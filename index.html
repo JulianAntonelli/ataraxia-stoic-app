@@ -376,6 +376,101 @@
     setInterval(updateClock, 1000);
     updateClock();
     lucide.createIcons();
+    // --- LÓGICA DEL CLASIFICADOR DE LA DICOTOMÍA DEL CONTROL ---
+const STORAGE_KEY = 'ataraxia_dichotomy_items';
+
+// Cargar o inicializar datos
+let dichotomyItems = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [
+  { id: 1, text: 'Mi propia serenidad y juicio ético', type: 'control' },
+  { id: 2, text: 'La impuntualidad o desdén de terceros', type: 'no-control' }
+];
+
+function saveDichotomyItems() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(dichotomyItems));
+}
+
+function renderDichotomyLists() {
+  const listControl = document.getElementById('listControl');
+  const listNoControl = document.getElementById('listNoControl');
+  const countControl = document.getElementById('countControl');
+  const countNoControl = document.getElementById('countNoControl');
+
+  if (!listControl || !listNoControl) return;
+
+  listControl.innerHTML = '';
+  listNoControl.innerHTML = '';
+
+  const controlItems = dichotomyItems.filter(item => item.type === 'control');
+  const noControlItems = dichotomyItems.filter(item => item.type === 'no-control');
+
+  countControl.textContent = controlItems.length;
+  countNoControl.textContent = noControlItems.length;
+
+  if (controlItems.length === 0) {
+    listControl.innerHTML = '<li class="text-[11px] text-zinc-600 italic py-1">Sin entradas</li>';
+  } else {
+    controlItems.forEach(item => {
+      listControl.appendChild(createDichotomyElement(item));
+    });
+  }
+
+  if (noControlItems.length === 0) {
+    listNoControl.innerHTML = '<li class="text-[11px] text-zinc-600 italic py-1">Sin entradas</li>';
+  } else {
+    noControlItems.forEach(item => {
+      listNoControl.appendChild(createDichotomyElement(item));
+    });
+  }
+
+  // Refrescar íconos de Lucide recién inyectados en el DOM
+  lucide.createIcons();
+}
+
+function createDichotomyElement(item) {
+  const li = document.createElement('li');
+  li.className = 'group flex items-center justify-between text-xs p-2 rounded-lg bg-brand-surfaceDim border border-brand-surfaceBorder/80 transition-all hover:border-zinc-700';
+
+  const textSpan = document.createElement('span');
+  textSpan.className = item.type === 'control' ? 'text-zinc-200 truncate pr-2' : 'text-zinc-400 line-through decoration-zinc-600 truncate pr-2';
+  textSpan.textContent = item.text;
+
+  const deleteBtn = document.createElement('button');
+  deleteBtn.className = 'text-zinc-500 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity p-0.5 flex-shrink-0';
+  deleteBtn.title = 'Descartar';
+  deleteBtn.setAttribute('onclick', `deleteDichotomyItem(${item.id})`);
+  deleteBtn.innerHTML = '<i data-lucide="x" class="w-3.5 h-3.5"></i>';
+
+  li.appendChild(textSpan);
+  li.appendChild(deleteBtn);
+  return li;
+}
+
+function addDichotomyItem(type) {
+  const input = document.getElementById('dichotomyInput');
+  const val = input.value.trim();
+  if (!val) return;
+
+  const newItem = {
+    id: Date.now(),
+    text: val,
+    type: type
+  };
+
+  dichotomyItems.unshift(newItem);
+  saveDichotomyItems();
+  renderDichotomyLists();
+  input.value = '';
+  input.focus();
+}
+
+function deleteDichotomyItem(id) {
+  dichotomyItems = dichotomyItems.filter(item => item.id !== id);
+  saveDichotomyItems();
+  renderDichotomyLists();
+}
+
+// Ejecutar el renderizado inicial al cargar
+renderDichotomyLists();
 
     // 2. Temporizador interactivo Pausa de Claridad (60s)
     let timerInterval = null;
@@ -467,5 +562,146 @@
       });
     });
   </script>
+  // --- BANCO DE CITAS Y ROTACIÓN DIARIA ---
+const STOIC_DAILY_BANK = [
+  {
+    category: "MÁXIMA MATUTINA • ENQUIRIDIÓN V",
+    quote: "No nos perturban las cosas que suceden, sino la opinión y el juicio que nos formamos acerca de ellas.",
+    author: "Epicteto de Hierápolis",
+    source: "Filósofo de la Libertad Interior (50 d.C. – 135 d.C.)",
+    praxis: "Distingue en cada contratiempo lo que depende enteramente de tu albedrío de lo que pertenece a la fortuna externa. Suspende el juicio apresurado.",
+    image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600&auto=format&fit=crop&q=80"
+  },
+  {
+    category: "MÁXIMA MATUTINA • MEDITACIONES IV",
+    quote: "Tienes poder sobre tu mente, no sobre los acontecimientos externos. Comprende esto y hallarás la verdadera fuerza.",
+    author: "Marco Aurelio",
+    source: "Emperador de Roma (121 d.C. – 180 d.C.)",
+    praxis: "No desgastes energía intentando gobernar las decisiones ajenas o los imprevistos. Dirige la totalidad de tu vigilancia hacia tu propia rectitud.",
+    image: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80"
+  },
+  {
+    category: "MÁXIMA MATUTINA • EPÍSTOLA XIII",
+    quote: "A menudo sufrimos más en la imaginación que en la realidad. La angustia anticipada inventa fantasmas innecesarios.",
+    author: "Lucio Anneo Séneca",
+    source: "Cartas a Lucilio (4 a.C. – 65 d.C.)",
+    praxis: "Pregúntate ante la incertidumbre: ¿este peligro está presente aquí y ahora, o es solo una hipótesis dolorosa construida por mi propia mente?",
+    image: "https://images.unsplash.com/photo-1552053831-71594a27632d?w=600&auto=format&fit=crop&q=80"
+  },
+  {
+    category: "MÁXIMA MATUTINA • DISCURSOS II",
+    quote: "Ninguna pérdida es irreparable salvo la de la propia virtud y el honor. Si conservas tu integridad moral, nada sustancial has perdido.",
+    author: "Epicteto de Hierápolis",
+    source: "Discursos por Arriano",
+    praxis: "Ante cualquier pérdida material o fracaso circunstancial, revisa si tu carácter continúa intacto. Si tu juicio sigue firme, el santuario interior prevalece.",
+    image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600&auto=format&fit=crop&q=80"
+  },
+  {
+    category: "MÁXIMA MATUTINA • MEDITACIONES VII",
+    quote: "Acepta las cosas a las que el destino te ata y ama a las personas con las que el destino te une, pero hazlo de todo corazón.",
+    author: "Marco Aurelio",
+    source: "Pensamientos para sí mismo",
+    praxis: "Evita la resistencia amarga ante lo irrevocable. Integra los sucesos del día como combustible necesario para forjar tu paciencia y benevolencia.",
+    image: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80"
+  }
+];
+
+const SECONDARY_QUOTES = [
+  {
+    quote: "«Cuando te despiertes en la mañana, piensa en qué valioso privilegio es estar vivo: respirar, pensar, disfrutar, amar.»",
+    author: "— Marco Aurelio, Emperador de Roma",
+    ref: "Meditaciones, Libro II"
+  },
+  {
+    quote: "«No recibimos una vida corta, sino que la hacemos tal; no somos pobres de tiempo, sino pródigos en desperdiciarlo.»",
+    author: "— Lucio Anneo Séneca",
+    ref: "De la brevedad de la vida"
+  },
+  {
+    quote: "«Primero aprende el significado de lo que dices; luego habla. Que tus acciones precedan a tus argumentos.»",
+    author: "— Epicteto de Hierápolis",
+    ref: "Discursos de Nicópolis"
+  }
+];
+
+// Obtener el día del año para rotación diaria determinista
+function getDayOfYear() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const diff = now - start;
+  const oneDay = 1000 * 60 * 60 * 24;
+  return Math.floor(diff / oneDay);
+}
+
+let currentDailyQuote = null;
+
+function renderDailyQuotes() {
+  const dayIndex = getDayOfYear();
+  
+  // Selección de la cita principal del día
+  currentDailyQuote = STOIC_DAILY_BANK[dayIndex % STOIC_DAILY_BANK.length];
+  
+  document.getElementById('dailyCategory').textContent = currentDailyQuote.category;
+  document.getElementById('dailyQuoteText').textContent = `“${currentDailyQuote.quote}”`;
+  document.getElementById('dailyAuthor').textContent = currentDailyQuote.author;
+  document.getElementById('dailySource').textContent = currentDailyQuote.source;
+  document.getElementById('dailyPraxis').textContent = currentDailyQuote.praxis;
+  document.getElementById('dailyImage').src = currentDailyQuote.image;
+
+  // Citas secundarias rotativas
+  const sub1 = SECONDARY_QUOTES[dayIndex % SECONDARY_QUOTES.length];
+  const sub2 = SECONDARY_QUOTES[(dayIndex + 1) % SECONDARY_QUOTES.length];
+
+  document.getElementById('subQuote1Text').textContent = sub1.quote;
+  document.getElementById('subQuote1Author').textContent = sub1.author;
+  document.getElementById('subQuote1Ref').textContent = sub1.ref;
+
+  document.getElementById('subQuote2Text').textContent = sub2.quote;
+  document.getElementById('subQuote2Author').textContent = sub2.author;
+  document.getElementById('subQuote2Ref').textContent = sub2.ref;
+
+  lucide.createIcons();
+}
+
+// Copiar cita al portapapeles con feedback
+async function copyDailyQuote() {
+  if (!currentDailyQuote) return;
+  const textToCopy = `«${currentDailyQuote.quote}» — ${currentDailyQuote.author} (${currentDailyQuote.source})`;
+  
+  try {
+    await navigator.clipboard.writeText(textToCopy);
+    const label = document.getElementById('copyBtnLabel');
+    const prevText = label.textContent;
+    label.textContent = '¡Copiada!';
+    setTimeout(() => {
+      label.textContent = prevText;
+    }, 2500);
+  } catch (err) {
+    console.error('Error al copiar:', err);
+  }
+}
+
+// Compartir de forma nativa (móvil o navegadores compatibles)
+async function shareDailyQuote() {
+  if (!currentDailyQuote) return;
+  const shareData = {
+    title: 'Ataraxia — Filosofía Vivida',
+    text: `«${currentDailyQuote.quote}» — ${currentDailyQuote.author}`,
+    url: window.location.href
+  };
+
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+    } catch (err) {
+      if (err.name !== 'AbortError') console.error(err);
+    }
+  } else {
+    copyDailyQuote();
+  }
+}
+
+// Invocar renderizado
+renderDailyQuotes();
 </body>
 </html>
