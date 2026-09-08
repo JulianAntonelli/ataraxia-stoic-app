@@ -280,22 +280,75 @@
         </button>
       </div>
 
-      <!-- SECCIÓN 5: DICOTOMÍA DEL CONTROL -->
-      <div id="dicotomia" class="scroll-target scroll-mt-24 p-5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-4">
-        <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-gold font-semibold">
-          <i data-lucide="scale" class="w-4 h-4"></i> Dicotomía del Control
-        </div>
-        <ul class="text-xs space-y-3">
-          <li class="flex items-start gap-2.5 text-zinc-300">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 mt-1 flex-shrink-0"></span>
-            <div><strong class="text-zinc-100">Bajo tu control:</strong> Tus juicios, anhelos, aversiones y tu propia rectitud moral.</div>
-          </li>
-          <li class="flex items-start gap-2.5 text-zinc-400">
-            <span class="w-2 h-2 rounded-full bg-zinc-600 mt-1 flex-shrink-0"></span>
-            <div><strong class="text-zinc-300">Fuera de control:</strong> La opinión de los demás, el clima, la fortuna o la reputación.</div>
-          </li>
-        </ul>
+
+      <!-- SECCIÓN 5: CLASIFICADOR INTERACTIVO - DICOTOMÍA DEL CONTROL -->
+<div id="dicotomia" class="scroll-target scroll-mt-24 p-5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-4">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-gold font-semibold">
+      <i data-lucide="scale" class="w-4 h-4"></i> Dicotomía del Control
+    </div>
+    <span class="text-[10px] font-mono text-zinc-500 uppercase">Triaje Mental</span>
+  </div>
+
+  <p class="text-xs text-zinc-400 leading-relaxed">
+    Examina una preocupación actual y sométela a la regla de Epicteto.
+  </p>
+
+  <!-- Campo de entrada -->
+  <div class="space-y-2">
+    <input 
+      type="text" 
+      id="dichotomyInput" 
+      placeholder="Ej: La opinión de mi jefe, mi disciplina..." 
+      maxlength="90"
+      class="w-full bg-brand-surfaceDim border border-brand-surfaceBorder rounded-xl px-3 py-2 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-brand-gold/60 transition"
+      onkeydown="if(event.key === 'Enter') addDichotomyItem('control')"
+    >
+    <div class="grid grid-cols-2 gap-2">
+      <button 
+        onclick="addDichotomyItem('control')" 
+        class="py-1.5 px-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30 hover:bg-emerald-900/50 text-emerald-400 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition"
+      >
+        <i data-lucide="check" class="w-3.5 h-3.5"></i> Bajo mi control
+      </button>
+      <button 
+        onclick="addDichotomyItem('no-control')" 
+        class="py-1.5 px-2 rounded-lg bg-zinc-800/60 border border-zinc-700 hover:bg-zinc-700/60 text-zinc-300 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition"
+      >
+        <i data-lucide="slash" class="w-3.5 h-3.5"></i> Fuera de control
+      </button>
+    </div>
+  </div>
+
+  <!-- Tableros de clasificación -->
+  <div class="space-y-3 pt-2 border-t border-brand-surfaceBorder/60">
+    <!-- Columna: Bajo mi control -->
+    <div>
+      <div class="flex items-center justify-between text-[11px] font-mono mb-1.5">
+        <span class="text-emerald-400 flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Bajo tu control
+        </span>
+        <span id="countControl" class="text-zinc-500 text-[10px]">0</span>
       </div>
+      <ul id="listControl" class="space-y-1.5 max-h-36 overflow-y-auto pr-1">
+        <!-- Elementos inyectados por JS -->
+      </ul>
+    </div>
+
+    <!-- Columna: Fuera de control -->
+    <div>
+      <div class="flex items-center justify-between text-[11px] font-mono mb-1.5">
+        <span class="text-zinc-400 flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-zinc-500"></span> Fuera de control
+        </span>
+        <span id="countNoControl" class="text-zinc-500 text-[10px]">0</span>
+      </div>
+      <ul id="listNoControl" class="space-y-1.5 max-h-36 overflow-y-auto pr-1">
+        <!-- Elementos inyectados por JS -->
+      </ul>
+    </div>
+  </div>
+</div>
 
       <!-- Memento Mori -->
       <div class="p-5 rounded-2xl border border-brand-surfaceBorder bg-gradient-to-br from-brand-surfaceDim to-brand-surfaceCard text-center space-y-2">
