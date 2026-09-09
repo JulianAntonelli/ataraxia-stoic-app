@@ -207,53 +207,66 @@
 
       <!-- SECCIÓN 3: MEDITACIONES DIARIAS -->
       <section id="meditaciones" class="scroll-target scroll-mt-24 space-y-6">
+        <!-- Tarjeta Principal Dinámica -->
         <article class="p-6 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-6">
-          <div class="flex items-center justify-between text-xs font-mono text-zinc-400 border-b border-brand-surfaceBorder/60 pb-3">
-            <span class="text-brand-gold uppercase tracking-wider font-semibold">MÁXIMA MATUTINA • ENQUIRIDIÓN V</span>
-            <span class="flex items-center gap-1.5"><i data-lucide="headphones" class="w-3.5 h-3.5 text-brand-gold"></i> Audio guía • 1:45 min</span>
+          <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-zinc-400 border-b border-brand-surfaceBorder/60 pb-3">
+            <span id="dailyCategory" class="text-brand-gold uppercase tracking-wider font-semibold">MÁXIMA MATUTINA</span>
+            <div class="flex items-center gap-3">
+              <button onclick="copyDailyQuote()" class="hover:text-brand-gold transition flex items-center gap-1">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                <span id="copyBtnLabel">Copiar</span>
+              </button>
+              <button onclick="shareDailyQuote()" class="hover:text-brand-gold transition flex items-center gap-1">
+                <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                <span>Compartir</span>
+              </button>
+              <span class="flex items-center gap-1.5"><i data-lucide="headphones" class="w-3.5 h-3.5 text-brand-gold"></i> Audio • 1:45 min</span>
+            </div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
             <div class="md:col-span-7 space-y-4">
-              <blockquote class="font-serif text-xl sm:text-2xl text-zinc-100 italic leading-relaxed">
-                “No nos perturban las cosas que suceden, sino la opinión y el juicio que nos formamos acerca de ellas.”
+              <blockquote id="dailyQuoteText" class="font-serif text-xl sm:text-2xl text-zinc-100 italic leading-relaxed">
+                “Cargando máxima del día...”
               </blockquote>
               <div>
-                <a href="epicteto.html" class="text-sm font-semibold text-brand-gold hover:underline">Epicteto de Hierápolis</a>
-                <p class="text-xs text-zinc-400 font-mono">Filósofo de la Libertad Interior (50 d.C. – 135 d.C.)</p>
+                <a href="epicteto.html" id="dailyAuthor" class="text-sm font-semibold text-brand-gold hover:underline">Autor</a>
+                <p id="dailySource" class="text-xs text-zinc-400 font-mono">Fuente histórica</p>
               </div>
             </div>
-            <div class="md:col-span-5 rounded-xl overflow-hidden border border-brand-surfaceBorder aspect-[4/3]">
-              <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600&auto=format&fit=crop&q=80" alt="Busto de Epicteto" class="w-full h-full object-cover grayscale contrast-125">
+            <div class="md:col-span-5 rounded-xl overflow-hidden border border-brand-surfaceBorder aspect-[4/3] bg-brand-surfaceDim">
+              <img id="dailyImage" src="" alt="Filósofo Estoico" class="w-full h-full object-cover grayscale contrast-125 transition duration-500">
             </div>
           </div>
           <div class="p-4 rounded-xl bg-brand-surfaceDim border border-brand-surfaceBorder/80 text-xs text-zinc-300 leading-relaxed">
             <div class="flex items-center gap-2 text-brand-gold font-mono uppercase text-[10px] font-bold mb-1">
               <i data-lucide="scale" class="w-3.5 h-3.5"></i> CONSEJO PRÁCTICO
             </div>
-            Distingue en cada conflicto lo que reside bajo tu soberana voluntad de lo que escapa a ella. El hecho en sí es neutro; tu juicio determina tu calma.
+            <span id="dailyPraxis">Cargando praxis...</span>
           </div>
         </article>
 
+        <!-- Sub-cita 1 Dinámica -->
         <article class="p-6 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-3">
           <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
             <span class="text-brand-gold uppercase tracking-wider font-semibold">AMOR FATI • GRATITUD MATUTINA</span>
-            <span class="text-zinc-500">Meditaciones, Libro II</span>
+            <span id="subQuote1Ref" class="text-zinc-500">Referencia</span>
           </div>
-          <blockquote class="font-serif text-lg sm:text-xl text-zinc-200 italic leading-snug">
-            «Cuando te despiertes en la mañana, piensa en qué valioso privilegio es estar vivo: respirar, pensar, disfrutar, amar.»
+          <blockquote id="subQuote1Text" class="font-serif text-lg sm:text-xl text-zinc-200 italic leading-snug">
+            Cargando reflexión...
           </blockquote>
-          <div class="text-xs text-zinc-400 font-mono">— Marco Aurelio</div>
+          <div id="subQuote1Author" class="text-xs text-zinc-400 font-mono">— Autor</div>
         </article>
 
+        <!-- Sub-cita 2 Dinámica -->
         <article class="p-6 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-3">
           <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
             <span class="text-brand-gold uppercase tracking-wider font-semibold">PAZ MENTAL • SERENIDAD</span>
-            <span class="text-zinc-500">Epístola XIII</span>
+            <span id="subQuote2Ref" class="text-zinc-500">Referencia</span>
           </div>
-          <blockquote class="font-serif text-lg sm:text-xl text-zinc-200 italic leading-snug">
-            «A menudo sufrimos más en la imaginación que en la realidad. Lo que tememos rara vez ocurre tal como lo angustiaba nuestra mente.»
+          <blockquote id="subQuote2Text" class="font-serif text-lg sm:text-xl text-zinc-200 italic leading-snug">
+            Cargando reflexión...
           </blockquote>
-          <div class="text-xs text-zinc-400 font-mono">— Séneca el Joven</div>
+          <div id="subQuote2Author" class="text-xs text-zinc-400 font-mono">— Autor</div>
         </article>
       </section>
     </main>
@@ -280,75 +293,68 @@
         </button>
       </div>
 
-
       <!-- SECCIÓN 5: CLASIFICADOR INTERACTIVO - DICOTOMÍA DEL CONTROL -->
-<div id="dicotomia" class="scroll-target scroll-mt-24 p-5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-4">
-  <div class="flex items-center justify-between">
-    <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-gold font-semibold">
-      <i data-lucide="scale" class="w-4 h-4"></i> Dicotomía del Control
-    </div>
-    <span class="text-[10px] font-mono text-zinc-500 uppercase">Triaje Mental</span>
-  </div>
+      <div id="dicotomia" class="scroll-target scroll-mt-24 p-5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-gold font-semibold">
+            <i data-lucide="scale" class="w-4 h-4"></i> Dicotomía del Control
+          </div>
+          <span class="text-[10px] font-mono text-zinc-500 uppercase">Triaje Mental</span>
+        </div>
 
-  <p class="text-xs text-zinc-400 leading-relaxed">
-    Examina una preocupación actual y sométela a la regla de Epicteto.
-  </p>
+        <p class="text-xs text-zinc-400 leading-relaxed">
+          Examina una preocupación actual y sométela a la regla de Epicteto.
+        </p>
 
-  <!-- Campo de entrada -->
-  <div class="space-y-2">
-    <input 
-      type="text" 
-      id="dichotomyInput" 
-      placeholder="Ej: La opinión de mi jefe, mi disciplina..." 
-      maxlength="90"
-      class="w-full bg-brand-surfaceDim border border-brand-surfaceBorder rounded-xl px-3 py-2 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-brand-gold/60 transition"
-      onkeydown="if(event.key === 'Enter') addDichotomyItem('control')"
-    >
-    <div class="grid grid-cols-2 gap-2">
-      <button 
-        onclick="addDichotomyItem('control')" 
-        class="py-1.5 px-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30 hover:bg-emerald-900/50 text-emerald-400 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition"
-      >
-        <i data-lucide="check" class="w-3.5 h-3.5"></i> Bajo mi control
-      </button>
-      <button 
-        onclick="addDichotomyItem('no-control')" 
-        class="py-1.5 px-2 rounded-lg bg-zinc-800/60 border border-zinc-700 hover:bg-zinc-700/60 text-zinc-300 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition"
-      >
-        <i data-lucide="slash" class="w-3.5 h-3.5"></i> Fuera de control
-      </button>
-    </div>
-  </div>
+        <!-- Campo de entrada -->
+        <div class="space-y-2">
+          <input 
+            type="text" 
+            id="dichotomyInput" 
+            placeholder="Ej: La opinión de mi jefe, mi disciplina..." 
+            maxlength="90"
+            class="w-full bg-brand-surfaceDim border border-brand-surfaceBorder rounded-xl px-3 py-2 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-brand-gold/60 transition"
+            onkeydown="if(event.key === 'Enter') addDichotomyItem('control')"
+          >
+          <div class="grid grid-cols-2 gap-2">
+            <button 
+              onclick="addDichotomyItem('control')" 
+              class="py-1.5 px-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30 hover:bg-emerald-900/50 text-emerald-400 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition"
+            >
+              <i data-lucide="check" class="w-3.5 h-3.5"></i> Bajo mi control
+            </button>
+            <button 
+              onclick="addDichotomyItem('no-control')" 
+              class="py-1.5 px-2 rounded-lg bg-zinc-800/60 border border-zinc-700 hover:bg-zinc-700/60 text-zinc-300 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition"
+            >
+              <i data-lucide="slash" class="w-3.5 h-3.5"></i> Fuera de control
+            </button>
+          </div>
+        </div>
 
-  <!-- Tableros de clasificación -->
-  <div class="space-y-3 pt-2 border-t border-brand-surfaceBorder/60">
-    <!-- Columna: Bajo mi control -->
-    <div>
-      <div class="flex items-center justify-between text-[11px] font-mono mb-1.5">
-        <span class="text-emerald-400 flex items-center gap-1">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Bajo tu control
-        </span>
-        <span id="countControl" class="text-zinc-500 text-[10px]">0</span>
+        <!-- Tableros de clasificación -->
+        <div class="space-y-3 pt-2 border-t border-brand-surfaceBorder/60">
+          <div>
+            <div class="flex items-center justify-between text-[11px] font-mono mb-1.5">
+              <span class="text-emerald-400 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Bajo tu control
+              </span>
+              <span id="countControl" class="text-zinc-500 text-[10px]">0</span>
+            </div>
+            <ul id="listControl" class="space-y-1.5 max-h-36 overflow-y-auto pr-1"></ul>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between text-[11px] font-mono mb-1.5">
+              <span class="text-zinc-400 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-zinc-500"></span> Fuera de control
+              </span>
+              <span id="countNoControl" class="text-zinc-500 text-[10px]">0</span>
+            </div>
+            <ul id="listNoControl" class="space-y-1.5 max-h-36 overflow-y-auto pr-1"></ul>
+          </div>
+        </div>
       </div>
-      <ul id="listControl" class="space-y-1.5 max-h-36 overflow-y-auto pr-1">
-        <!-- Elementos inyectados por JS -->
-      </ul>
-    </div>
-
-    <!-- Columna: Fuera de control -->
-    <div>
-      <div class="flex items-center justify-between text-[11px] font-mono mb-1.5">
-        <span class="text-zinc-400 flex items-center gap-1">
-          <span class="w-1.5 h-1.5 rounded-full bg-zinc-500"></span> Fuera de control
-        </span>
-        <span id="countNoControl" class="text-zinc-500 text-[10px]">0</span>
-      </div>
-      <ul id="listNoControl" class="space-y-1.5 max-h-36 overflow-y-auto pr-1">
-        <!-- Elementos inyectados por JS -->
-      </ul>
-    </div>
-  </div>
-</div>
 
       <!-- Memento Mori -->
       <div class="p-5 rounded-2xl border border-brand-surfaceBorder bg-gradient-to-br from-brand-surfaceDim to-brand-surfaceCard text-center space-y-2">
@@ -375,104 +381,94 @@
     }
     setInterval(updateClock, 1000);
     updateClock();
-    lucide.createIcons();
-    // --- LÓGICA DEL CLASIFICADOR DE LA DICOTOMÍA DEL CONTROL ---
-const STORAGE_KEY = 'ataraxia_dichotomy_items';
 
-// Cargar o inicializar datos
-let dichotomyItems = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [
-  { id: 1, text: 'Mi propia serenidad y juicio ético', type: 'control' },
-  { id: 2, text: 'La impuntualidad o desdén de terceros', type: 'no-control' }
-];
+    // 2. Dicotomía del Control
+    const STORAGE_KEY = 'ataraxia_dichotomy_items';
+    let dichotomyItems = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [
+      { id: 1, text: 'Mi propia serenidad y juicio ético', type: 'control' },
+      { id: 2, text: 'La impuntualidad o desdén de terceros', type: 'no-control' }
+    ];
 
-function saveDichotomyItems() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(dichotomyItems));
-}
+    function saveDichotomyItems() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(dichotomyItems));
+    }
 
-function renderDichotomyLists() {
-  const listControl = document.getElementById('listControl');
-  const listNoControl = document.getElementById('listNoControl');
-  const countControl = document.getElementById('countControl');
-  const countNoControl = document.getElementById('countNoControl');
+    function renderDichotomyLists() {
+      const listControl = document.getElementById('listControl');
+      const listNoControl = document.getElementById('listNoControl');
+      const countControl = document.getElementById('countControl');
+      const countNoControl = document.getElementById('countNoControl');
 
-  if (!listControl || !listNoControl) return;
+      if (!listControl || !listNoControl) return;
 
-  listControl.innerHTML = '';
-  listNoControl.innerHTML = '';
+      listControl.innerHTML = '';
+      listNoControl.innerHTML = '';
 
-  const controlItems = dichotomyItems.filter(item => item.type === 'control');
-  const noControlItems = dichotomyItems.filter(item => item.type === 'no-control');
+      const controlItems = dichotomyItems.filter(item => item.type === 'control');
+      const noControlItems = dichotomyItems.filter(item => item.type === 'no-control');
 
-  countControl.textContent = controlItems.length;
-  countNoControl.textContent = noControlItems.length;
+      countControl.textContent = controlItems.length;
+      countNoControl.textContent = noControlItems.length;
 
-  if (controlItems.length === 0) {
-    listControl.innerHTML = '<li class="text-[11px] text-zinc-600 italic py-1">Sin entradas</li>';
-  } else {
-    controlItems.forEach(item => {
-      listControl.appendChild(createDichotomyElement(item));
-    });
-  }
+      if (controlItems.length === 0) {
+        listControl.innerHTML = '<li class="text-[11px] text-zinc-600 italic py-1">Sin entradas</li>';
+      } else {
+        controlItems.forEach(item => listControl.appendChild(createDichotomyElement(item)));
+      }
 
-  if (noControlItems.length === 0) {
-    listNoControl.innerHTML = '<li class="text-[11px] text-zinc-600 italic py-1">Sin entradas</li>';
-  } else {
-    noControlItems.forEach(item => {
-      listNoControl.appendChild(createDichotomyElement(item));
-    });
-  }
+      if (noControlItems.length === 0) {
+        listNoControl.innerHTML = '<li class="text-[11px] text-zinc-600 italic py-1">Sin entradas</li>';
+      } else {
+        noControlItems.forEach(item => listNoControl.appendChild(createDichotomyElement(item)));
+      }
 
-  // Refrescar íconos de Lucide recién inyectados en el DOM
-  lucide.createIcons();
-}
+      lucide.createIcons();
+    }
 
-function createDichotomyElement(item) {
-  const li = document.createElement('li');
-  li.className = 'group flex items-center justify-between text-xs p-2 rounded-lg bg-brand-surfaceDim border border-brand-surfaceBorder/80 transition-all hover:border-zinc-700';
+    function createDichotomyElement(item) {
+      const li = document.createElement('li');
+      li.className = 'group flex items-center justify-between text-xs p-2 rounded-lg bg-brand-surfaceDim border border-brand-surfaceBorder/80 transition-all hover:border-zinc-700';
 
-  const textSpan = document.createElement('span');
-  textSpan.className = item.type === 'control' ? 'text-zinc-200 truncate pr-2' : 'text-zinc-400 line-through decoration-zinc-600 truncate pr-2';
-  textSpan.textContent = item.text;
+      const textSpan = document.createElement('span');
+      textSpan.className = item.type === 'control' ? 'text-zinc-200 truncate pr-2' : 'text-zinc-400 line-through decoration-zinc-600 truncate pr-2';
+      textSpan.textContent = item.text;
 
-  const deleteBtn = document.createElement('button');
-  deleteBtn.className = 'text-zinc-500 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity p-0.5 flex-shrink-0';
-  deleteBtn.title = 'Descartar';
-  deleteBtn.setAttribute('onclick', `deleteDichotomyItem(${item.id})`);
-  deleteBtn.innerHTML = '<i data-lucide="x" class="w-3.5 h-3.5"></i>';
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'text-zinc-500 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity p-0.5 flex-shrink-0';
+      deleteBtn.title = 'Descartar';
+      deleteBtn.onclick = () => deleteDichotomyItem(item.id);
+      deleteBtn.innerHTML = '<i data-lucide="x" class="w-3.5 h-3.5"></i>';
 
-  li.appendChild(textSpan);
-  li.appendChild(deleteBtn);
-  return li;
-}
+      li.appendChild(textSpan);
+      li.appendChild(deleteBtn);
+      return li;
+    }
 
-function addDichotomyItem(type) {
-  const input = document.getElementById('dichotomyInput');
-  const val = input.value.trim();
-  if (!val) return;
+    function addDichotomyItem(type) {
+      const input = document.getElementById('dichotomyInput');
+      const val = input.value.trim();
+      if (!val) return;
 
-  const newItem = {
-    id: Date.now(),
-    text: val,
-    type: type
-  };
+      const newItem = {
+        id: Date.now(),
+        text: val,
+        type: type
+      };
 
-  dichotomyItems.unshift(newItem);
-  saveDichotomyItems();
-  renderDichotomyLists();
-  input.value = '';
-  input.focus();
-}
+      dichotomyItems.unshift(newItem);
+      saveDichotomyItems();
+      renderDichotomyLists();
+      input.value = '';
+      input.focus();
+    }
 
-function deleteDichotomyItem(id) {
-  dichotomyItems = dichotomyItems.filter(item => item.id !== id);
-  saveDichotomyItems();
-  renderDichotomyLists();
-}
+    function deleteDichotomyItem(id) {
+      dichotomyItems = dichotomyItems.filter(item => item.id !== id);
+      saveDichotomyItems();
+      renderDichotomyLists();
+    }
 
-// Ejecutar el renderizado inicial al cargar
-renderDichotomyLists();
-
-    // 2. Temporizador interactivo Pausa de Claridad (60s)
+    // 3. Temporizador Pausa de Claridad (60s)
     let timerInterval = null;
     let timeLeft = 60;
     let isRunning = false;
@@ -525,7 +521,7 @@ renderDichotomyLists();
       }, 1000);
     }
 
-    // 3. Scroll Spy optimizado
+    // 4. Scroll Spy
     const sections = document.querySelectorAll('.scroll-target');
     const navLinks = document.querySelectorAll('.nav-link');
     const sideLinks = document.querySelectorAll('.side-link');
@@ -561,147 +557,162 @@ renderDichotomyLists();
         }
       });
     });
-  </script>
-  // --- BANCO DE CITAS Y ROTACIÓN DIARIA ---
-const STOIC_DAILY_BANK = [
-  {
-    category: "MÁXIMA MATUTINA • ENQUIRIDIÓN V",
-    quote: "No nos perturban las cosas que suceden, sino la opinión y el juicio que nos formamos acerca de ellas.",
-    author: "Epicteto de Hierápolis",
-    source: "Filósofo de la Libertad Interior (50 d.C. – 135 d.C.)",
-    praxis: "Distingue en cada contratiempo lo que depende enteramente de tu albedrío de lo que pertenece a la fortuna externa. Suspende el juicio apresurado.",
-    image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600&auto=format&fit=crop&q=80"
-  },
-  {
-    category: "MÁXIMA MATUTINA • MEDITACIONES IV",
-    quote: "Tienes poder sobre tu mente, no sobre los acontecimientos externos. Comprende esto y hallarás la verdadera fuerza.",
-    author: "Marco Aurelio",
-    source: "Emperador de Roma (121 d.C. – 180 d.C.)",
-    praxis: "No desgastes energía intentando gobernar las decisiones ajenas o los imprevistos. Dirige la totalidad de tu vigilancia hacia tu propia rectitud.",
-    image: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80"
-  },
-  {
-    category: "MÁXIMA MATUTINA • EPÍSTOLA XIII",
-    quote: "A menudo sufrimos más en la imaginación que en la realidad. La angustia anticipada inventa fantasmas innecesarios.",
-    author: "Lucio Anneo Séneca",
-    source: "Cartas a Lucilio (4 a.C. – 65 d.C.)",
-    praxis: "Pregúntate ante la incertidumbre: ¿este peligro está presente aquí y ahora, o es solo una hipótesis dolorosa construida por mi propia mente?",
-    image: "https://images.unsplash.com/photo-1552053831-71594a27632d?w=600&auto=format&fit=crop&q=80"
-  },
-  {
-    category: "MÁXIMA MATUTINA • DISCURSOS II",
-    quote: "Ninguna pérdida es irreparable salvo la de la propia virtud y el honor. Si conservas tu integridad moral, nada sustancial has perdido.",
-    author: "Epicteto de Hierápolis",
-    source: "Discursos por Arriano",
-    praxis: "Ante cualquier pérdida material o fracaso circunstancial, revisa si tu carácter continúa intacto. Si tu juicio sigue firme, el santuario interior prevalece.",
-    image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600&auto=format&fit=crop&q=80"
-  },
-  {
-    category: "MÁXIMA MATUTINA • MEDITACIONES VII",
-    quote: "Acepta las cosas a las que el destino te ata y ama a las personas con las que el destino te une, pero hazlo de todo corazón.",
-    author: "Marco Aurelio",
-    source: "Pensamientos para sí mismo",
-    praxis: "Evita la resistencia amarga ante lo irrevocable. Integra los sucesos del día como combustible necesario para forjar tu paciencia y benevolencia.",
-    image: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80"
-  }
-];
 
-const SECONDARY_QUOTES = [
-  {
-    quote: "«Cuando te despiertes en la mañana, piensa en qué valioso privilegio es estar vivo: respirar, pensar, disfrutar, amar.»",
-    author: "— Marco Aurelio, Emperador de Roma",
-    ref: "Meditaciones, Libro II"
-  },
-  {
-    quote: "«No recibimos una vida corta, sino que la hacemos tal; no somos pobres de tiempo, sino pródigos en desperdiciarlo.»",
-    author: "— Lucio Anneo Séneca",
-    ref: "De la brevedad de la vida"
-  },
-  {
-    quote: "«Primero aprende el significado de lo que dices; luego habla. Que tus acciones precedan a tus argumentos.»",
-    author: "— Epicteto de Hierápolis",
-    ref: "Discursos de Nicópolis"
-  }
-];
+    // 5. Banco de citas y rotación diaria
+    const STOIC_DAILY_BANK = [
+      {
+        category: "MÁXIMA MATUTINA • ENQUIRIDIÓN V",
+        quote: "No nos perturban las cosas que suceden, sino la opinión y el juicio que nos formamos acerca de ellas.",
+        author: "Epicteto de Hierápolis",
+        source: "Filósofo de la Libertad Interior (50 d.C. – 135 d.C.)",
+        praxis: "Distingue en cada contratiempo lo que depende enteramente de tu albedrío de lo que pertenece a la fortuna externa. Suspende el juicio apresurado.",
+        image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        category: "MÁXIMA MATUTINA • MEDITACIONES IV",
+        quote: "Tienes poder sobre tu mente, no sobre los acontecimientos externos. Comprende esto y hallarás la verdadera fuerza.",
+        author: "Marco Aurelio",
+        source: "Emperador de Roma (121 d.C. – 180 d.C.)",
+        praxis: "No desgastes energía intentando gobernar las decisiones ajenas o los imprevistos. Dirige la totalidad de tu vigilancia hacia tu propia rectitud.",
+        image: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        category: "MÁXIMA MATUTINA • EPÍSTOLA XIII",
+        quote: "A menudo sufrimos más en la imaginación que en la realidad. La angustia anticipada inventa fantasmas innecesarios.",
+        author: "Lucio Anneo Séneca",
+        source: "Cartas a Lucilio (4 a.C. – 65 d.C.)",
+        praxis: "Pregúntate ante la incertidumbre: ¿este peligro está presente aquí y ahora, o es solo una hipótesis dolorosa construida por mi propia mente?",
+        image: "https://images.unsplash.com/photo-1552053831-71594a27632d?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        category: "MÁXIMA MATUTINA • DISCURSOS II",
+        quote: "Ninguna pérdida es irreparable salvo la de la propia virtud y el honor. Si conservas tu integridad moral, nada sustancial has perdido.",
+        author: "Epicteto de Hierápolis",
+        source: "Discursos por Arriano",
+        praxis: "Ante cualquier pérdida material o fracaso circunstancial, revisa si tu carácter continúa intacto. Si tu juicio sigue firme, el santuario interior prevalece.",
+        image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        category: "MÁXIMA MATUTINA • MEDITACIONES VII",
+        quote: "Acepta las cosas a las que el destino te ata y ama a las personas con las que el destino te une, pero hazlo de todo corazón.",
+        author: "Marco Aurelio",
+        source: "Pensamientos para sí mismo",
+        praxis: "Evita la resistencia amarga ante lo irrevocable. Integra los sucesos del día como combustible necesario para forjar tu paciencia y benevolencia.",
+        image: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80"
+      }
+    ];
 
-// Obtener el día del año para rotación diaria determinista
-function getDayOfYear() {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const diff = now - start;
-  const oneDay = 1000 * 60 * 60 * 24;
-  return Math.floor(diff / oneDay);
-}
+    const SECONDARY_QUOTES = [
+      {
+        quote: "«Cuando te despiertes en la mañana, piensa en qué valioso privilegio es estar vivo: respirar, pensar, disfrutar, amar.»",
+        author: "— Marco Aurelio, Emperador de Roma",
+        ref: "Meditaciones, Libro II"
+      },
+      {
+        quote: "«No recibimos una vida corta, sino que la hacemos tal; no somos pobres de tiempo, sino pródigos en desperdiciarlo.»",
+        author: "— Lucio Anneo Séneca",
+        ref: "De la brevedad de la vida"
+      },
+      {
+        quote: "«Primero aprende el significado de lo que dices; luego habla. Que tus acciones precedan a tus argumentos.»",
+        author: "— Epicteto de Hierápolis",
+        ref: "Discursos de Nicópolis"
+      }
+    ];
 
-let currentDailyQuote = null;
-
-function renderDailyQuotes() {
-  const dayIndex = getDayOfYear();
-  
-  // Selección de la cita principal del día
-  currentDailyQuote = STOIC_DAILY_BANK[dayIndex % STOIC_DAILY_BANK.length];
-  
-  document.getElementById('dailyCategory').textContent = currentDailyQuote.category;
-  document.getElementById('dailyQuoteText').textContent = `“${currentDailyQuote.quote}”`;
-  document.getElementById('dailyAuthor').textContent = currentDailyQuote.author;
-  document.getElementById('dailySource').textContent = currentDailyQuote.source;
-  document.getElementById('dailyPraxis').textContent = currentDailyQuote.praxis;
-  document.getElementById('dailyImage').src = currentDailyQuote.image;
-
-  // Citas secundarias rotativas
-  const sub1 = SECONDARY_QUOTES[dayIndex % SECONDARY_QUOTES.length];
-  const sub2 = SECONDARY_QUOTES[(dayIndex + 1) % SECONDARY_QUOTES.length];
-
-  document.getElementById('subQuote1Text').textContent = sub1.quote;
-  document.getElementById('subQuote1Author').textContent = sub1.author;
-  document.getElementById('subQuote1Ref').textContent = sub1.ref;
-
-  document.getElementById('subQuote2Text').textContent = sub2.quote;
-  document.getElementById('subQuote2Author').textContent = sub2.author;
-  document.getElementById('subQuote2Ref').textContent = sub2.ref;
-
-  lucide.createIcons();
-}
-
-// Copiar cita al portapapeles con feedback
-async function copyDailyQuote() {
-  if (!currentDailyQuote) return;
-  const textToCopy = `«${currentDailyQuote.quote}» — ${currentDailyQuote.author} (${currentDailyQuote.source})`;
-  
-  try {
-    await navigator.clipboard.writeText(textToCopy);
-    const label = document.getElementById('copyBtnLabel');
-    const prevText = label.textContent;
-    label.textContent = '¡Copiada!';
-    setTimeout(() => {
-      label.textContent = prevText;
-    }, 2500);
-  } catch (err) {
-    console.error('Error al copiar:', err);
-  }
-}
-
-// Compartir de forma nativa (móvil o navegadores compatibles)
-async function shareDailyQuote() {
-  if (!currentDailyQuote) return;
-  const shareData = {
-    title: 'Ataraxia — Filosofía Vivida',
-    text: `«${currentDailyQuote.quote}» — ${currentDailyQuote.author}`,
-    url: window.location.href
-  };
-
-  if (navigator.share) {
-    try {
-      await navigator.share(shareData);
-    } catch (err) {
-      if (err.name !== 'AbortError') console.error(err);
+    function getDayOfYear() {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 0);
+      const diff = now - start;
+      const oneDay = 1000 * 60 * 60 * 24;
+      return Math.floor(diff / oneDay);
     }
-  } else {
-    copyDailyQuote();
-  }
-}
 
-// Invocar renderizado
-renderDailyQuotes();
+    let currentDailyQuote = null;
+
+    function renderDailyQuotes() {
+      const dayIndex = getDayOfYear();
+      currentDailyQuote = STOIC_DAILY_BANK[dayIndex % STOIC_DAILY_BANK.length];
+      
+      const catEl = document.getElementById('dailyCategory');
+      const quoteEl = document.getElementById('dailyQuoteText');
+      const authorEl = document.getElementById('dailyAuthor');
+      const sourceEl = document.getElementById('dailySource');
+      const praxisEl = document.getElementById('dailyPraxis');
+      const imgEl = document.getElementById('dailyImage');
+
+      if (catEl) catEl.textContent = currentDailyQuote.category;
+      if (quoteEl) quoteEl.textContent = `“${currentDailyQuote.quote}”`;
+      if (authorEl) authorEl.textContent = currentDailyQuote.author;
+      if (sourceEl) sourceEl.textContent = currentDailyQuote.source;
+      if (praxisEl) praxisEl.textContent = currentDailyQuote.praxis;
+      if (imgEl) {
+        imgEl.src = currentDailyQuote.image;
+        imgEl.alt = currentDailyQuote.author;
+      }
+
+      const sub1 = SECONDARY_QUOTES[dayIndex % SECONDARY_QUOTES.length];
+      const sub2 = SECONDARY_QUOTES[(dayIndex + 1) % SECONDARY_QUOTES.length];
+
+      const sub1Text = document.getElementById('subQuote1Text');
+      const sub1Author = document.getElementById('subQuote1Author');
+      const sub1Ref = document.getElementById('subQuote1Ref');
+
+      if (sub1Text) sub1Text.textContent = sub1.quote;
+      if (sub1Author) sub1Author.textContent = sub1.author;
+      if (sub1Ref) sub1Ref.textContent = sub1.ref;
+
+      const sub2Text = document.getElementById('subQuote2Text');
+      const sub2Author = document.getElementById('subQuote2Author');
+      const sub2Ref = document.getElementById('subQuote2Ref');
+
+      if (sub2Text) sub2Text.textContent = sub2.quote;
+      if (sub2Author) sub2Author.textContent = sub2.author;
+      if (sub2Ref) sub2Ref.textContent = sub2.ref;
+
+      lucide.createIcons();
+    }
+
+    async function copyDailyQuote() {
+      if (!currentDailyQuote) return;
+      const textToCopy = `«${currentDailyQuote.quote}» — ${currentDailyQuote.author} (${currentDailyQuote.source})`;
+      
+      try {
+        await navigator.clipboard.writeText(textToCopy);
+        const label = document.getElementById('copyBtnLabel');
+        if (label) {
+          const prevText = label.textContent;
+          label.textContent = '¡Copiada!';
+          setTimeout(() => { label.textContent = prevText; }, 2500);
+        }
+      } catch (err) {
+        console.error('Error al copiar:', err);
+      }
+    }
+
+    async function shareDailyQuote() {
+      if (!currentDailyQuote) return;
+      const shareData = {
+        title: 'Ataraxia — Filosofía Vivida',
+        text: `«${currentDailyQuote.quote}» — ${currentDailyQuote.author}`,
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+        } catch (err) {
+          if (err.name !== 'AbortError') console.error(err);
+        }
+      } else {
+        copyDailyQuote();
+      }
+    }
+
+    // Inicializaciones al cargar el script
+    renderDichotomyLists();
+    renderDailyQuotes();
+    lucide.createIcons();
+  </script>
 </body>
 </html>
