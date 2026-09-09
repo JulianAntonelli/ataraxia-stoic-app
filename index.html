@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ataraxia — Filosofía Vivida | El Portal Estoico Integral</title>
+  <title>Ataraxia — Filosofía Vivida | El Portal Estoico</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
@@ -19,19 +19,37 @@
         extend: {
           colors: {
             brand: {
-              gold: '#c5a059',
-              goldLight: '#e4c483',
-              goldDark: '#937537',
-              surface: '#121316',
-              surfaceDim: '#0d0e11',
-              surfaceCard: '#1b1b1f',
-              surfaceBorder: '#27282d',
-              surfaceHighlight: '#222328'
+              gold: '#e6be6c',
+              goldLight: '#fde09e',
+              goldDark: '#9e792f',
+              obsidian: '#07080a',
+              surfaceDim: '#0a0c10',
+              surfaceCard: '#0f1218',
+              surfaceBorder: '#1c212c',
+              surfaceHighlight: '#161b24',
+              neonEmerald: '#10b981',
+              neonRose: '#f43f5e',
+              neonSky: '#38bdf8'
             }
           },
           fontFamily: {
             serif: ['"Playfair Display"', 'serif'],
             sans: ['"Plus Jakarta Sans"', 'sans-serif']
+          },
+          keyframes: {
+            flame: {
+              '0%, 100%': { transform: 'scale(1)', filter: 'drop-shadow(0 0 6px rgba(245, 158, 11, 0.7))' },
+              '50%': { transform: 'scale(1.15) rotate(-3deg)', filter: 'drop-shadow(0 0 14px rgba(239, 68, 68, 0.9))' }
+            },
+            levelUp: {
+              '0%': { transform: 'scale(0.8)', opacity: '0' },
+              '50%': { transform: 'scale(1.05)' },
+              '100%': { transform: 'scale(1)', opacity: '1' }
+            }
+          },
+          animation: {
+            flame: 'flame 2s infinite ease-in-out',
+            levelUp: 'levelUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
           }
         }
       }
@@ -39,16 +57,25 @@
   </script>
   <style>
     html { scroll-behavior: smooth; scroll-padding-top: 5.5rem; }
-    body { background-color: #0d0e11; color: #e4e4e7; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: #07080a; color: #e2e8f0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    
     .gold-text-gradient {
-      background: linear-gradient(135deg, #f3deab 0%, #c5a059 50%, #937537 100%);
+      background: linear-gradient(135deg, #fff2cc 0%, #e6be6c 50%, #9e792f 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #121316; }
-    ::-webkit-scrollbar-thumb { background: #27282d; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #c5a059; }
+
+    .gold-glow {
+      box-shadow: 0 0 35px -8px rgba(230, 190, 108, 0.25);
+    }
+    .emerald-glow {
+      box-shadow: 0 0 30px -8px rgba(16, 185, 129, 0.3);
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #0a0c10; }
+    ::-webkit-scrollbar-thumb { background: #1c212c; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #e6be6c; }
 
     /* Tablero de Ajedrez */
     .chess-cell {
@@ -66,47 +93,49 @@
     @media (min-width: 640px) {
       .chess-cell { font-size: 2.35rem; }
     }
-    .cell-light { background-color: #27282e; }
-    .cell-dark { background-color: #141518; }
-    .cell-selected { outline: 2px solid #c5a059; background-color: #3b3628 !important; }
-    .cell-in-check { background-color: rgba(225, 29, 72, 0.45) !important; outline: 2px solid #f43f5e !important; }
+    .cell-light { background-color: #212631; }
+    .cell-dark { background-color: #11141b; }
+    .cell-selected { outline: 2px solid #e6be6c; background-color: #38311f !important; }
+    .cell-in-check { background-color: rgba(244, 63, 94, 0.45) !important; outline: 2px solid #f43f5e !important; }
     .cell-valid-move::after {
       content: '';
       position: absolute;
       width: 11px;
       height: 11px;
-      background: #c5a059;
-      opacity: 0.75;
+      background: #e6be6c;
+      opacity: 0.85;
       border-radius: 50%;
     }
     .cell-valid-capture::after {
       content: '';
       position: absolute;
       inset: 2px;
-      border: 2px solid #e11d48;
+      border: 2px solid #f43f5e;
       border-radius: 6px;
       opacity: 0.85;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col bg-[#0d0e11] text-zinc-200">
+<body class="min-h-screen flex flex-col bg-brand-obsidian text-slate-200">
 
-  <!-- Header Superior Fijo -->
-  <header class="border-b border-brand-surfaceBorder bg-brand-surface/95 backdrop-blur sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+  <!-- Header Superior Fijo con Nivel y Racha Gamificada -->
+  <header class="border-b border-brand-surfaceBorder bg-brand-obsidian/95 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Logo -->
       <div class="flex items-center gap-6">
         <a href="#muro" class="flex items-center gap-3 group" onclick="handleNavClick(event, 'muro')">
-          <div class="w-9 h-9 rounded-lg border border-brand-gold/40 flex items-center justify-center bg-brand-gold/10 text-brand-gold group-hover:border-brand-gold transition">
+          <div class="w-10 h-10 rounded-xl border border-brand-gold/40 flex items-center justify-center bg-brand-gold/10 text-brand-gold group-hover:border-brand-gold transition duration-300 shadow-sm">
             <i data-lucide="landmark" class="w-5 h-5"></i>
           </div>
           <div>
             <span class="font-serif tracking-widest text-lg font-bold uppercase gold-text-gradient">ATARAXIA</span>
-            <span class="block text-[10px] tracking-[0.2em] text-zinc-400 font-mono -mt-1">FILOSOFÍA VIVIDA</span>
+            <span class="block text-[10px] tracking-[0.2em] text-zinc-400 font-mono -mt-1">SANTUARIO VIRTUAL</span>
           </div>
         </a>
 
-        <!-- Navegación Superior -->
-        <nav class="hidden lg:flex items-center gap-5 text-sm font-medium">
+        <!-- Barra Navegación Desktop -->
+        <nav class="hidden xl:flex items-center gap-5 text-sm font-medium">
           <a href="#muro" data-target="muro" onclick="handleNavClick(event, 'muro')" class="nav-link text-brand-gold flex items-center gap-2 border-b-2 border-brand-gold pb-1 pt-1 font-semibold transition-all">
             <i data-lucide="scroll" class="w-4 h-4"></i> Muro
           </a>
@@ -125,8 +154,29 @@
         </nav>
       </div>
 
-      <!-- Acciones de Cabecera -->
-      <div class="flex items-center gap-2.5 sm:gap-3">
+      <!-- Barra de Progreso XP y Racha de Fuego -->
+      <div class="flex items-center gap-2.5 sm:gap-4">
+        
+        <!-- Nivel y Progreso de XP -->
+        <div class="hidden sm:flex flex-col items-end">
+          <div class="flex items-center gap-1.5 text-xs font-mono">
+            <span class="text-zinc-400 text-[11px]">Rango:</span>
+            <span id="rankTitle" class="text-brand-gold font-bold">Neófito</span>
+            <span class="text-zinc-500">•</span>
+            <span id="rankLevelBadge" class="text-brand-neonSky font-semibold">Nv. 1</span>
+          </div>
+          <div class="w-32 bg-brand-surfaceHighlight border border-brand-surfaceBorder rounded-full h-2 mt-1 overflow-hidden">
+            <div id="xpProgressBar" class="bg-gradient-to-r from-brand-goldDark to-brand-gold h-full rounded-full transition-all duration-500" style="width: 15%;"></div>
+          </div>
+        </div>
+
+        <!-- Racha con Llama Animada -->
+        <div class="flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-300 text-xs font-mono font-bold" title="Racha activa de templanza">
+          <span class="inline-block animate-flame">🔥</span>
+          <span id="streakCount">14 d</span>
+        </div>
+
+        <!-- Selector Clima -->
         <div class="flex items-center gap-1.5 bg-brand-surfaceDim border border-brand-surfaceBorder rounded-full px-2.5 py-1 text-xs font-mono text-zinc-300">
           <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-gold"></i>
           <select id="citySelect" onchange="changeCity(this.value)" class="bg-transparent text-xs text-zinc-200 outline-none cursor-pointer">
@@ -141,14 +191,18 @@
           <span id="weatherTemp" class="text-brand-gold font-semibold">--°C</span>
         </div>
 
-        <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg border border-brand-surfaceBorder bg-brand-surfaceCard text-zinc-300 hover:text-brand-gold transition">
+        <button onclick="toggleMobileMenu()" class="xl:hidden p-2 rounded-lg border border-brand-surfaceBorder bg-brand-surfaceCard text-zinc-300 hover:text-brand-gold transition">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
       </div>
     </div>
 
     <!-- Menú Drawer Mobile -->
-    <div id="mobileDrawer" class="hidden lg:hidden border-b border-brand-surfaceBorder bg-brand-surfaceDim px-6 py-4 space-y-3">
+    <div id="mobileDrawer" class="hidden xl:hidden border-b border-brand-surfaceBorder bg-brand-surfaceDim px-6 py-4 space-y-3">
+      <div class="flex items-center justify-between pb-3 border-b border-brand-surfaceBorder">
+        <span class="text-xs font-mono text-zinc-400">Progreso de Templanza:</span>
+        <span id="mobileRankBadge" class="text-xs font-mono text-brand-gold font-bold">Nv. 1 Neófito</span>
+      </div>
       <nav class="flex flex-col space-y-2 text-sm">
         <a href="#muro" onclick="handleNavClick(event, 'muro')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
           <i data-lucide="scroll" class="w-4 h-4"></i> Muro Principal
@@ -172,34 +226,81 @@
   <!-- Layout Principal -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8">
     
-    <!-- Barra Lateral Izquierda -->
+    <!-- Barra Lateral Izquierda: Módulos & Vitrina de Logros -->
     <aside class="hidden lg:block lg:col-span-3 space-y-6">
       <div class="sticky top-24 space-y-6">
+        
+        <!-- Navegación Lateral -->
         <div class="text-[11px] font-mono tracking-widest text-zinc-500 uppercase px-3">Praxis Diaria</div>
         <nav class="space-y-1">
-          <a href="#muro" data-target="muro" onclick="handleNavClick(event, 'muro')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-lg bg-brand-gold text-zinc-950 font-semibold text-sm shadow-sm transition">
+          <a href="#muro" data-target="muro" onclick="handleNavClick(event, 'muro')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-xl bg-brand-gold text-brand-obsidian font-bold text-sm shadow-sm transition">
             <i data-lucide="columns-2" class="w-4 h-4"></i> Muro Principal
           </a>
-          <a href="#ajedrez" data-target="ajedrez" onclick="handleNavClick(event, 'ajedrez')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
+          <a href="#ajedrez" data-target="ajedrez" onclick="handleNavClick(event, 'ajedrez')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
             <i data-lucide="crown" class="w-4 h-4"></i> Ajedrez Estoico
           </a>
-          <a href="#oraculo" data-target="oraculo" onclick="handleNavClick(event, 'oraculo')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
+          <a href="#oraculo" data-target="oraculo" onclick="handleNavClick(event, 'oraculo')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
             <i data-lucide="compass" class="w-4 h-4"></i> Oráculo de Dilemas
           </a>
-          <a href="#perspectiva" data-target="perspectiva" onclick="handleNavClick(event, 'perspectiva')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
+          <a href="#perspectiva" data-target="perspectiva" onclick="handleNavClick(event, 'perspectiva')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
             <i data-lucide="eye" class="w-4 h-4"></i> Vista desde Arriba
           </a>
-          <a href="#buscador" data-target="buscador" onclick="handleNavClick(event, 'buscador')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
+          <a href="#buscador" data-target="buscador" onclick="handleNavClick(event, 'buscador')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
             <i data-lucide="search" class="w-4 h-4"></i> Corpus Canónico
           </a>
         </nav>
 
-        <!-- Canon Filosófico -->
-        <div class="p-4 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceCard text-xs space-y-3">
-          <div class="text-[10px] font-mono uppercase tracking-wider text-zinc-500">LOS SABIOS DE LA ESTOA</div>
+        <!-- Vitrina de Insignias / Logros Desbloqueables -->
+        <div class="p-4 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-3">
+          <div class="flex items-center justify-between text-[11px] font-mono uppercase text-zinc-400 font-bold">
+            <span>Insignias de Virtud</span>
+            <span id="badgeCountText" class="text-brand-gold">0 / 4</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-center text-xs">
+            <!-- Insignia 1 -->
+            <div id="badge-first-step" class="p-2.5 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim opacity-50 transition duration-300">
+              <div class="w-8 h-8 mx-auto rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 mb-1">
+                <i data-lucide="footprints" class="w-4 h-4"></i>
+              </div>
+              <div class="font-bold text-[10px] text-zinc-300">Primer Paso</div>
+              <div class="text-[9px] text-zinc-500 font-mono">Lee una máxima</div>
+            </div>
+
+            <!-- Insignia 2 -->
+            <div id="badge-calm-mind" class="p-2.5 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim opacity-50 transition duration-300">
+              <div class="w-8 h-8 mx-auto rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 mb-1">
+                <i data-lucide="flower-2" class="w-4 h-4"></i>
+              </div>
+              <div class="font-bold text-[10px] text-zinc-300">Mente Serena</div>
+              <div class="text-[9px] text-zinc-500 font-mono">Haz la pausa</div>
+            </div>
+
+            <!-- Insignia 3 -->
+            <div id="badge-chess-win" class="p-2.5 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim opacity-50 transition duration-300">
+              <div class="w-8 h-8 mx-auto rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 mb-1">
+                <i data-lucide="trophy" class="w-4 h-4"></i>
+              </div>
+              <div class="font-bold text-[10px] text-zinc-300">Victoria Digna</div>
+              <div class="text-[9px] text-zinc-500 font-mono">Gana al Ajedrez</div>
+            </div>
+
+            <!-- Insignia 4 -->
+            <div id="badge-daily-master" class="p-2.5 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim opacity-50 transition duration-300">
+              <div class="w-8 h-8 mx-auto rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 mb-1">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+              </div>
+              <div class="font-bold text-[10px] text-zinc-300">Soberano</div>
+              <div class="text-[9px] text-zinc-500 font-mono">Cumple el Reto</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Canon de los Sabios -->
+        <div class="p-4 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard text-xs space-y-3">
+          <div class="text-[10px] font-mono uppercase tracking-wider text-zinc-500">CANON MONOGRÁFICO</div>
           <div class="space-y-1.5">
             <a href="epicteto.html" class="flex items-center justify-between text-zinc-300 hover:text-brand-gold py-1 transition border-b border-brand-surfaceBorder/40">
-              <span>Epicteto (Liberto)</span>
+              <span>Epicteto (El Liberto)</span>
               <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
             </a>
             <a href="marco-aurelio.html" class="flex items-center justify-between text-zinc-300 hover:text-brand-gold py-1 transition border-b border-brand-surfaceBorder/40">
@@ -218,13 +319,13 @@
     <!-- Contenido Principal -->
     <main class="lg:col-span-9 space-y-12">
       
-      <!-- SECCIÓN 1: MURO / RELOJ KAIROS -->
-      <section id="muro" class="scroll-target scroll-mt-24 border border-brand-surfaceBorder bg-gradient-to-r from-brand-surface to-brand-surfaceCard rounded-2xl p-6 relative overflow-hidden shadow-sm">
+      <!-- SECCIÓN 1: MURO / RELOJ KAIROS + RETO DEL DÍA -->
+      <section id="muro" class="scroll-target scroll-mt-24 border border-brand-surfaceBorder bg-gradient-to-r from-brand-surfaceDim to-brand-surfaceCard rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-2xl gold-glow">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-brand-surfaceBorder/60 pb-5">
           <div class="flex items-center gap-3">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-            <div id="clock" class="font-mono text-2xl sm:text-3xl font-bold text-brand-gold tracking-wider">00:00:00</div>
-            <span class="text-[10px] font-mono uppercase tracking-widest bg-brand-gold/10 text-brand-gold px-2 py-0.5 rounded border border-brand-gold/20">VIGILIA</span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+            <div id="clock" class="font-mono text-2xl sm:text-3xl font-extrabold text-brand-gold tracking-wider">00:00:00</div>
+            <span class="text-[10px] font-mono uppercase tracking-widest bg-brand-gold/10 text-brand-gold px-2.5 py-0.5 rounded border border-brand-gold/20">VIGILIA</span>
           </div>
           <div class="text-xs text-zinc-400 font-mono flex flex-wrap items-center gap-3">
             <span class="flex items-center gap-1.5"><i data-lucide="calendar" class="w-3.5 h-3.5 text-brand-gold"></i> <span id="currentDateRoman">Die IX September</span></span>
@@ -233,9 +334,35 @@
           </div>
         </div>
 
+        <!-- Misión / Desafío del Día -->
+        <div class="mt-6 p-4 rounded-2xl bg-brand-obsidian/70 border border-brand-surfaceBorder flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-3.5">
+            <div class="w-10 h-10 rounded-xl bg-brand-neonEmerald/10 border border-brand-neonEmerald/30 flex items-center justify-center text-brand-neonEmerald">
+              <i data-lucide="target" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono uppercase text-brand-neonEmerald font-bold tracking-wider">RETO DEL DÍA</span>
+                <span class="text-[10px] font-mono text-brand-gold bg-brand-gold/10 px-2 py-0.2 rounded border border-brand-gold/20">+50 XP</span>
+              </div>
+              <p id="dailyChallengeText" class="text-xs sm:text-sm font-medium text-slate-200 mt-0.5">
+                Hoy comeré el almuerzo sin pantallas ni distracciones, masticando en silencio consciente.
+              </p>
+            </div>
+          </div>
+          <button id="claimChallengeBtn" onclick="completeDailyChallenge()" class="py-2 px-4 rounded-xl bg-brand-neonEmerald hover:bg-emerald-400 text-slate-950 font-bold text-xs font-mono transition flex items-center justify-center gap-2 flex-shrink-0">
+            <i data-lucide="check-circle" class="w-4 h-4"></i>
+            <span>Completar</span>
+          </button>
+        </div>
+
+        <!-- Máxima Matutina -->
         <div class="pt-6 space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-zinc-400">
             <span id="dailyCategory" class="text-brand-gold uppercase tracking-wider font-semibold">MÁXIMA MATUTINA</span>
+            <button onclick="randomizeDailyQuote()" class="text-brand-gold hover:text-brand-goldLight transition flex items-center gap-1.5 bg-brand-gold/10 border border-brand-gold/30 px-3 py-1 rounded-full text-xs font-semibold">
+              <i data-lucide="shuffle" class="w-3.5 h-3.5"></i> <span>Extraer otra Sentencia (+15 XP)</span>
+            </button>
           </div>
           <blockquote id="dailyQuoteText" class="font-serif text-2xl sm:text-3xl text-zinc-100 italic leading-relaxed">
             “No nos perturban las cosas que suceden, sino la opinión y el juicio que nos formamos acerca de ellas.”
@@ -258,7 +385,6 @@
           </div>
 
           <div class="flex flex-wrap items-center gap-3">
-            <!-- Selector de Dificultades -->
             <div class="flex items-center gap-1.5 bg-brand-surfaceDim border border-brand-surfaceBorder rounded-full px-3 py-1 text-xs font-mono">
               <span class="text-zinc-500">Rival:</span>
               <select id="chessDifficulty" onchange="setChessDifficulty(this.value)" class="bg-transparent text-brand-gold font-semibold outline-none cursor-pointer">
@@ -268,7 +394,6 @@
               </select>
             </div>
 
-            <!-- Estado del Turno / Jaque -->
             <span id="chessTurnBadge" class="text-xs font-mono px-3 py-1 rounded-full border border-brand-gold/40 bg-brand-gold/10 text-brand-gold font-semibold transition-all">
               Tu Turno (Blancas)
             </span>
@@ -279,24 +404,24 @@
           </div>
         </div>
 
-        <!-- Banner de Alerta Jaque / Jaque Mate -->
+        <!-- Banner de Jaque / Jaque Mate -->
         <div id="chessAlertBanner" class="hidden p-3 rounded-xl border flex items-center justify-between transition-all">
           <div class="flex items-center gap-2.5">
-            <i id="chessAlertIcon" data-lucide="alert-triangle" class="w-4 h-4"></i>
-            <span id="chessAlertText" class="text-xs font-mono font-semibold tracking-wide">¡JAQUE! Tu Rey está bajo ataque. Debes defenderlo.</span>
+            <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+            <span id="chessAlertText" class="text-xs font-mono font-semibold tracking-wide">¡JAQUE! Tu Rey está amenazado. Debes moverlo o bloquear.</span>
           </div>
           <span id="chessAlertSub" class="text-[10px] font-mono opacity-80 uppercase">Escape Obligatorio</span>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <!-- El Tablero 8x8 -->
+          <!-- Tablero 8x8 -->
           <div class="lg:col-span-7 flex justify-center">
-            <div class="w-full max-w-[440px] aspect-square border-2 border-brand-surfaceBorder rounded-xl overflow-hidden shadow-2xl bg-black">
+            <div class="w-full max-w-[440px] aspect-square border-2 border-brand-surfaceBorder rounded-2xl overflow-hidden shadow-2xl bg-black">
               <div id="chessBoardGrid" class="grid grid-cols-8 grid-rows-8 w-full h-full"></div>
             </div>
           </div>
 
-          <!-- Panel Lateral: Capturas y Lecciones -->
+          <!-- Panel de Capturas y Veredicto -->
           <div class="lg:col-span-5 space-y-4">
             <div class="p-4 rounded-2xl bg-brand-surfaceDim border border-brand-surfaceBorder space-y-3">
               <div class="flex items-center justify-between text-xs font-mono">
@@ -309,7 +434,7 @@
               </div>
             </div>
 
-            <!-- Veredicto Filosófico de la Jugada -->
+            <!-- Veredicto Filosófico -->
             <div class="p-5 rounded-2xl bg-brand-surfaceDim border border-brand-gold/30 space-y-2">
               <span class="text-[10px] font-mono text-brand-gold uppercase font-bold tracking-wider flex items-center gap-1.5">
                 <i data-lucide="scale" class="w-3.5 h-3.5"></i> Veredicto de la Estoa
@@ -318,15 +443,6 @@
                 «El ajedrez es como la vida: juegas con las piezas que te son dadas, pero tu virtud reside enteramente en el juicio de cada movimiento.»
               </p>
               <span id="chessAuthorRef" class="block text-[10px] font-mono text-zinc-500 text-right">— EPICTETO</span>
-            </div>
-
-            <div class="p-4 rounded-xl border border-dashed border-zinc-800 bg-brand-surfaceDim text-xs space-y-2">
-              <div class="text-[10px] font-mono uppercase text-zinc-400 font-bold">Reglas de Templanza:</div>
-              <ul class="text-[11px] text-zinc-400 space-y-1 list-disc list-inside">
-                <li><strong class="text-zinc-300">Jaque Obligatorio:</strong> No puedes realizar movimientos que dejen a tu rey bajo amenaza.</li>
-                <li><strong class="text-zinc-300">Dificultad Progresiva:</strong> En <em>Supremo</em>, el bot anticipa sacrificios y jaques letales.</li>
-                <li>Funciona 100% sin conexión a internet.</li>
-              </ul>
             </div>
           </div>
         </div>
@@ -345,19 +461,19 @@
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <button onclick="consultOracle('ansiedad')" class="p-3 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-gold text-left transition group">
+          <button onclick="consultOracle('ansiedad')" class="p-3.5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-gold hover:gold-glow text-left transition group">
             <div class="text-xs font-semibold text-zinc-200 group-hover:text-brand-gold">Ansiedad</div>
             <div class="text-[10px] text-zinc-500 font-mono mt-1">Futuro incierto</div>
           </button>
-          <button onclick="consultOracle('ira')" class="p-3 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-gold text-left transition group">
+          <button onclick="consultOracle('ira')" class="p-3.5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-gold hover:gold-glow text-left transition group">
             <div class="text-xs font-semibold text-zinc-200 group-hover:text-brand-gold">Ira y Agravio</div>
             <div class="text-[10px] text-zinc-500 font-mono mt-1">Desdén ajeno</div>
           </button>
-          <button onclick="consultOracle('desgano')" class="p-3 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-gold text-left transition group">
+          <button onclick="consultOracle('desgano')" class="p-3.5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-gold hover:gold-glow text-left transition group">
             <div class="text-xs font-semibold text-zinc-200 group-hover:text-brand-gold">Desgano</div>
             <div class="text-[10px] text-zinc-500 font-mono mt-1">Eludir el deber</div>
           </button>
-          <button onclick="consultOracle('perdida')" class="p-3 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-gold text-left transition group">
+          <button onclick="consultOracle('perdida')" class="p-3.5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-gold hover:gold-glow text-left transition group">
             <div class="text-xs font-semibold text-zinc-200 group-hover:text-brand-gold">Pérdida</div>
             <div class="text-[10px] text-zinc-500 font-mono mt-1">Finitud y apego</div>
           </button>
@@ -377,7 +493,7 @@
       </section>
 
       <!-- SECCIÓN 4: LA VISTA DESDE ARRIBA -->
-      <section id="perspectiva" class="scroll-target scroll-mt-24 p-6 sm:p-8 rounded-3xl border border-brand-surfaceBorder bg-gradient-to-b from-brand-surface to-brand-surfaceCard space-y-6">
+      <section id="perspectiva" class="scroll-target scroll-mt-24 p-6 sm:p-8 rounded-3xl border border-brand-surfaceBorder bg-gradient-to-b from-brand-surfaceDim to-brand-surfaceCard space-y-6">
         <div class="flex items-center justify-between border-b border-brand-surfaceBorder pb-4">
           <div>
             <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-gold font-semibold">
@@ -424,10 +540,169 @@
     </main>
   </div>
 
+  <!-- TOAST DE SUBIDA DE NIVEL (POPUP DINÁMICO) -->
+  <div id="levelUpToast" class="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-brand-surfaceCard border-2 border-brand-gold text-white shadow-2xl flex items-center gap-4 hidden animate-levelUp gold-glow">
+    <div class="w-12 h-12 rounded-xl bg-brand-gold/20 flex items-center justify-center text-brand-gold text-2xl">
+      🏛️
+    </div>
+    <div>
+      <div class="text-[10px] font-mono text-brand-gold uppercase tracking-wider font-bold">¡Evolución Moral Lograda!</div>
+      <div id="levelUpMsg" class="text-sm font-bold text-slate-100">Has ascendido a Nivel 2</div>
+    </div>
+  </div>
+
   <!-- SCRIPTS -->
   <script>
     // =========================================================================
-    // 1. MOTOR DE AJEDREZ ESTOICO COMPLETO: JAQUE, ESCAPE, MATE & IA ASCENDENTE
+    // 1. SISTEMA DE GAMIFICACIÓN, XP, NIVELES Y RETO DIARIO
+    // =========================================================================
+    const RANKS = [
+      { level: 1, title: "Neófito", minXp: 0, maxXp: 100 },
+      { level: 2, title: "Iniciado", minXp: 100, maxXp: 250 },
+      { level: 3, title: "Discípulo de Nicópolis", minXp: 250, maxXp: 500 },
+      { level: 4, title: "Practicante de la Estoa", minXp: 500, maxXp: 900 },
+      { level: 5, title: "Gobernador del Juicio", minXp: 900, maxXp: 1500 },
+      { level: 6, title: "Sabio Imperturbable", minXp: 1500, maxXp: 99999 }
+    ];
+
+    const DAILY_CHALLENGES = [
+      "Hoy tomaré un baño frío de al menos 60 segundos sin articular una sola queja verbal.",
+      "Hoy suspenderé mi juicio por 2 horas ante la primera persona que me contradiga o irrite.",
+      "Hoy almorzaré en silencio absoluto, saboreando cada alimento sin mirar el teléfono.",
+      "Hoy identificaré tres cosas fuera de mi control y declararé voluntariamente: 'No me pertenece'.",
+      "Hoy realizaré una acción bondadosa por alguien sin permitir que esa persona se entere de mi autoría."
+    ];
+
+    let userXp = parseInt(localStorage.getItem('ataraxia_user_xp')) || 25;
+    let unlockedBadges = JSON.parse(localStorage.getItem('ataraxia_badges')) || [];
+    let lastChallengeDate = localStorage.getItem('ataraxia_challenge_date') || '';
+
+    // Audio Web API
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playTone(freq, duration, type = 'sine') {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
+
+    function playLevelUpChime() {
+      playTone(440, 0.2);
+      setTimeout(() => playTone(554.37, 0.2), 100);
+      setTimeout(() => playTone(659.25, 0.4), 200);
+      setTimeout(() => playTone(880, 0.7), 300);
+    }
+
+    function playWoodClick() {
+      playTone(180, 0.04, 'triangle');
+    }
+
+    function getCurrentRank(xp) {
+      return RANKS.find(r => xp >= r.minXp && xp < r.maxXp) || RANKS[RANKS.length - 1];
+    }
+
+    function addXp(amount, reason = "") {
+      const oldRank = getCurrentRank(userXp);
+      userXp += amount;
+      localStorage.setItem('ataraxia_user_xp', userXp);
+      const newRank = getCurrentRank(userXp);
+
+      updateXpUI();
+
+      if (newRank.level > oldRank.level) {
+        showLevelUpToast(newRank);
+        playLevelUpChime();
+      } else {
+        playTone(520, 0.2);
+      }
+    }
+
+    function updateXpUI() {
+      const rank = getCurrentRank(userXp);
+      const range = rank.maxXp - rank.minXp;
+      const progressInLevel = Math.max(0, userXp - rank.minXp);
+      const percentage = Math.min(100, Math.round((progressInLevel / range) * 100));
+
+      const rankTitleEl = document.getElementById('rankTitle');
+      const rankBadgeEl = document.getElementById('rankLevelBadge');
+      const mobileRankEl = document.getElementById('mobileRankBadge');
+      const barEl = document.getElementById('xpProgressBar');
+
+      if (rankTitleEl) rankTitleEl.textContent = rank.title;
+      if (rankBadgeEl) rankBadgeEl.textContent = `Nv. ${rank.level}`;
+      if (mobileRankEl) mobileRankEl.textContent = `Nv. ${rank.level} ${rank.title}`;
+      if (barEl) barEl.style.width = `${percentage}%`;
+    }
+
+    function showLevelUpToast(rank) {
+      const toast = document.getElementById('levelUpToast');
+      const msg = document.getElementById('levelUpMsg');
+      if (msg) msg.textContent = `Has alcanzado el rango "${rank.title}" (Nivel ${rank.level})`;
+      if (toast) {
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 4000);
+      }
+    }
+
+    function unlockBadge(badgeId) {
+      if (!unlockedBadges.includes(badgeId)) {
+        unlockedBadges.push(badgeId);
+        localStorage.setItem('ataraxia_badges', JSON.stringify(unlockedBadges));
+        addXp(40, "Logro desbloqueado");
+        renderBadges();
+      }
+    }
+
+    function renderBadges() {
+      const badges = ['first-step', 'calm-mind', 'chess-win', 'daily-master'];
+      let count = 0;
+      badges.forEach(bId => {
+        const el = document.getElementById(`badge-${bId}`);
+        if (el) {
+          if (unlockedBadges.includes(bId)) {
+            el.classList.remove('opacity-50');
+            el.classList.add('border-brand-gold', 'gold-glow');
+            count++;
+          }
+        }
+      });
+      const badgeText = document.getElementById('badgeCountText');
+      if (badgeText) badgeText.textContent = `${count} / 4`;
+    }
+
+    function checkDailyChallenge() {
+      const today = new Date().toISOString().slice(0, 10);
+      const dayIndex = new Date().getDate() % DAILY_CHALLENGES.length;
+      document.getElementById('dailyChallengeText').textContent = DAILY_CHALLENGES[dayIndex];
+
+      const btn = document.getElementById('claimChallengeBtn');
+      if (lastChallengeDate === today) {
+        btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> <span>Completado</span>`;
+        btn.className = 'py-2 px-4 rounded-xl bg-brand-surfaceBorder text-zinc-500 font-bold text-xs font-mono cursor-not-allowed flex items-center gap-2';
+        btn.disabled = true;
+      }
+    }
+
+    function completeDailyChallenge() {
+      const today = new Date().toISOString().slice(0, 10);
+      lastChallengeDate = today;
+      localStorage.setItem('ataraxia_challenge_date', today);
+      addXp(50, "Reto Diario Completado");
+      unlockBadge('daily-master');
+      checkDailyChallenge();
+      lucide.createIcons();
+    }
+
+    // =========================================================================
+    // 2. MOTOR DE AJEDREZ CON DIFICULTADES, JAQUE Y JAQUE MATE
     // =========================================================================
     const CHESS_PIECES = {
       wP: '♙', wR: '♖', wN: '♘', wB: '♗', wQ: '♕', wK: '♔',
@@ -458,22 +733,20 @@
 
     let selectedCell = null;
     let validMoves = [];
-    let currentTurn = 'w'; // 'w' = Blancas (Humano), 'b' = Negras (Bot)
+    let currentTurn = 'w';
     let capturedByWhite = [];
     let capturedByBlack = [];
-    let currentDifficulty = 'medium'; // 'easy', 'medium', 'supreme'
+    let currentDifficulty = 'medium';
     let isGameOver = false;
 
     function setChessDifficulty(val) {
       currentDifficulty = val;
     }
 
-    // Copia profunda de tablero
     function cloneBoard(b) {
       return b.map(row => [...row]);
     }
 
-    // Encuentra la posición del rey
     function findKing(board, color) {
       const kingTarget = color + 'K';
       for (let r = 0; r < 8; r++) {
@@ -484,23 +757,19 @@
       return null;
     }
 
-    // Verifica si una casilla está amenazada por un bando dado
     function isSquareAttacked(board, targetR, targetC, attackerColor) {
       for (let r = 0; r < 8; r++) {
         for (let c = 0; c < 8; c++) {
           const piece = board[r][c];
           if (piece && piece[0] === attackerColor) {
             const rawMoves = getPseudoMoves(r, c, board);
-            if (rawMoves.some(m => m.r === targetR && m.c === targetC)) {
-              return true;
-            }
+            if (rawMoves.some(m => m.r === targetR && m.c === targetC)) return true;
           }
         }
       }
       return false;
     }
 
-    // Evalúa si el rey del color está en Jaque
     function isKingInCheck(board, color) {
       const kingPos = findKing(board, color);
       if (!kingPos) return false;
@@ -508,7 +777,6 @@
       return isSquareAttacked(board, kingPos.r, kingPos.c, enemyColor);
     }
 
-    // Movimientos geométricos crudos sin validar jaque propio
     function getPseudoMoves(r, c, board) {
       const piece = board[r][c];
       if (!piece) return [];
@@ -520,14 +788,12 @@
       if (type === 'P') {
         const dir = color === 'w' ? -1 : 1;
         const startRow = color === 'w' ? 6 : 1;
-        // Avance
         if (inBounds(r + dir, c) && board[r + dir][c] === '') {
           moves.push({ r: r + dir, c });
           if (r === startRow && board[r + 2 * dir][c] === '') {
             moves.push({ r: r + 2 * dir, c });
           }
         }
-        // Capturas
         [-1, 1].forEach(dc => {
           const nr = r + dir, nc = c + dc;
           if (inBounds(nr, nc) && board[nr][nc] !== '' && board[nr][nc][0] !== color) {
@@ -591,7 +857,6 @@
       return moves;
     }
 
-    // Movimientos estrictamente legales (filtra los que dejan al propio rey en Jaque)
     function getStrictLegalMoves(r, c, board) {
       const piece = board[r][c];
       if (!piece) return [];
@@ -606,7 +871,6 @@
       });
     }
 
-    // Obtiene todos los movimientos legales posibles de un bando
     function getAllLegalMoves(board, color) {
       const all = [];
       for (let r = 0; r < 8; r++) {
@@ -637,7 +901,6 @@
           const isDark = (r + c) % 2 === 1;
           cell.className = `chess-cell ${isDark ? 'cell-dark' : 'cell-light'}`;
 
-          // Resaltar rey en jaque
           if (whiteInCheck && whiteKingPos && whiteKingPos.r === r && whiteKingPos.c === c) {
             cell.classList.add('cell-in-check');
           }
@@ -645,24 +908,18 @@
             cell.classList.add('cell-in-check');
           }
 
-          // Resaltar casilla seleccionada
           if (selectedCell && selectedCell.r === r && selectedCell.c === c) {
             cell.classList.add('cell-selected');
           }
 
-          // Indicadores de movimiento válido
           if (validMoves.some(m => m.r === r && m.c === c)) {
-            if (piece !== '') {
-              cell.classList.add('cell-valid-capture');
-            } else {
-              cell.classList.add('cell-valid-move');
-            }
+            if (piece !== '') cell.classList.add('cell-valid-capture');
+            else cell.classList.add('cell-valid-move');
           }
 
-          // Render de piezas
           if (piece) {
             cell.textContent = CHESS_PIECES[piece];
-            cell.style.color = piece.startsWith('w') ? '#c5a059' : '#a1a1aa';
+            cell.style.color = piece.startsWith('w') ? '#e6be6c' : '#94a3b8';
           }
 
           cell.onclick = () => onCellClick(r, c);
@@ -686,34 +943,33 @@
       const legalMovesWhite = getAllLegalMoves(boardState, 'w');
       const legalMovesBlack = getAllLegalMoves(boardState, 'b');
 
-      // Jaque Mate Blancas
       if (whiteInCheck && legalMovesWhite.length === 0) {
         isGameOver = true;
-        banner.className = 'p-3 rounded-xl border border-rose-500/50 bg-rose-950/30 text-rose-300 flex items-center justify-between';
-        alertText.textContent = '¡JAQUE MATE! Has sido vencido por el destino.';
+        banner.className = 'p-3 rounded-xl border border-brand-neonRose/50 bg-brand-neonRose/20 text-rose-300 flex items-center justify-between';
+        alertText.textContent = '¡JAQUE MATE! Has caído con dignidad ante el destino.';
         alertSub.textContent = 'Fin de la Partida';
-        turnBadge.textContent = 'Derrota Digna';
+        turnBadge.textContent = 'Derrota Serana';
         turnBadge.className = 'text-xs font-mono px-3 py-1 rounded-full border border-rose-600 bg-rose-950 text-rose-300 font-semibold';
         banner.classList.remove('hidden');
         return;
       }
 
-      // Jaque Mate Negras
       if (blackInCheck && legalMovesBlack.length === 0) {
         isGameOver = true;
-        banner.className = 'p-3 rounded-xl border border-emerald-500/50 bg-emerald-950/30 text-emerald-300 flex items-center justify-between';
-        alertText.textContent = '¡JAQUE MATE! Has dominado el tablero con virtud.';
-        alertSub.textContent = 'Victoria Estoica';
-        turnBadge.textContent = 'Triunfo Sereno';
-        turnBadge.className = 'text-xs font-mono px-3 py-1 rounded-full border border-emerald-600 bg-emerald-950 text-emerald-300 font-semibold';
+        banner.className = 'p-3 rounded-xl border border-brand-neonEmerald/50 bg-brand-neonEmerald/20 text-emerald-300 flex items-center justify-between emerald-glow';
+        alertText.textContent = '¡JAQUE MATE! Victoria de la virtud y la estrategia.';
+        alertSub.textContent = 'Triunfo Logrado';
+        turnBadge.textContent = 'Victoria Estoica';
+        turnBadge.className = 'text-xs font-mono px-3 py-1 rounded-full border border-emerald-500 bg-emerald-950 text-emerald-300 font-semibold';
         banner.classList.remove('hidden');
+        addXp(60, "Victoria en Ajedrez");
+        unlockBadge('chess-win');
         return;
       }
 
-      // Jaque Activo
       if (whiteInCheck) {
-        banner.className = 'p-3 rounded-xl border border-amber-500/50 bg-amber-950/30 text-amber-300 flex items-center justify-between';
-        alertText.textContent = '¡JAQUE! Tu Rey está amenazado. Debes moverlo o bloquear.';
+        banner.className = 'p-3 rounded-xl border border-amber-500/50 bg-amber-950/40 text-amber-300 flex items-center justify-between';
+        alertText.textContent = '¡JAQUE! Tu Rey está amenazado. Debes defenderlo.';
         alertSub.textContent = 'Escape Forzoso';
         banner.classList.remove('hidden');
       } else if (blackInCheck) {
@@ -728,12 +984,11 @@
 
     function onCellClick(r, c) {
       if (isGameOver || currentTurn !== 'w') return;
-
       const piece = boardState[r][c];
 
-      // Ejecutar movimiento legal seleccionado
       if (selectedCell && validMoves.some(m => m.r === r && m.c === c)) {
         executeMove(selectedCell.r, selectedCell.c, r, c);
+        playWoodClick();
         selectedCell = null;
         validMoves = [];
         renderBoard();
@@ -747,7 +1002,6 @@
         return;
       }
 
-      // Seleccionar pieza propia
       if (piece && piece.startsWith('w')) {
         selectedCell = { r, c };
         validMoves = getStrictLegalMoves(r, c, boardState);
@@ -770,19 +1024,14 @@
       boardState[toR][toC] = moving;
       boardState[fromR][fromC] = '';
 
-      // Coronación de peón a Dama
       if (moving === 'wP' && toR === 0) boardState[toR][toC] = 'wQ';
       if (moving === 'bP' && toR === 7) boardState[toR][toC] = 'bQ';
 
-      // Actualizar pensamiento estoico
       const thought = STOIC_CHESS_THOUGHTS[Math.floor(Math.random() * STOIC_CHESS_THOUGHTS.length)];
       document.getElementById('chessStoicThought').textContent = thought.text;
       document.getElementById('chessAuthorRef').textContent = `— ${thought.author}`;
     }
 
-    // =========================================================================
-    // INTELIGENCIA ARTIFICIAL EN 3 DIFICULTADES ASCENDENTES
-    // =========================================================================
     function evaluateBoardScore(board) {
       let score = 0;
       for (let r = 0; r < 8; r++) {
@@ -790,7 +1039,6 @@
           const p = board[r][c];
           if (!p) continue;
           const val = PIECE_VALUES[p[1]] || 0;
-          // Bonificación posicional por control de casillas centrales (d4, d5, e4, e5)
           const centerBonus = (3.5 - Math.abs(3.5 - r)) + (3.5 - Math.abs(3.5 - c));
           const totalVal = val + (p[1] === 'P' ? centerBonus * 0.5 : centerBonus * 0.2);
 
@@ -804,7 +1052,6 @@
     function runBotEngine() {
       if (isGameOver) return;
       const allMoves = getAllLegalMoves(boardState, 'b');
-
       if (allMoves.length === 0) {
         updateGameStatusBanners();
         return;
@@ -812,51 +1059,37 @@
 
       let chosenMove = null;
 
-      // DIFICULTAD 1: PRINCIPIANTE (El Neófito) - Mayormente aleatorio, capturas accidentales
       if (currentDifficulty === 'easy') {
         if (Math.random() < 0.65) {
           chosenMove = allMoves[Math.floor(Math.random() * allMoves.length)];
         } else {
-          // Busca cualquier captura directa simple
           const captures = allMoves.filter(m => boardState[m.toR][m.toC].startsWith('w'));
           chosenMove = captures.length > 0 ? captures[0] : allMoves[Math.floor(Math.random() * allMoves.length)];
         }
-      }
-
-      // DIFICULTAD 2: ESTOICO MEDIUM (Filósofo Practicante) - Evaluación voraz de 1 capa
-      else if (currentDifficulty === 'medium') {
+      } else if (currentDifficulty === 'medium') {
         let bestScore = -Infinity;
         allMoves.forEach(m => {
           const sim = cloneBoard(boardState);
           sim[m.toR][m.toC] = sim[m.fromR][m.fromC];
           sim[m.fromR][m.fromC] = '';
-
           let score = evaluateBoardScore(sim);
-          // Priorizar jaques al rey blanco
           if (isKingInCheck(sim, 'w')) score += 15;
-
           if (score > bestScore) {
             bestScore = score;
             chosenMove = m;
           }
         });
-      }
-
-      // DIFICULTAD 3: ESTOICO SUPREMO (Marco Aurelio / Minimax a 2 capas)
-      else if (currentDifficulty === 'supreme') {
+      } else if (currentDifficulty === 'supreme') {
         let bestScore = -Infinity;
-
         allMoves.forEach(m1 => {
           const sim1 = cloneBoard(boardState);
           sim1[m1.toR][m1.toC] = sim1[m1.fromR][m1.fromC];
           sim1[m1.fromR][m1.fromC] = '';
 
-          // Simula la mejor respuesta de las blancas
           const whiteResponses = getAllLegalMoves(sim1, 'w');
           let worstWhiteScore = Infinity;
 
           if (whiteResponses.length === 0) {
-            // Si el blanco no tiene movimientos y está en jaque, es Jaque Mate
             if (isKingInCheck(sim1, 'w')) worstWhiteScore = 9999;
             else worstWhiteScore = 0;
           } else {
@@ -864,7 +1097,6 @@
               const sim2 = cloneBoard(sim1);
               sim2[m2.toR][m2.toC] = sim2[m2.fromR][m2.fromC];
               sim2[m2.fromR][m2.fromC] = '';
-
               const score = evaluateBoardScore(sim2);
               if (score < worstWhiteScore) worstWhiteScore = score;
             });
@@ -880,6 +1112,7 @@
       if (!chosenMove) chosenMove = allMoves[0];
 
       executeMove(chosenMove.fromR, chosenMove.fromC, chosenMove.toR, chosenMove.toC);
+      playWoodClick();
       currentTurn = 'w';
       document.getElementById('chessTurnBadge').textContent = 'Tu Turno (Blancas)';
       document.getElementById('chessTurnBadge').className = 'text-xs font-mono px-3 py-1 rounded-full border border-brand-gold/40 bg-brand-gold/10 text-brand-gold font-semibold';
@@ -910,13 +1143,13 @@
     }
 
     // =========================================================================
-    // 2. CORPUS CANÓNICO & ORÁCULO
+    // 3. CORPUS CANÓNICO & ORÁCULO
     // =========================================================================
     const STOIC_CORPUS = [
-      { id: 1, author: "Epicteto", source: "Enquiridión V", category: "control", quote: "No nos perturban las cosas que suceden, sino la opinión y el juicio que nos formamos acerca de ellas." },
-      { id: 2, author: "Marco Aurelio", source: "Meditaciones IV, 3", category: "control", quote: "En ninguna parte puede hallar el hombre un retiro más apacible y tranquilo que en la intimidad de su propia alma." },
-      { id: 3, author: "Séneca", source: "De la Brevedad de la Vida I", category: "tiempo", quote: "No recibimos una vida corta, sino que la hacemos tal; y no somos pobres de tiempo, sino pródigos en desperdiciarlo." },
-      { id: 4, author: "Musonio Rufo", source: "Disertaciones V", category: "resiliencia", quote: "Si logras algo bueno con esfuerzo, el esfuerzo pasa pronto, pero el bien permanece." }
+      { id: 1, author: "Epicteto", source: "Enquiridión V", quote: "No nos perturban las cosas que suceden, sino la opinión y el juicio que nos formamos acerca de ellas." },
+      { id: 2, author: "Marco Aurelio", source: "Meditaciones IV, 3", quote: "En ninguna parte puede hallar el hombre un retiro más apacible y tranquilo que en la intimidad de su propia alma." },
+      { id: 3, author: "Séneca", source: "De la Brevedad de la Vida I", quote: "No recibimos una vida corta, sino que la hacemos tal; y no somos pobres de tiempo, sino pródigos en desperdiciarlo." },
+      { id: 4, author: "Musonio Rufo", source: "Disertaciones V", quote: "Si logras algo bueno con esfuerzo, el esfuerzo pasa pronto, pero el bien permanece." }
     ];
 
     const ORACLE_DATA = {
@@ -934,6 +1167,7 @@
       document.getElementById('oracleQuote').textContent = `«${data.quote}»`;
       document.getElementById('oraclePrescription').textContent = data.prep;
       document.getElementById('oracleResponseCard').classList.remove('hidden');
+      addXp(15, "Consulta al Oráculo");
     }
 
     const COSMIC_STEPS = [
@@ -952,6 +1186,7 @@
       document.getElementById('cosmicScale').textContent = COSMIC_STEPS[idx].scale;
       document.getElementById('cosmicDescription').textContent = COSMIC_STEPS[idx].desc;
       document.getElementById('cosmicPrompt').textContent = COSMIC_STEPS[idx].prompt;
+      unlockBadge('calm-mind');
     }
 
     function filterCorpus() {
@@ -969,8 +1204,17 @@
       });
     }
 
+    function randomizeDailyQuote() {
+      const q = STOIC_CORPUS[Math.floor(Math.random() * STOIC_CORPUS.length)];
+      document.getElementById('dailyQuoteText').textContent = `“${q.quote}”`;
+      document.getElementById('dailyAuthor').textContent = q.author;
+      document.getElementById('dailySource').textContent = q.source;
+      addXp(15, "Lectura de Máxima");
+      unlockBadge('first-step');
+    }
+
     // =========================================================================
-    // 3. NAVEGACIÓN, CLIMA Y RELOJ
+    // 4. CLIMA, RELOJ Y NAVEGACIÓN
     // =========================================================================
     function handleNavClick(e, targetId) {
       e.preventDefault();
@@ -978,7 +1222,7 @@
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('text-brand-gold', 'border-b-2', 'border-brand-gold', 'font-semibold'));
-        document.querySelectorAll('.side-link').forEach(l => l.classList.remove('bg-brand-gold', 'text-zinc-950', 'font-semibold'));
+        document.querySelectorAll('.side-link').forEach(l => l.classList.remove('bg-brand-gold', 'text-brand-obsidian', 'font-bold'));
         const drawer = document.getElementById('mobileDrawer');
         if (drawer) drawer.classList.add('hidden');
       }
@@ -1024,12 +1268,16 @@
       fetchWeather(k);
     }
 
+    // Inicializaciones al cargar el DOM
     document.addEventListener('DOMContentLoaded', () => {
       const savedCity = localStorage.getItem('ataraxia_user_city') || 'mendoza';
       const select = document.getElementById('citySelect');
       if (select) select.value = savedCity;
       fetchWeather(savedCity);
 
+      updateXpUI();
+      renderBadges();
+      checkDailyChallenge();
       renderBoard();
       filterCorpus();
       lucide.createIcons();
