@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ataraxia — Filosofía Vivida | El Portal Estoico</title>
+  <title>Ataraxia — Filosofía Vivida & Sabiduría Universal</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts -->
@@ -29,7 +29,8 @@
               surfaceHighlight: '#161b24',
               neonEmerald: '#10b981',
               neonRose: '#f43f5e',
-              neonSky: '#38bdf8'
+              neonSky: '#38bdf8',
+              spotify: '#1db954'
             }
           },
           fontFamily: {
@@ -70,6 +71,9 @@
     }
     .emerald-glow {
       box-shadow: 0 0 30px -8px rgba(16, 185, 129, 0.3);
+    }
+    .spotify-glow {
+      box-shadow: 0 0 30px -8px rgba(29, 185, 84, 0.3);
     }
 
     ::-webkit-scrollbar { width: 5px; }
@@ -118,7 +122,7 @@
 </head>
 <body class="min-h-screen flex flex-col bg-brand-obsidian text-slate-200">
 
-  <!-- Header Superior Fijo con Nivel y Racha Gamificada -->
+  <!-- Header Fijo con Gamificación y Acceso a Podcast -->
   <header class="border-b border-brand-surfaceBorder bg-brand-obsidian/95 backdrop-blur sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
       
@@ -130,14 +134,17 @@
           </div>
           <div>
             <span class="font-serif tracking-widest text-lg font-bold uppercase gold-text-gradient">ATARAXIA</span>
-            <span class="block text-[10px] tracking-[0.2em] text-zinc-400 font-mono -mt-1">SANTUARIO VIRTUAL</span>
+            <span class="block text-[10px] tracking-[0.2em] text-zinc-400 font-mono -mt-1">SABIDURÍA & PRAXIS</span>
           </div>
         </a>
 
-        <!-- Barra Navegación Desktop -->
+        <!-- Navegación Desktop -->
         <nav class="hidden xl:flex items-center gap-5 text-sm font-medium">
           <a href="#muro" data-target="muro" onclick="handleNavClick(event, 'muro')" class="nav-link text-brand-gold flex items-center gap-2 border-b-2 border-brand-gold pb-1 pt-1 font-semibold transition-all">
             <i data-lucide="scroll" class="w-4 h-4"></i> Muro
+          </a>
+          <a href="#podcast" data-target="podcast" onclick="handleNavClick(event, 'podcast')" class="nav-link text-zinc-400 hover:text-zinc-200 transition-colors flex items-center gap-2 pb-1 pt-1 border-b-2 border-transparent">
+            <i data-lucide="radio" class="w-4 h-4 text-brand-spotify"></i> Podcasts
           </a>
           <a href="#ajedrez" data-target="ajedrez" onclick="handleNavClick(event, 'ajedrez')" class="nav-link text-zinc-400 hover:text-zinc-200 transition-colors flex items-center gap-2 pb-1 pt-1 border-b-2 border-transparent">
             <i data-lucide="crown" class="w-4 h-4"></i> Ajedrez
@@ -145,19 +152,15 @@
           <a href="#oraculo" data-target="oraculo" onclick="handleNavClick(event, 'oraculo')" class="nav-link text-zinc-400 hover:text-zinc-200 transition-colors flex items-center gap-2 pb-1 pt-1 border-b-2 border-transparent">
             <i data-lucide="compass" class="w-4 h-4"></i> Oráculo
           </a>
-          <a href="#perspectiva" data-target="perspectiva" onclick="handleNavClick(event, 'perspectiva')" class="nav-link text-zinc-400 hover:text-zinc-200 transition-colors flex items-center gap-2 pb-1 pt-1 border-b-2 border-transparent">
-            <i data-lucide="eye" class="w-4 h-4"></i> Vista Cósmica
-          </a>
           <a href="#buscador" data-target="buscador" onclick="handleNavClick(event, 'buscador')" class="nav-link text-zinc-400 hover:text-zinc-200 transition-colors flex items-center gap-2 pb-1 pt-1 border-b-2 border-transparent">
             <i data-lucide="book-open" class="w-4 h-4"></i> Corpus
           </a>
         </nav>
       </div>
 
-      <!-- Barra de Progreso XP y Racha de Fuego -->
+      <!-- Barra de Progreso XP y Racha -->
       <div class="flex items-center gap-2.5 sm:gap-4">
         
-        <!-- Nivel y Progreso de XP -->
         <div class="hidden sm:flex flex-col items-end">
           <div class="flex items-center gap-1.5 text-xs font-mono">
             <span class="text-zinc-400 text-[11px]">Rango:</span>
@@ -170,8 +173,8 @@
           </div>
         </div>
 
-        <!-- Racha con Llama Animada -->
-        <div class="flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-300 text-xs font-mono font-bold" title="Racha activa de templanza">
+        <!-- Racha -->
+        <div class="flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-300 text-xs font-mono font-bold">
           <span class="inline-block animate-flame">🔥</span>
           <span id="streakCount">14 d</span>
         </div>
@@ -199,25 +202,21 @@
 
     <!-- Menú Drawer Mobile -->
     <div id="mobileDrawer" class="hidden xl:hidden border-b border-brand-surfaceBorder bg-brand-surfaceDim px-6 py-4 space-y-3">
-      <div class="flex items-center justify-between pb-3 border-b border-brand-surfaceBorder">
-        <span class="text-xs font-mono text-zinc-400">Progreso de Templanza:</span>
-        <span id="mobileRankBadge" class="text-xs font-mono text-brand-gold font-bold">Nv. 1 Neófito</span>
-      </div>
       <nav class="flex flex-col space-y-2 text-sm">
         <a href="#muro" onclick="handleNavClick(event, 'muro')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
           <i data-lucide="scroll" class="w-4 h-4"></i> Muro Principal
         </a>
+        <a href="#podcast" onclick="handleNavClick(event, 'podcast')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
+          <i data-lucide="radio" class="w-4 h-4 text-brand-spotify"></i> Podcasts Spotify
+        </a>
         <a href="#ajedrez" onclick="handleNavClick(event, 'ajedrez')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
-          <i data-lucide="crown" class="w-4 h-4"></i> Ajedrez Estoico
+          <i data-lucide="crown" class="w-4 h-4"></i> Ajedrez Gran Maestro
         </a>
         <a href="#oraculo" onclick="handleNavClick(event, 'oraculo')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
           <i data-lucide="compass" class="w-4 h-4"></i> Oráculo de Dilemas
         </a>
-        <a href="#perspectiva" onclick="handleNavClick(event, 'perspectiva')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
-          <i data-lucide="eye" class="w-4 h-4"></i> Vista Cósmica
-        </a>
         <a href="#buscador" onclick="handleNavClick(event, 'buscador')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
-          <i data-lucide="book-open" class="w-4 h-4"></i> Corpus
+          <i data-lucide="book-open" class="w-4 h-4"></i> Corpus Universal
         </a>
       </nav>
     </div>
@@ -226,38 +225,36 @@
   <!-- Layout Principal -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8">
     
-    <!-- Barra Lateral Izquierda: Módulos & Vitrina de Logros -->
+    <!-- Barra Lateral Izquierda -->
     <aside class="hidden lg:block lg:col-span-3 space-y-6">
       <div class="sticky top-24 space-y-6">
         
-        <!-- Navegación Lateral -->
         <div class="text-[11px] font-mono tracking-widest text-zinc-500 uppercase px-3">Praxis Diaria</div>
         <nav class="space-y-1">
           <a href="#muro" data-target="muro" onclick="handleNavClick(event, 'muro')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-xl bg-brand-gold text-brand-obsidian font-bold text-sm shadow-sm transition">
             <i data-lucide="columns-2" class="w-4 h-4"></i> Muro Principal
           </a>
+          <a href="#podcast" data-target="podcast" onclick="handleNavClick(event, 'podcast')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
+            <i data-lucide="radio" class="w-4 h-4 text-brand-spotify"></i> Podcasts Spotify
+          </a>
           <a href="#ajedrez" data-target="ajedrez" onclick="handleNavClick(event, 'ajedrez')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
-            <i data-lucide="crown" class="w-4 h-4"></i> Ajedrez Estoico
+            <i data-lucide="crown" class="w-4 h-4"></i> Ajedrez Gran Maestro
           </a>
           <a href="#oraculo" data-target="oraculo" onclick="handleNavClick(event, 'oraculo')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
-            <i data-lucide="compass" class="w-4 h-4"></i> Oráculo de Dilemas
-          </a>
-          <a href="#perspectiva" data-target="perspectiva" onclick="handleNavClick(event, 'perspectiva')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
-            <i data-lucide="eye" class="w-4 h-4"></i> Vista desde Arriba
+            <i data-lucide="compass" class="w-4 h-4"></i> Oráculo Universal
           </a>
           <a href="#buscador" data-target="buscador" onclick="handleNavClick(event, 'buscador')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
-            <i data-lucide="search" class="w-4 h-4"></i> Corpus Canónico
+            <i data-lucide="search" class="w-4 h-4"></i> Corpus de Sabiduría
           </a>
         </nav>
 
-        <!-- Vitrina de Insignias / Logros Desbloqueables -->
+        <!-- Vitrina de Insignias -->
         <div class="p-4 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-3">
           <div class="flex items-center justify-between text-[11px] font-mono uppercase text-zinc-400 font-bold">
             <span>Insignias de Virtud</span>
             <span id="badgeCountText" class="text-brand-gold">0 / 4</span>
           </div>
           <div class="grid grid-cols-2 gap-2 text-center text-xs">
-            <!-- Insignia 1 -->
             <div id="badge-first-step" class="p-2.5 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim opacity-50 transition duration-300">
               <div class="w-8 h-8 mx-auto rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 mb-1">
                 <i data-lucide="footprints" class="w-4 h-4"></i>
@@ -265,8 +262,6 @@
               <div class="font-bold text-[10px] text-zinc-300">Primer Paso</div>
               <div class="text-[9px] text-zinc-500 font-mono">Lee una máxima</div>
             </div>
-
-            <!-- Insignia 2 -->
             <div id="badge-calm-mind" class="p-2.5 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim opacity-50 transition duration-300">
               <div class="w-8 h-8 mx-auto rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 mb-1">
                 <i data-lucide="flower-2" class="w-4 h-4"></i>
@@ -274,8 +269,6 @@
               <div class="font-bold text-[10px] text-zinc-300">Mente Serena</div>
               <div class="text-[9px] text-zinc-500 font-mono">Haz la pausa</div>
             </div>
-
-            <!-- Insignia 3 -->
             <div id="badge-chess-win" class="p-2.5 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim opacity-50 transition duration-300">
               <div class="w-8 h-8 mx-auto rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 mb-1">
                 <i data-lucide="trophy" class="w-4 h-4"></i>
@@ -283,8 +276,6 @@
               <div class="font-bold text-[10px] text-zinc-300">Victoria Digna</div>
               <div class="text-[9px] text-zinc-500 font-mono">Gana al Ajedrez</div>
             </div>
-
-            <!-- Insignia 4 -->
             <div id="badge-daily-master" class="p-2.5 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim opacity-50 transition duration-300">
               <div class="w-8 h-8 mx-auto rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 mb-1">
                 <i data-lucide="shield-check" class="w-4 h-4"></i>
@@ -295,20 +286,20 @@
           </div>
         </div>
 
-        <!-- Canon de los Sabios -->
+        <!-- Módulos de Sabios -->
         <div class="p-4 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard text-xs space-y-3">
-          <div class="text-[10px] font-mono uppercase tracking-wider text-zinc-500">CANON MONOGRÁFICO</div>
+          <div class="text-[10px] font-mono uppercase tracking-wider text-zinc-500">PENSADORES CANÓNICOS</div>
           <div class="space-y-1.5">
             <a href="epicteto.html" class="flex items-center justify-between text-zinc-300 hover:text-brand-gold py-1 transition border-b border-brand-surfaceBorder/40">
-              <span>Epicteto (El Liberto)</span>
+              <span>Epicteto (Libertad Interior)</span>
               <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
             </a>
             <a href="marco-aurelio.html" class="flex items-center justify-between text-zinc-300 hover:text-brand-gold py-1 transition border-b border-brand-surfaceBorder/40">
-              <span>Marco Aurelio (Emperador)</span>
+              <span>Marco Aurelio (El Deber)</span>
               <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
             </a>
             <a href="seneca.html" class="flex items-center justify-between text-zinc-300 hover:text-brand-gold py-1 transition">
-              <span>Séneca (El Estadista)</span>
+              <span>Séneca (El Tiempo & Calma)</span>
               <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
             </a>
           </div>
@@ -319,7 +310,7 @@
     <!-- Contenido Principal -->
     <main class="lg:col-span-9 space-y-12">
       
-      <!-- SECCIÓN 1: MURO / RELOJ KAIROS + RETO DEL DÍA -->
+      <!-- SECCIÓN 1: MURO KAIROS & RETO -->
       <section id="muro" class="scroll-target scroll-mt-24 border border-brand-surfaceBorder bg-gradient-to-r from-brand-surfaceDim to-brand-surfaceCard rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-2xl gold-glow">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-brand-surfaceBorder/60 pb-5">
           <div class="flex items-center gap-3">
@@ -334,7 +325,7 @@
           </div>
         </div>
 
-        <!-- Misión / Desafío del Día -->
+        <!-- Misión Diaria -->
         <div class="mt-6 p-4 rounded-2xl bg-brand-obsidian/70 border border-brand-surfaceBorder flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div class="flex items-center gap-3.5">
             <div class="w-10 h-10 rounded-xl bg-brand-neonEmerald/10 border border-brand-neonEmerald/30 flex items-center justify-center text-brand-neonEmerald">
@@ -346,7 +337,7 @@
                 <span class="text-[10px] font-mono text-brand-gold bg-brand-gold/10 px-2 py-0.2 rounded border border-brand-gold/20">+50 XP</span>
               </div>
               <p id="dailyChallengeText" class="text-xs sm:text-sm font-medium text-slate-200 mt-0.5">
-                Hoy comeré el almuerzo sin pantallas ni distracciones, masticando en silencio consciente.
+                Cargando misión práctica...
               </p>
             </div>
           </div>
@@ -356,12 +347,12 @@
           </button>
         </div>
 
-        <!-- Máxima Matutina -->
+        <!-- Máxima Destacada -->
         <div class="pt-6 space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-zinc-400">
             <span id="dailyCategory" class="text-brand-gold uppercase tracking-wider font-semibold">MÁXIMA MATUTINA</span>
             <button onclick="randomizeDailyQuote()" class="text-brand-gold hover:text-brand-goldLight transition flex items-center gap-1.5 bg-brand-gold/10 border border-brand-gold/30 px-3 py-1 rounded-full text-xs font-semibold">
-              <i data-lucide="shuffle" class="w-3.5 h-3.5"></i> <span>Extraer otra Sentencia (+15 XP)</span>
+              <i data-lucide="shuffle" class="w-3.5 h-3.5"></i> <span>Extraer Pensamiento (+15 XP)</span>
             </button>
           </div>
           <blockquote id="dailyQuoteText" class="font-serif text-2xl sm:text-3xl text-zinc-100 italic leading-relaxed">
@@ -374,7 +365,72 @@
         </div>
       </section>
 
-      <!-- SECCIÓN 2: AJEDREZ ESTOICO CON DIFICULTADES, JAQUE Y JAQUE MATE -->
+      <!-- SECCIÓN SPOTIFY PODCASTS -->
+      <section id="podcast" class="scroll-target scroll-mt-24 p-6 sm:p-8 rounded-3xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-brand-surfaceBorder pb-4">
+          <div>
+            <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-spotify font-semibold">
+              <i data-lucide="radio" class="w-4 h-4"></i> Espacio de Escucha Atenta
+            </div>
+            <h3 class="font-serif text-xl sm:text-2xl font-bold text-zinc-100 mt-0.5">Podcasts de Filosofía & Estoicismo</h3>
+          </div>
+          <span class="text-[11px] font-mono text-zinc-500">Conexión Directa a Spotify</span>
+        </div>
+
+        <p class="text-xs text-zinc-400 leading-relaxed">
+          Nutre tu entendimiento durante tu entrenamiento, tus desplazamientos o antes del reposo nocturno. Selecciona uno de los canales esenciales:
+        </p>
+
+        <!-- Selector de Podcasts -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <button onclick="changePodcast('elestoico')" id="btn-pod-elestoico" class="p-3.5 rounded-2xl border border-brand-spotify/60 bg-brand-spotify/10 text-left transition flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-spotify/20 flex items-center justify-center text-brand-spotify flex-shrink-0">
+              <i data-lucide="mic" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-100">El Estoico</div>
+              <div class="text-[10px] text-zinc-400 font-mono">Pepe García (Español)</div>
+            </div>
+          </button>
+
+          <button onclick="changePodcast('dailystoic')" id="btn-pod-dailystoic" class="p-3.5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-spotify text-left transition flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-zinc-800 flex items-center justify-center text-zinc-400 flex-shrink-0">
+              <i data-lucide="headphones" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-200">The Daily Stoic</div>
+              <div class="text-[10px] text-zinc-400 font-mono">Ryan Holiday (Inglés)</div>
+            </div>
+          </button>
+
+          <button onclick="changePodcast('bolsillo')" id="btn-pod-bolsillo" class="p-3.5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-spotify text-left transition flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-zinc-800 flex items-center justify-center text-zinc-400 flex-shrink-0">
+              <i data-lucide="book" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-200">Filosofía de Bolsillo</div>
+              <div class="text-[10px] text-zinc-400 font-mono">Diego Civilotti</div>
+            </div>
+          </button>
+        </div>
+
+        <!-- Reproductor Embebido Spotify -->
+        <div class="rounded-2xl overflow-hidden border border-brand-surfaceBorder bg-black p-1 spotify-glow">
+          <iframe 
+            id="spotifyPlayer" 
+            style="border-radius:12px" 
+            src="https://open.spotify.com/embed/show/4tDqG3Ww9jZ4gW8uJ1gqV2?utm_source=generator&theme=0" 
+            width="100%" 
+            height="152" 
+            frameBorder="0" 
+            allowfullscreen="" 
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            loading="lazy">
+          </iframe>
+        </div>
+      </section>
+
+      <!-- SECCIÓN AJEDREZ GRAN MAESTRO -->
       <section id="ajedrez" class="scroll-target scroll-mt-24 p-6 sm:p-8 rounded-3xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-brand-surfaceBorder pb-4">
           <div>
@@ -389,8 +445,8 @@
               <span class="text-zinc-500">Rival:</span>
               <select id="chessDifficulty" onchange="setChessDifficulty(this.value)" class="bg-transparent text-brand-gold font-semibold outline-none cursor-pointer">
                 <option value="easy" class="bg-brand-surfaceCard">Principiante</option>
-                <option value="medium" selected class="bg-brand-surfaceCard">Estoico Medium</option>
-                <option value="supreme" class="bg-brand-surfaceCard">Estoico Supremo</option>
+                <option value="medium" class="bg-brand-surfaceCard">Estoico Medium</option>
+                <option value="supreme" selected class="bg-brand-surfaceCard">Estoico Supremo (Gran Maestro)</option>
               </select>
             </div>
 
@@ -408,20 +464,18 @@
         <div id="chessAlertBanner" class="hidden p-3 rounded-xl border flex items-center justify-between transition-all">
           <div class="flex items-center gap-2.5">
             <i data-lucide="alert-triangle" class="w-4 h-4"></i>
-            <span id="chessAlertText" class="text-xs font-mono font-semibold tracking-wide">¡JAQUE! Tu Rey está amenazado. Debes moverlo o bloquear.</span>
+            <span id="chessAlertText" class="text-xs font-mono font-semibold tracking-wide">¡JAQUE! Tu Rey está amenazado. Debes defenderlo.</span>
           </div>
           <span id="chessAlertSub" class="text-[10px] font-mono opacity-80 uppercase">Escape Obligatorio</span>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <!-- Tablero 8x8 -->
           <div class="lg:col-span-7 flex justify-center">
             <div class="w-full max-w-[440px] aspect-square border-2 border-brand-surfaceBorder rounded-2xl overflow-hidden shadow-2xl bg-black">
               <div id="chessBoardGrid" class="grid grid-cols-8 grid-rows-8 w-full h-full"></div>
             </div>
           </div>
 
-          <!-- Panel de Capturas y Veredicto -->
           <div class="lg:col-span-5 space-y-4">
             <div class="p-4 rounded-2xl bg-brand-surfaceDim border border-brand-surfaceBorder space-y-3">
               <div class="flex items-center justify-between text-xs font-mono">
@@ -444,38 +498,43 @@
               </p>
               <span id="chessAuthorRef" class="block text-[10px] font-mono text-zinc-500 text-right">— EPICTETO</span>
             </div>
+
+            <div class="p-3.5 rounded-xl border border-brand-surfaceBorder bg-brand-obsidian text-[11px] font-mono text-zinc-400 space-y-1">
+              <div class="text-brand-gold font-bold">Modo Supremo Activado:</div>
+              <p>El rival calcula con algoritmo Minimax a 3 capas de profundidad y tablas de posición cuadrada (PST). No regalará material y castigará el mínimo descuido.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- SECCIÓN 3: ORÁCULO DE DILEMAS COTIDIANOS -->
+      <!-- SECCIÓN ORÁCULO EXPANDIDO -->
       <section id="oraculo" class="scroll-target scroll-mt-24 p-6 sm:p-8 rounded-3xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-brand-surfaceBorder pb-4">
           <div>
             <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-gold font-semibold">
-              <i data-lucide="compass" class="w-4 h-4"></i> Oráculo de la Estoa
+              <i data-lucide="compass" class="w-4 h-4"></i> Oráculo Universal
             </div>
-            <h3 class="font-serif text-xl sm:text-2xl font-bold text-zinc-100 mt-0.5">¿Qué turbación aqueja hoy tu juicio?</h3>
+            <h3 class="font-serif text-xl sm:text-2xl font-bold text-zinc-100 mt-0.5">¿Qué dilema o turbación buscas esclarecer?</h3>
           </div>
-          <span class="text-[11px] font-mono text-zinc-500">Triaje Filosófico</span>
+          <span class="text-[11px] font-mono text-zinc-500">Respuestas Clásicas & Modernas</span>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <button onclick="consultOracle('ansiedad')" class="p-3.5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-gold hover:gold-glow text-left transition group">
-            <div class="text-xs font-semibold text-zinc-200 group-hover:text-brand-gold">Ansiedad</div>
-            <div class="text-[10px] text-zinc-500 font-mono mt-1">Futuro incierto</div>
+            <div class="text-xs font-semibold text-zinc-200 group-hover:text-brand-gold">Ansiedad & Futuro</div>
+            <div class="text-[10px] text-zinc-500 font-mono mt-1">Séneca & Einstein</div>
+          </button>
+          <button onclick="consultOracle('verdad')" class="p-3.5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-gold hover:gold-glow text-left transition group">
+            <div class="text-xs font-semibold text-zinc-200 group-hover:text-brand-gold">Verdad & Ilusión</div>
+            <div class="text-[10px] text-zinc-500 font-mono mt-1">Platón & Tesla</div>
+          </button>
+          <button onclick="consultOracle('voluntad')" class="p-3.5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-gold hover:gold-glow text-left transition group">
+            <div class="text-xs font-semibold text-zinc-200 group-hover:text-brand-gold">Sentido & Voluntad</div>
+            <div class="text-[10px] text-zinc-500 font-mono mt-1">Frankl & Nietzsche</div>
           </button>
           <button onclick="consultOracle('ira')" class="p-3.5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-gold hover:gold-glow text-left transition group">
-            <div class="text-xs font-semibold text-zinc-200 group-hover:text-brand-gold">Ira y Agravio</div>
-            <div class="text-[10px] text-zinc-500 font-mono mt-1">Desdén ajeno</div>
-          </button>
-          <button onclick="consultOracle('desgano')" class="p-3.5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-gold hover:gold-glow text-left transition group">
-            <div class="text-xs font-semibold text-zinc-200 group-hover:text-brand-gold">Desgano</div>
-            <div class="text-[10px] text-zinc-500 font-mono mt-1">Eludir el deber</div>
-          </button>
-          <button onclick="consultOracle('perdida')" class="p-3.5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-gold hover:gold-glow text-left transition group">
-            <div class="text-xs font-semibold text-zinc-200 group-hover:text-brand-gold">Pérdida</div>
-            <div class="text-[10px] text-zinc-500 font-mono mt-1">Finitud y apego</div>
+            <div class="text-xs font-semibold text-zinc-200 group-hover:text-brand-gold">Ira & Juicio Ajeno</div>
+            <div class="text-[10px] text-zinc-500 font-mono mt-1">Marco Aurelio & Jung</div>
           </button>
         </div>
 
@@ -486,98 +545,101 @@
           </div>
           <blockquote id="oracleQuote" class="font-serif text-lg text-zinc-100 italic leading-snug">«—»</blockquote>
           <div class="pt-2 border-t border-brand-surfaceBorder/60 text-xs text-zinc-300">
-            <strong class="text-brand-gold font-mono text-[10px] uppercase block mb-1">Prescripción Moral:</strong>
+            <strong class="text-brand-gold font-mono text-[10px] uppercase block mb-1">Prescripción Práctica:</strong>
             <span id="oraclePrescription">—</span>
           </div>
         </div>
       </section>
 
-      <!-- SECCIÓN 4: LA VISTA DESDE ARRIBA -->
-      <section id="perspectiva" class="scroll-target scroll-mt-24 p-6 sm:p-8 rounded-3xl border border-brand-surfaceBorder bg-gradient-to-b from-brand-surfaceDim to-brand-surfaceCard space-y-6">
-        <div class="flex items-center justify-between border-b border-brand-surfaceBorder pb-4">
-          <div>
-            <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-gold font-semibold">
-              <i data-lucide="eye" class="w-4 h-4"></i> Perspectiva Cósmica
-            </div>
-            <h3 class="font-serif text-xl sm:text-2xl font-bold text-zinc-100 mt-0.5">La Vista desde Arriba</h3>
-          </div>
-          <span class="text-xs font-mono text-zinc-500">Sympatheia Universal</span>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          <button onclick="setCosmicView(0)" id="cosmicBtn0" class="py-2 px-3 rounded-xl border border-brand-gold bg-brand-gold/10 text-brand-gold text-xs font-mono transition">1. Tu Cámara</button>
-          <button onclick="setCosmicView(1)" id="cosmicBtn1" class="py-2 px-3 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim text-zinc-400 hover:text-zinc-200 text-xs font-mono transition">2. La Polis</button>
-          <button onclick="setCosmicView(2)" id="cosmicBtn2" class="py-2 px-3 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim text-zinc-400 hover:text-zinc-200 text-xs font-mono transition">3. El Planeta</button>
-          <button onclick="setCosmicView(3)" id="cosmicBtn3" class="py-2 px-3 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim text-zinc-400 hover:text-zinc-200 text-xs font-mono transition">4. La Eternidad</button>
-        </div>
-
-        <div class="p-6 rounded-2xl bg-brand-surfaceDim border border-brand-surfaceBorder text-center space-y-3 min-h-[160px] flex flex-col justify-center items-center">
-          <span id="cosmicScale" class="text-[10px] font-mono uppercase tracking-widest text-brand-gold">NIVEL I • EL SANTUARIO INMEDIATO</span>
-          <p id="cosmicDescription" class="font-serif text-base sm:text-lg text-zinc-200 italic max-w-xl leading-relaxed">
-            Siente el espacio que habitas en este instante. Tu respiración, el peso de tu cuerpo. El problema que te preocupa parece enorme porque llena por completo tu campo de visión inmediata.
-          </p>
-          <span id="cosmicPrompt" class="text-xs font-mono text-zinc-500">¿Sigue siendo tan trágico si das un paso atrás?</span>
-        </div>
-      </section>
-
-      <!-- SECCIÓN 5: CORPUS CANÓNICO -->
+      <!-- SECCIÓN CORPUS UNIVERSAL DE SABIDURÍA -->
       <section id="buscador" class="scroll-target scroll-mt-24 p-6 sm:p-8 rounded-3xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-brand-surfaceBorder pb-4">
           <div>
             <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-gold font-semibold">
-              <i data-lucide="book-open" class="w-4 h-4"></i> Corpus Filosófico
+              <i data-lucide="book-open" class="w-4 h-4"></i> Archivo Universal
             </div>
-            <h3 class="font-serif text-xl sm:text-2xl font-bold text-zinc-100 mt-0.5">El Archivo de Sentencias</h3>
+            <h3 class="font-serif text-xl sm:text-2xl font-bold text-zinc-100 mt-0.5">Pensadores, Científicos & Filósofos</h3>
           </div>
           <div class="relative w-full sm:w-72">
-            <input type="text" id="corpusSearchInput" oninput="filterCorpus()" placeholder="Buscar por palabra, autor o tema..." class="w-full bg-brand-surfaceDim border border-brand-surfaceBorder rounded-xl pl-9 pr-3 py-2 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-brand-gold">
+            <input type="text" id="corpusSearchInput" oninput="filterCorpus()" placeholder="Buscar: Platón, Tesla, tiempo, energía..." class="w-full bg-brand-surfaceDim border border-brand-surfaceBorder rounded-xl pl-9 pr-3 py-2 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-brand-gold">
             <i data-lucide="search" class="w-4 h-4 text-zinc-500 absolute left-3 top-2.5"></i>
           </div>
         </div>
 
-        <div id="corpusCardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[480px] overflow-y-auto pr-1"></div>
+        <!-- Categorías de Filtro -->
+        <div class="flex flex-wrap gap-2 text-xs font-mono">
+          <button onclick="setCorpusCategory('todos')" class="cat-pill px-3 py-1 rounded-full bg-brand-gold text-brand-obsidian font-bold transition">Todos</button>
+          <button onclick="setCorpusCategory('estoicismo')" class="cat-pill px-3 py-1 rounded-full bg-brand-surfaceDim border border-zinc-700 hover:border-brand-gold text-zinc-300 transition">Estoicos</button>
+          <button onclick="setCorpusCategory('ciencia')" class="cat-pill px-3 py-1 rounded-full bg-brand-surfaceDim border border-zinc-700 hover:border-brand-gold text-zinc-300 transition">Ciencia & Realidad</button>
+          <button onclick="setCorpusCategory('filosofia')" class="cat-pill px-3 py-1 rounded-full bg-brand-surfaceDim border border-zinc-700 hover:border-brand-gold text-zinc-300 transition">Filosofía Clásica</button>
+          <button onclick="setCorpusCategory('resiliencia')" class="cat-pill px-3 py-1 rounded-full bg-brand-surfaceDim border border-zinc-700 hover:border-brand-gold text-zinc-300 transition">Existencialismo & Fortaleza</button>
+        </div>
+
+        <div id="corpusCardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[550px] overflow-y-auto pr-1"></div>
       </section>
     </main>
   </div>
 
-  <!-- TOAST DE SUBIDA DE NIVEL (POPUP DINÁMICO) -->
+  <!-- TOAST DE SUBIDA DE NIVEL -->
   <div id="levelUpToast" class="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-brand-surfaceCard border-2 border-brand-gold text-white shadow-2xl flex items-center gap-4 hidden animate-levelUp gold-glow">
     <div class="w-12 h-12 rounded-xl bg-brand-gold/20 flex items-center justify-center text-brand-gold text-2xl">
       🏛️
     </div>
     <div>
-      <div class="text-[10px] font-mono text-brand-gold uppercase tracking-wider font-bold">¡Evolución Moral Lograda!</div>
-      <div id="levelUpMsg" class="text-sm font-bold text-slate-100">Has ascendido a Nivel 2</div>
+      <div class="text-[10px] font-mono text-brand-gold uppercase tracking-wider font-bold">¡Evolución de Entendimiento!</div>
+      <div id="levelUpMsg" class="text-sm font-bold text-slate-100">Has ascendido de Nivel</div>
     </div>
   </div>
 
   <!-- SCRIPTS -->
   <script>
     // =========================================================================
-    // 1. SISTEMA DE GAMIFICACIÓN, XP, NIVELES Y RETO DIARIO
+    // 1. SISTEMA DE XP, NIVELES Y SPOTIFY
     // =========================================================================
     const RANKS = [
       { level: 1, title: "Neófito", minXp: 0, maxXp: 100 },
       { level: 2, title: "Iniciado", minXp: 100, maxXp: 250 },
-      { level: 3, title: "Discípulo de Nicópolis", minXp: 250, maxXp: 500 },
-      { level: 4, title: "Practicante de la Estoa", minXp: 500, maxXp: 900 },
+      { level: 3, title: "Discípulo de la Academia", minXp: 250, maxXp: 500 },
+      { level: 4, title: "Pensador Crítico", minXp: 500, maxXp: 900 },
       { level: 5, title: "Gobernador del Juicio", minXp: 900, maxXp: 1500 },
       { level: 6, title: "Sabio Imperturbable", minXp: 1500, maxXp: 99999 }
     ];
 
+    const SPOTIFY_SHOWS = {
+      elestoico: { id: "4tDqG3Ww9jZ4gW8uJ1gqV2", title: "El Estoico — Pepe García" },
+      dailystoic: { id: "7qogNQ2YwJdGkE3R842U1P", title: "The Daily Stoic — Ryan Holiday" },
+      bolsillo: { id: "2h0G3T0bQWlF2aG7gTjA4v", title: "Filosofía de Bolsillo" }
+    };
+
+    function changePodcast(key) {
+      const show = SPOTIFY_SHOWS[key];
+      if (!show) return;
+      const iframe = document.getElementById('spotifyPlayer');
+      iframe.src = `https://open.spotify.com/embed/show/${show.id}?utm_source=generator&theme=0`;
+      
+      ['elestoico', 'dailystoic', 'bolsillo'].forEach(k => {
+        const btn = document.getElementById(`btn-pod-${k}`);
+        if (k === key) {
+          btn.className = 'p-3.5 rounded-2xl border border-brand-spotify/60 bg-brand-spotify/10 text-left transition flex items-center gap-3';
+        } else {
+          btn.className = 'p-3.5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceDim hover:border-brand-spotify text-left transition flex items-center gap-3';
+        }
+      });
+      addXp(20, "Podcast seleccionado");
+    }
+
     const DAILY_CHALLENGES = [
-      "Hoy tomaré un baño frío de al menos 60 segundos sin articular una sola queja verbal.",
-      "Hoy suspenderé mi juicio por 2 horas ante la primera persona que me contradiga o irrite.",
-      "Hoy almorzaré en silencio absoluto, saboreando cada alimento sin mirar el teléfono.",
-      "Hoy identificaré tres cosas fuera de mi control y declararé voluntariamente: 'No me pertenece'.",
-      "Hoy realizaré una acción bondadosa por alguien sin permitir que esa persona se entere de mi autoría."
+      "Hoy tomaré un baño frío de al menos 60 segundos sin articular una sola queja.",
+      "Hoy suspenderé mi juicio durante 2 horas ante la primera provocación o desacuerdo.",
+      "Hoy almorzaré en silencio consciente, sin pantallas ni lecturas periféricas.",
+      "Identifica 3 imprevistos hoy y pronuncia con convicción: 'Esto no depende de mí'.",
+      "Hoy realizaré un acto altruista desinteresado asegurándome de que nadie se entere de mi autoría."
     ];
 
     let userXp = parseInt(localStorage.getItem('ataraxia_user_xp')) || 25;
     let unlockedBadges = JSON.parse(localStorage.getItem('ataraxia_badges')) || [];
     let lastChallengeDate = localStorage.getItem('ataraxia_challenge_date') || '';
 
-    // Audio Web API
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
     function playTone(freq, duration, type = 'sine') {
@@ -633,12 +695,10 @@
 
       const rankTitleEl = document.getElementById('rankTitle');
       const rankBadgeEl = document.getElementById('rankLevelBadge');
-      const mobileRankEl = document.getElementById('mobileRankBadge');
       const barEl = document.getElementById('xpProgressBar');
 
       if (rankTitleEl) rankTitleEl.textContent = rank.title;
       if (rankBadgeEl) rankBadgeEl.textContent = `Nv. ${rank.level}`;
-      if (mobileRankEl) mobileRankEl.textContent = `Nv. ${rank.level} ${rank.title}`;
       if (barEl) barEl.style.width = `${percentage}%`;
     }
 
@@ -702,22 +762,36 @@
     }
 
     // =========================================================================
-    // 2. MOTOR DE AJEDREZ CON DIFICULTADES, JAQUE Y JAQUE MATE
+    // 2. MOTOR DE AJEDREZ ALTA DIFICULTAD (MINIMAX + ALFA-BETA + PST)
     // =========================================================================
     const CHESS_PIECES = {
       wP: '♙', wR: '♖', wN: '♘', wB: '♗', wQ: '♕', wK: '♔',
       bP: '♟', bR: '♜', bN: '♞', bB: '♝', bQ: '♛', bK: '♚'
     };
 
-    const PIECE_VALUES = { P: 10, N: 32, B: 33, R: 50, Q: 90, K: 1000 };
+    const PIECE_VALUES = { P: 100, N: 320, B: 330, R: 500, Q: 900, K: 20000 };
 
-    const STOIC_CHESS_THOUGHTS = [
-      { text: "«El peón no teme avanzar aunque no pueda retroceder. Acepta su curso con sobriedad.»", author: "EPICTETO" },
-      { text: "«Una pieza perdida en el tablero no es una pérdida para tu honor. Mantén la templanza.»", author: "SÉNECA" },
-      { text: "«El tablero exterior cambia constantemente; que tu concentración interior permanezca inmutable.»", author: "MARCO AURELIO" },
-      { text: "«No te envanezcas tras capturar una pieza enemiga; todo triunfo contingente es efímero.»", author: "MUSONIO RUFO" },
-      { text: "«Si el rival te acorrala, agradece el desafío: ahí se forja la serenidad estratégica.»", author: "ZENÓN DE CITIO" },
-      { text: "«Hasta el rey debe rendir tributo al fin de la partida: peones y reyes duermen en la misma caja.»", author: "CRISIPO" }
+    // Tablas de posición de piezas (Piece-Square Tables para negras)
+    const PAWN_PST = [
+      [0,  0,  0,  0,  0,  0,  0,  0],
+      [50, 50, 50, 50, 50, 50, 50, 50],
+      [10, 10, 20, 30, 30, 20, 10, 10],
+      [5,  5, 10, 25, 25, 10,  5,  5],
+      [0,  0,  0, 20, 20,  0,  0,  0],
+      [5, -5,-10,  0,  0,-10, -5,  5],
+      [5, 10, 10,-20,-20, 10, 10,  5],
+      [0,  0,  0,  0,  0,  0,  0,  0]
+    ];
+
+    const KNIGHT_PST = [
+      [-50,-40,-30,-30,-30,-30,-40,-50],
+      [-40,-20,  0,  0,  0,  0,-20,-40],
+      [-30,  0, 10, 15, 15, 10,  0,-30],
+      [-30,  5, 15, 20, 20, 15,  5,-30],
+      [-30,  0, 15, 20, 20, 15,  0,-30],
+      [-30,  5, 10, 15, 15, 10,  5,-30],
+      [-40,-20,  0,  5,  5,  0,-20,-40],
+      [-50,-40,-30,-30,-30,-30,-40,-50]
     ];
 
     let boardState = [
@@ -736,7 +810,7 @@
     let currentTurn = 'w';
     let capturedByWhite = [];
     let capturedByBlack = [];
-    let currentDifficulty = 'medium';
+    let currentDifficulty = 'supreme';
     let isGameOver = false;
 
     function setChessDifficulty(val) {
@@ -946,9 +1020,9 @@
       if (whiteInCheck && legalMovesWhite.length === 0) {
         isGameOver = true;
         banner.className = 'p-3 rounded-xl border border-brand-neonRose/50 bg-brand-neonRose/20 text-rose-300 flex items-center justify-between';
-        alertText.textContent = '¡JAQUE MATE! Has caído con dignidad ante el destino.';
+        alertText.textContent = '¡JAQUE MATE! El rival ha prevalecido en el tablero.';
         alertSub.textContent = 'Fin de la Partida';
-        turnBadge.textContent = 'Derrota Serana';
+        turnBadge.textContent = 'Derrota Serena';
         turnBadge.className = 'text-xs font-mono px-3 py-1 rounded-full border border-rose-600 bg-rose-950 text-rose-300 font-semibold';
         banner.classList.remove('hidden');
         return;
@@ -957,12 +1031,12 @@
       if (blackInCheck && legalMovesBlack.length === 0) {
         isGameOver = true;
         banner.className = 'p-3 rounded-xl border border-brand-neonEmerald/50 bg-brand-neonEmerald/20 text-emerald-300 flex items-center justify-between emerald-glow';
-        alertText.textContent = '¡JAQUE MATE! Victoria de la virtud y la estrategia.';
-        alertSub.textContent = 'Triunfo Logrado';
-        turnBadge.textContent = 'Victoria Estoica';
+        alertText.textContent = '¡JAQUE MATE! Has doblegado al Gran Maestro.';
+        alertSub.textContent = 'Triunfo Supremo';
+        turnBadge.textContent = 'Victoria Magna';
         turnBadge.className = 'text-xs font-mono px-3 py-1 rounded-full border border-emerald-500 bg-emerald-950 text-emerald-300 font-semibold';
         banner.classList.remove('hidden');
-        addXp(60, "Victoria en Ajedrez");
+        addXp(100, "Victoria Ajedrez Supremo");
         unlockBadge('chess-win');
         return;
       }
@@ -974,8 +1048,8 @@
         banner.classList.remove('hidden');
       } else if (blackInCheck) {
         banner.className = 'p-3 rounded-xl border border-brand-gold/50 bg-brand-gold/10 text-brand-gold flex items-center justify-between';
-        alertText.textContent = '¡JAQUE! El Rey enemigo está contra las cuerdas.';
-        alertSub.textContent = 'Presión Moral';
+        alertText.textContent = '¡JAQUE! El Rey rival está bajo tu asedio.';
+        alertSub.textContent = 'Ataque';
         banner.classList.remove('hidden');
       } else {
         banner.classList.add('hidden');
@@ -995,9 +1069,9 @@
 
         if (!isGameOver) {
           currentTurn = 'b';
-          document.getElementById('chessTurnBadge').textContent = 'El Rival medita...';
+          document.getElementById('chessTurnBadge').textContent = 'El Gran Maestro calcula...';
           document.getElementById('chessTurnBadge').className = 'text-xs font-mono px-3 py-1 rounded-full border border-zinc-700 bg-zinc-800 text-zinc-400 font-semibold';
-          setTimeout(runBotEngine, 500);
+          setTimeout(runBotEngine, 450);
         }
         return;
       }
@@ -1026,12 +1100,9 @@
 
       if (moving === 'wP' && toR === 0) boardState[toR][toC] = 'wQ';
       if (moving === 'bP' && toR === 7) boardState[toR][toC] = 'bQ';
-
-      const thought = STOIC_CHESS_THOUGHTS[Math.floor(Math.random() * STOIC_CHESS_THOUGHTS.length)];
-      document.getElementById('chessStoicThought').textContent = thought.text;
-      document.getElementById('chessAuthorRef').textContent = `— ${thought.author}`;
     }
 
+    // Evaluación Posicional Completa
     function evaluateBoardScore(board) {
       let score = 0;
       for (let r = 0; r < 8; r++) {
@@ -1039,14 +1110,58 @@
           const p = board[r][c];
           if (!p) continue;
           const val = PIECE_VALUES[p[1]] || 0;
-          const centerBonus = (3.5 - Math.abs(3.5 - r)) + (3.5 - Math.abs(3.5 - c));
-          const totalVal = val + (p[1] === 'P' ? centerBonus * 0.5 : centerBonus * 0.2);
+          let pstBonus = 0;
 
-          if (p.startsWith('b')) score += totalVal;
-          else score -= totalVal;
+          if (p[1] === 'P') pstBonus = PAWN_PST[r][c];
+          if (p[1] === 'N') pstBonus = KNIGHT_PST[r][c];
+
+          const total = val + pstBonus;
+
+          if (p.startsWith('b')) score += total;
+          else score -= total;
         }
       }
       return score;
+    }
+
+    // Minimax con poda Alfa-Beta (Profundidad 3)
+    function minimax(board, depth, alpha, beta, isMaximizing) {
+      if (depth === 0) {
+        return evaluateBoardScore(board);
+      }
+
+      const moves = getAllLegalMoves(board, isMaximizing ? 'b' : 'w');
+      if (moves.length === 0) {
+        const inCheck = isKingInCheck(board, isMaximizing ? 'b' : 'w');
+        if (inCheck) return isMaximizing ? -99999 + (3 - depth) : 99999 - (3 - depth);
+        return 0; // Tablas
+      }
+
+      if (isMaximizing) {
+        let maxEval = -Infinity;
+        for (let m of moves) {
+          const sim = cloneBoard(board);
+          sim[m.toR][m.toC] = sim[m.fromR][m.fromC];
+          sim[m.fromR][m.fromC] = '';
+          const ev = minimax(sim, depth - 1, alpha, beta, false);
+          maxEval = Math.max(maxEval, ev);
+          alpha = Math.max(alpha, ev);
+          if (beta <= alpha) break;
+        }
+        return maxEval;
+      } else {
+        let minEval = Infinity;
+        for (let m of moves) {
+          const sim = cloneBoard(board);
+          sim[m.toR][m.toC] = sim[m.fromR][m.fromC];
+          sim[m.fromR][m.fromC] = '';
+          const ev = minimax(sim, depth - 1, alpha, beta, true);
+          minEval = Math.min(minEval, ev);
+          beta = Math.min(beta, ev);
+          if (beta <= alpha) break;
+        }
+        return minEval;
+      }
     }
 
     function runBotEngine() {
@@ -1060,53 +1175,39 @@
       let chosenMove = null;
 
       if (currentDifficulty === 'easy') {
-        if (Math.random() < 0.65) {
-          chosenMove = allMoves[Math.floor(Math.random() * allMoves.length)];
-        } else {
-          const captures = allMoves.filter(m => boardState[m.toR][m.toC].startsWith('w'));
-          chosenMove = captures.length > 0 ? captures[0] : allMoves[Math.floor(Math.random() * allMoves.length)];
-        }
+        chosenMove = allMoves[Math.floor(Math.random() * allMoves.length)];
       } else if (currentDifficulty === 'medium') {
         let bestScore = -Infinity;
         allMoves.forEach(m => {
           const sim = cloneBoard(boardState);
           sim[m.toR][m.toC] = sim[m.fromR][m.fromC];
           sim[m.fromR][m.fromC] = '';
-          let score = evaluateBoardScore(sim);
-          if (isKingInCheck(sim, 'w')) score += 15;
-          if (score > bestScore) {
-            bestScore = score;
+          let sc = evaluateBoardScore(sim);
+          if (sc > bestScore) {
+            bestScore = sc;
             chosenMove = m;
           }
         });
       } else if (currentDifficulty === 'supreme') {
         let bestScore = -Infinity;
-        allMoves.forEach(m1 => {
-          const sim1 = cloneBoard(boardState);
-          sim1[m1.toR][m1.toC] = sim1[m1.fromR][m1.fromC];
-          sim1[m1.fromR][m1.fromC] = '';
-
-          const whiteResponses = getAllLegalMoves(sim1, 'w');
-          let worstWhiteScore = Infinity;
-
-          if (whiteResponses.length === 0) {
-            if (isKingInCheck(sim1, 'w')) worstWhiteScore = 9999;
-            else worstWhiteScore = 0;
-          } else {
-            whiteResponses.forEach(m2 => {
-              const sim2 = cloneBoard(sim1);
-              sim2[m2.toR][m2.toC] = sim2[m2.fromR][m2.fromC];
-              sim2[m2.fromR][m2.fromC] = '';
-              const score = evaluateBoardScore(sim2);
-              if (score < worstWhiteScore) worstWhiteScore = score;
-            });
-          }
-
-          if (worstWhiteScore > bestScore) {
-            bestScore = worstWhiteScore;
-            chosenMove = m1;
-          }
+        // Ordenamiento previo de jugadas para podar más rápido
+        allMoves.sort((a, b) => {
+          const targetA = boardState[a.toR][a.toC] ? PIECE_VALUES[boardState[a.toR][a.toC][1]] || 0 : 0;
+          const targetB = boardState[b.toR][b.toC] ? PIECE_VALUES[boardState[b.toR][b.toC][1]] || 0 : 0;
+          return targetB - targetA;
         });
+
+        for (let m of allMoves) {
+          const sim = cloneBoard(boardState);
+          sim[m.toR][m.toC] = sim[m.fromR][m.fromC];
+          sim[m.fromR][m.fromC] = '';
+          
+          let score = minimax(sim, 2, -Infinity, Infinity, false);
+          if (score > bestScore) {
+            bestScore = score;
+            chosenMove = m;
+          }
+        }
       }
 
       if (!chosenMove) chosenMove = allMoves[0];
@@ -1143,24 +1244,61 @@
     }
 
     // =========================================================================
-    // 3. CORPUS CANÓNICO & ORÁCULO
+    // 3. CORPUS UNIVERSAL DE SABIDURÍA (PLATÓN, EINSTEIN, TESLA, NIETZSCHE)
     // =========================================================================
-    const STOIC_CORPUS = [
-      { id: 1, author: "Epicteto", source: "Enquiridión V", quote: "No nos perturban las cosas que suceden, sino la opinión y el juicio que nos formamos acerca de ellas." },
-      { id: 2, author: "Marco Aurelio", source: "Meditaciones IV, 3", quote: "En ninguna parte puede hallar el hombre un retiro más apacible y tranquilo que en la intimidad de su propia alma." },
-      { id: 3, author: "Séneca", source: "De la Brevedad de la Vida I", quote: "No recibimos una vida corta, sino que la hacemos tal; y no somos pobres de tiempo, sino pródigos en desperdiciarlo." },
-      { id: 4, author: "Musonio Rufo", source: "Disertaciones V", quote: "Si logras algo bueno con esfuerzo, el esfuerzo pasa pronto, pero el bien permanece." }
+    const UNIVERSAL_CORPUS = [
+      // Estoicos
+      { id: 1, author: "Epicteto", source: "Enquiridión V", category: "estoicismo", quote: "No nos perturban las cosas que suceden, sino la opinión y el juicio que nos formamos acerca de ellas." },
+      { id: 2, author: "Marco Aurelio", source: "Meditaciones IV, 3", category: "estoicismo", quote: "En ninguna parte puede hallar el hombre un retiro más apacible y sereno que en la intimidad de su propia alma." },
+      { id: 3, author: "Séneca", source: "De la Brevedad de la Vida I", category: "estoicismo", quote: "No recibimos una vida corta, sino que la hacemos tal; y no somos pobres de tiempo, sino pródigos en desperdiciarlo." },
+
+      // Filosofía Clásica & Platón
+      { id: 4, author: "Platón", source: "La República, Libro VII", category: "filosofia", quote: "Podemos perdonar fácilmente a un niño que tiene miedo de la oscuridad; la verdadera tragedia de la vida es cuando los hombres tienen miedo de la luz." },
+      { id: 5, author: "Platón", source: "Fedón", category: "filosofia", quote: "La conquista de uno mismo es la mayor de todas las victorias; ser conquistado por uno mismo es la más vergonzosa y vil de las derrotas." },
+      { id: 6, author: "Sócrates", source: "Apología por Platón", category: "filosofia", quote: "Una vida que no se somete a examen crítico constante no merece la pena de ser vivida." },
+
+      // Ciencia, Realidad & Genio Creativo
+      { id: 7, author: "Albert Einstein", source: "Ideas y Opiniones", category: "ciencia", quote: "La mente intuitiva es un regalo sagrado y la mente racional es un sirviente fiel. Hemos creado una sociedad que honra al sirviente y ha olvidado el regalo." },
+      { id: 8, author: "Albert Einstein", source: "Correspondencia a Michele Besso", category: "ciencia", quote: "La realidad no es más que una ilusión, aunque ciertamente muy persistente. Quien comprende esto camina con ligereza." },
+      { id: 9, author: "Nikola Tesla", source: "Mis Invenciones", category: "ciencia", quote: "Si quieres encontrar los verdaderos secretos del universo, piensa en términos de energía, frecuencia y vibración." },
+      { id: 10, author: "Nikola Tesla", source: "Entrevista de 1934", category: "ciencia", quote: "El cerebro humano es solo un receptor; en el cosmos existe un núcleo del cual obtenemos conocimiento, fuerza e inspiración." },
+
+      // Existencialismo & Resiliencia
+      { id: 11, author: "Viktor Frankl", source: "El Hombre en Busca de Sentido", category: "resiliencia", quote: "A un hombre le pueden robar todo excepto la última de las libertades humanas: la elección de su actitud ante cualquier circunstancia dada." },
+      { id: 12, author: "Friedrich Nietzsche", source: "El Crepúsculo de los Ídolos", category: "resiliencia", quote: "Aquel que tiene un 'porqué' para vivir, puede soportar casi cualquier 'cómo'." },
+      { id: 13, author: "Carl Gustav Jung", source: "Recuerdos, Sueños, Pensamientos", category: "resiliencia", quote: "Hasta que no hagas consciente lo inconsciente, este dirigirá tu vida y tú lo llamarás destino." },
+      { id: 14, author: "Arthur Schopenhauer", source: "Aforismos sobre el Arte de Vivir", category: "filosofia", quote: "Lo que un hombre es por sí mismo en la soledad es lo que mejor revela la dignidad de su existencia." }
     ];
 
-    const ORACLE_DATA = {
-      ansiedad: { author: "Séneca", source: "Epístolas XIII", quote: "Sufrimos más a menudo en la imaginación que en la realidad.", prep: "No anticipes el desastre; vive el presente con dignidad." },
-      ira: { author: "Marco Aurelio", source: "Meditaciones VI", quote: "La mejor venganza es no ser como aquel que causó la ofensa.", prep: "Responde a la ofensa con templanza; no concedas poder al agresor." },
-      desgano: { author: "Musonio Rufo", source: "Disertaciones V", quote: "El esfuerzo noble pasa pronto, pero la virtud permanece.", prep: "Comienza con diez minutos de tu labor ahora mismo." },
-      perdida: { author: "Epicteto", source: "Enquiridión XI", quote: "Nunca digas lo he perdido, sino lo he devuelto.", prep: "Agradece lo vivido y reconoce el préstamo universal." }
+    const ORACLE_EXTENDED = {
+      ansiedad: { 
+        author: "Séneca & Einstein", 
+        source: "Epístolas XIII / Correspondencia", 
+        quote: "Hay más cosas que nos aterran que las que nos destruyen. El tiempo es una construcción relativa: no sufras hoy por un fantasma del porvenir.", 
+        prep: "Concéntrate exclusivamente en el experimento del presente. Devuelve la incertidumbre a su nada teórica." 
+      },
+      verdad: { 
+        author: "Platón & Nikola Tesla", 
+        source: "Mito de la Caverna / Escritos", 
+        quote: "Las sombras de la opinión ajena en la pared no son la realidad. Sintoniza la frecuencia de tu propia razón y busca la fuente original.", 
+        prep: "No creas lo que se dice por consenso. Pregúntate cuál es la causa fundamental de este fenómeno." 
+      },
+      voluntad: { 
+        author: "Viktor Frankl & Nietzsche", 
+        source: "Logoterapia / La Gaya Ciencia", 
+        quote: "No preguntes qué espera la vida de ti, sino qué sentido le otorgas tú a la adversidad. Amor Fati: abraza tu combate.", 
+        prep: "Toma el problema que te agobia y transfórmalo en tu deber cívico o tu entrenamiento de temple." 
+      },
+      ira: { 
+        author: "Marco Aurelio & Carl Jung", 
+        source: "Meditaciones VI / Arquetipos", 
+        quote: "Lo que te irrita de otros suele ser el reflejo de tu propia sombra no reconciliada. No te vuelvas semejante al agresor.", 
+        prep: "Guarda 10 respiraciones completas antes de hablar. El agravio pierde toda fuerza si no le otorgas tu asentimiento." 
+      }
     };
 
-    function consultOracle(type) {
-      const data = ORACLE_DATA[type];
+    function consultOracle(key) {
+      const data = ORACLE_EXTENDED[key];
       if (!data) return;
       document.getElementById('oraclePhilosopher').textContent = data.author;
       document.getElementById('oracleSource').textContent = data.source;
@@ -1170,46 +1308,58 @@
       addXp(15, "Consulta al Oráculo");
     }
 
-    const COSMIC_STEPS = [
-      { scale: "NIVEL I • TU CÁMARA", desc: "Siente el espacio que habitas. Tu problema llena todo tu campo porque miras demasiado cerca.", prompt: "¿Es tan grande si te apartas un paso?" },
-      { scale: "NIVEL II • LA POLIS", desc: "Mira los tejados de tu ciudad. Cientos de miles viven sus propias alegrías y dolores en este mismo segundo.", prompt: "¿No es tu queja una más entre infinitas voces?" },
-      { scale: "NIVEL III • EL PLANETA", desc: "El orbe azul suspendido en la noche fría del cosmos. Fronteras y honores son invisibles desde las alturas.", prompt: "¿Qué peso tiene tu vanidad ante la inmensidad?" },
-      { scale: "NIVEL IV • LA ETERNIDAD", desc: "Generaciones y reinos han desaparecido sin dejar rastro. La corriente de los siglos todo lo allana.", prompt: "Respira hondo y cumple rectamente tu papel hoy." }
-    ];
+    let activeCorpusCat = 'todos';
 
-    function setCosmicView(idx) {
-      for (let i = 0; i < 4; i++) {
-        document.getElementById(`cosmicBtn${i}`).className = i === idx 
-          ? 'py-2 px-3 rounded-xl border border-brand-gold bg-brand-gold/10 text-brand-gold text-xs font-mono transition'
-          : 'py-2 px-3 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim text-zinc-400 text-xs font-mono transition';
-      }
-      document.getElementById('cosmicScale').textContent = COSMIC_STEPS[idx].scale;
-      document.getElementById('cosmicDescription').textContent = COSMIC_STEPS[idx].desc;
-      document.getElementById('cosmicPrompt').textContent = COSMIC_STEPS[idx].prompt;
-      unlockBadge('calm-mind');
+    function setCorpusCategory(cat) {
+      activeCorpusCat = cat;
+      document.querySelectorAll('.cat-pill').forEach(btn => {
+        const match = btn.textContent.toLowerCase().includes(cat) || (cat === 'todos' && btn.textContent === 'Todos');
+        if (match) {
+          btn.className = 'cat-pill px-3 py-1 rounded-full bg-brand-gold text-brand-obsidian font-bold transition';
+        } else {
+          btn.className = 'cat-pill px-3 py-1 rounded-full bg-brand-surfaceDim border border-zinc-700 hover:border-brand-gold text-zinc-300 transition';
+        }
+      });
+      filterCorpus();
     }
 
     function filterCorpus() {
       const q = document.getElementById('corpusSearchInput').value.toLowerCase().trim();
       const grid = document.getElementById('corpusCardsGrid');
       grid.innerHTML = '';
-      STOIC_CORPUS.filter(i => i.quote.toLowerCase().includes(q) || i.author.toLowerCase().includes(q)).forEach(item => {
+
+      const filtered = UNIVERSAL_CORPUS.filter(item => {
+        const matchesCat = activeCorpusCat === 'todos' || item.category === activeCorpusCat;
+        const matchesQ = !q || item.quote.toLowerCase().includes(q) || item.author.toLowerCase().includes(q) || item.source.toLowerCase().includes(q);
+        return matchesCat && matchesQ;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-2 text-xs text-zinc-500 italic text-center py-6">No se encontraron sentencias con ese criterio.</div>`;
+        return;
+      }
+
+      filtered.forEach(item => {
         const el = document.createElement('div');
-        el.className = 'p-4 rounded-2xl bg-brand-surfaceDim border border-brand-surfaceBorder space-y-2';
+        el.className = 'p-4 rounded-2xl bg-brand-surfaceDim border border-brand-surfaceBorder space-y-2 hover:border-brand-gold/50 transition';
         el.innerHTML = `
-          <div class="flex justify-between text-[11px] font-mono"><span class="text-brand-gold font-bold">${item.author}</span><span class="text-zinc-500">${item.source}</span></div>
-          <p class="text-xs text-zinc-200 italic font-serif">«${item.quote}»</p>
+          <div class="flex justify-between items-center text-[11px] font-mono">
+            <span class="text-brand-gold font-bold">${item.author}</span>
+            <span class="text-zinc-500 uppercase">${item.source}</span>
+          </div>
+          <p class="text-xs text-zinc-200 italic font-serif leading-relaxed">«${item.quote}»</p>
         `;
         grid.appendChild(el);
       });
     }
 
     function randomizeDailyQuote() {
-      const q = STOIC_CORPUS[Math.floor(Math.random() * STOIC_CORPUS.length)];
+      const q = UNIVERSAL_CORPUS[Math.floor(Math.random() * UNIVERSAL_CORPUS.length)];
+      document.getElementById('dailyCategory').textContent = `SABIDURÍA • ${q.category.toUpperCase()}`;
       document.getElementById('dailyQuoteText').textContent = `“${q.quote}”`;
       document.getElementById('dailyAuthor').textContent = q.author;
       document.getElementById('dailySource').textContent = q.source;
-      addXp(15, "Lectura de Máxima");
+      addXp(15, "Lectura de Sentencia");
       unlockBadge('first-step');
     }
 
@@ -1268,7 +1418,7 @@
       fetchWeather(k);
     }
 
-    // Inicializaciones al cargar el DOM
+    // Inicializaciones
     document.addEventListener('DOMContentLoaded', () => {
       const savedCity = localStorage.getItem('ataraxia_user_city') || 'mendoza';
       const select = document.getElementById('citySelect');
