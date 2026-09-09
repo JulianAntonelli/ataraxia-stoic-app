@@ -3,14 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ataraxia — Filosofía Vivida | Muro Estoico</title>
-  <!-- Tailwind CSS CDN -->
+  <title>Ataraxia — Filosofía Vivida | Portal Estoico</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
     tailwind.config = {
@@ -38,15 +35,8 @@
     }
   </script>
   <style>
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 5.5rem;
-    }
-    body {
-      background-color: #0d0e11;
-      color: #e4e4e7;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
+    html { scroll-behavior: smooth; scroll-padding-top: 5.5rem; }
+    body { background-color: #0d0e11; color: #e4e4e7; font-family: 'Plus Jakarta Sans', sans-serif; }
     .gold-text-gradient {
       background: linear-gradient(135deg, #f3deab 0%, #c5a059 50%, #937537 100%);
       -webkit-background-clip: text;
@@ -61,9 +51,9 @@
 <body class="min-h-screen flex flex-col bg-[#0d0e11] text-zinc-200">
 
   <!-- Header Superior Fijo -->
-  <header class="border-b border-brand-surfaceBorder bg-brand-surface/90 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-8">
+  <header class="border-b border-brand-surfaceBorder bg-brand-surface/95 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-6">
         <a href="#muro" class="flex items-center gap-3 group" onclick="handleNavClick(event, 'muro')">
           <div class="w-9 h-9 rounded-lg border border-brand-gold/40 flex items-center justify-center bg-brand-gold/10 text-brand-gold group-hover:border-brand-gold transition">
             <i data-lucide="landmark" class="w-5 h-5"></i>
@@ -74,13 +64,10 @@
           </div>
         </a>
 
-        <!-- Navegación Superior -->
-        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <!-- Navegación Desktop -->
+        <nav class="hidden lg:flex items-center gap-5 text-sm font-medium">
           <a href="#muro" data-target="muro" onclick="handleNavClick(event, 'muro')" class="nav-link text-brand-gold flex items-center gap-2 border-b-2 border-brand-gold pb-1 pt-1 font-semibold transition-all">
             <i data-lucide="scroll" class="w-4 h-4"></i> Muro
-          </a>
-          <a href="#historias" data-target="historias" onclick="handleNavClick(event, 'historias')" class="nav-link text-zinc-400 hover:text-zinc-200 transition-colors flex items-center gap-2 pb-1 pt-1 border-b-2 border-transparent">
-            <i data-lucide="waves" class="w-4 h-4"></i> Historias
           </a>
           <a href="#meditaciones" data-target="meditaciones" onclick="handleNavClick(event, 'meditaciones')" class="nav-link text-zinc-400 hover:text-zinc-200 transition-colors flex items-center gap-2 pb-1 pt-1 border-b-2 border-transparent">
             <i data-lucide="book-open" class="w-4 h-4"></i> Meditaciones
@@ -91,56 +78,85 @@
           <a href="#dicotomia" data-target="dicotomia" onclick="handleNavClick(event, 'dicotomia')" class="nav-link text-zinc-400 hover:text-zinc-200 transition-colors flex items-center gap-2 pb-1 pt-1 border-b-2 border-transparent">
             <i data-lucide="scale" class="w-4 h-4"></i> Dicotomía
           </a>
-          <a href="epicteto.html" class="text-zinc-400 hover:text-brand-gold transition-colors flex items-center gap-1.5 pb-1 pt-1 text-xs font-mono border border-zinc-700 hover:border-brand-gold/50 px-2.5 py-1 rounded-full">
-            <span>Epicteto</span>
-            <i data-lucide="external-link" class="w-3 h-3"></i>
+          <a href="#mementomori" data-target="mementomori" onclick="handleNavClick(event, 'mementomori')" class="nav-link text-zinc-400 hover:text-zinc-200 transition-colors flex items-center gap-2 pb-1 pt-1 border-b-2 border-transparent">
+            <i data-lucide="hourglass" class="w-4 h-4"></i> Memento Mori
           </a>
         </nav>
       </div>
 
-      <!-- Selector de Ciudad & Racha -->
-      <div class="flex items-center gap-3">
-        <!-- Selector interactivo de Ciudad y Clima -->
-        <div class="relative flex items-center">
-          <div class="flex items-center gap-1.5 bg-brand-surfaceDim border border-brand-surfaceBorder rounded-full px-2.5 py-1 text-xs font-mono text-zinc-300 shadow-inner">
-            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-gold"></i>
-            <select id="citySelect" onchange="changeCity(this.value)" class="bg-transparent text-xs text-zinc-200 outline-none cursor-pointer pr-1 font-sans font-medium">
-              <option value="mendoza" class="bg-brand-surfaceCard text-zinc-200">Mendoza</option>
-              <option value="buenosaires" class="bg-brand-surfaceCard text-zinc-200">Buenos Aires</option>
-              <option value="santiago" class="bg-brand-surfaceCard text-zinc-200">Santiago</option>
-              <option value="madrid" class="bg-brand-surfaceCard text-zinc-200">Madrid</option>
-              <option value="rome" class="bg-brand-surfaceCard text-zinc-200">Roma</option>
-              <option value="athens" class="bg-brand-surfaceCard text-zinc-200">Atenas</option>
-            </select>
-            <span class="text-zinc-600">|</span>
-            <span id="weatherTemp" class="text-brand-gold font-mono font-semibold">--°C</span>
-          </div>
+      <!-- Acciones de Cabecera -->
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        <!-- Selector Clima -->
+        <div class="flex items-center gap-1.5 bg-brand-surfaceDim border border-brand-surfaceBorder rounded-full px-2.5 py-1 text-xs font-mono text-zinc-300">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-gold"></i>
+          <select id="citySelect" onchange="changeCity(this.value)" class="bg-transparent text-xs text-zinc-200 outline-none cursor-pointer">
+            <option value="mendoza" class="bg-brand-surfaceCard">Mendoza</option>
+            <option value="buenosaires" class="bg-brand-surfaceCard">Buenos Aires</option>
+            <option value="santiago" class="bg-brand-surfaceCard">Santiago</option>
+            <option value="madrid" class="bg-brand-surfaceCard">Madrid</option>
+            <option value="rome" class="bg-brand-surfaceCard">Roma</option>
+            <option value="athens" class="bg-brand-surfaceCard">Atenas</option>
+          </select>
+          <span class="text-zinc-600">|</span>
+          <span id="weatherTemp" class="text-brand-gold font-semibold">--°C</span>
         </div>
 
-        <div class="flex items-center gap-2 px-3 py-1 rounded-full border border-brand-gold/30 bg-brand-gold/10 text-brand-gold text-xs font-semibold">
-          <i data-lucide="flame" class="w-4 h-4 fill-brand-gold"></i>
-          <span class="hidden sm:inline">14 d racha</span>
+        <!-- Botón Examen Nocturno -->
+        <button onclick="toggleJournalModal(true)" class="p-1.5 sm:px-3 sm:py-1 rounded-full border border-brand-gold/40 bg-brand-gold/10 hover:bg-brand-gold/20 text-brand-gold text-xs font-semibold flex items-center gap-1.5 transition" title="Examen de Conciencia Nocturno">
+          <i data-lucide="feather" class="w-4 h-4"></i>
+          <span class="hidden md:inline">Diario</span>
+        </button>
+
+        <!-- Botón Menú Mobile -->
+        <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg border border-brand-surfaceBorder bg-brand-surfaceCard text-zinc-300 hover:text-brand-gold transition">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menú Drawer Mobile -->
+    <div id="mobileDrawer" class="hidden lg:hidden border-b border-brand-surfaceBorder bg-brand-surfaceDim px-6 py-4 space-y-3">
+      <nav class="flex flex-col space-y-2 text-sm">
+        <a href="#muro" onclick="handleNavClick(event, 'muro')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
+          <i data-lucide="scroll" class="w-4 h-4"></i> Muro Principal
+        </a>
+        <a href="#meditaciones" onclick="handleNavClick(event, 'meditaciones')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
+          <i data-lucide="book-open" class="w-4 h-4"></i> Meditaciones & Buscador
+        </a>
+        <a href="#pausa" onclick="handleNavClick(event, 'pausa')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
+          <i data-lucide="sun" class="w-4 h-4"></i> Pausa de Claridad
+        </a>
+        <a href="#dicotomia" onclick="handleNavClick(event, 'dicotomia')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
+          <i data-lucide="scale" class="w-4 h-4"></i> Dicotomía del Control
+        </a>
+        <a href="#mementomori" onclick="handleNavClick(event, 'mementomori')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
+          <i data-lucide="hourglass" class="w-4 h-4"></i> Memento Mori
+        </a>
+      </nav>
+      <div class="pt-3 border-t border-brand-surfaceBorder flex items-center justify-between text-xs font-mono">
+        <span class="text-zinc-500">Perfiles Estoicos:</span>
+        <div class="flex gap-2">
+          <a href="epicteto.html" class="text-brand-gold hover:underline">Epicteto</a> •
+          <a href="marco-aurelio.html" class="text-brand-gold hover:underline">Marco Aurelio</a> •
+          <a href="seneca.html" class="text-brand-gold hover:underline">Séneca</a>
         </div>
       </div>
     </div>
   </header>
 
   <!-- Layout Principal -->
-  <div class="max-w-7xl mx-auto px-6 py-8 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8">
     
     <!-- Barra Lateral Izquierda -->
-    <aside class="hidden lg:block lg:col-span-2 space-y-6">
+    <aside class="hidden lg:block lg:col-span-3 space-y-6">
       <div class="sticky top-24 space-y-6">
         <div class="text-[11px] font-mono tracking-widest text-zinc-500 uppercase px-3">Praxis Diaria</div>
         <nav class="space-y-1">
           <a href="#muro" data-target="muro" onclick="handleNavClick(event, 'muro')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-lg bg-brand-gold text-zinc-950 font-semibold text-sm shadow-sm transition">
             <i data-lucide="columns-2" class="w-4 h-4"></i> Muro Principal
           </a>
-          <a href="#historias" data-target="historias" onclick="handleNavClick(event, 'historias')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
-            <i data-lucide="waves" class="w-4 h-4"></i> Historias
-          </a>
           <a href="#meditaciones" data-target="meditaciones" onclick="handleNavClick(event, 'meditaciones')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
-            <i data-lucide="scroll" class="w-4 h-4"></i> Meditaciones
+            <i data-lucide="search" class="w-4 h-4"></i> Citas & Buscador
           </a>
           <a href="#pausa" data-target="pausa" onclick="handleNavClick(event, 'pausa')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
             <i data-lucide="flower-2" class="w-4 h-4"></i> Pausa de Claridad
@@ -148,21 +164,49 @@
           <a href="#dicotomia" data-target="dicotomia" onclick="handleNavClick(event, 'dicotomia')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
             <i data-lucide="scale" class="w-4 h-4"></i> Dicotomía
           </a>
-          <a href="epicteto.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-brand-gold hover:bg-brand-surfaceHighlight text-sm transition">
-            <i data-lucide="compass" class="w-4 h-4"></i> Perfil Epicteto
+          <a href="#mementomori" data-target="mementomori" onclick="handleNavClick(event, 'mementomori')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
+            <i data-lucide="hourglass" class="w-4 h-4"></i> Memento Mori
           </a>
         </nav>
 
-        <div class="p-4 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceDim text-xs space-y-3">
-          <div class="text-brand-gold font-serif italic text-sm">"No nos afecta lo que sucede, sino lo que pensamos acerca de lo que sucede."</div>
-          <div class="text-[11px] text-zinc-500 text-right font-mono">— EPICTETO</div>
+        <!-- Canon Filosófico -->
+        <div class="p-4 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceCard text-xs space-y-3">
+          <div class="text-[10px] font-mono uppercase tracking-wider text-zinc-500">CANON DE LOS SABIOS</div>
+          <div class="space-y-1.5">
+            <a href="epicteto.html" class="flex items-center justify-between text-zinc-300 hover:text-brand-gold py-1 transition border-b border-brand-surfaceBorder/40">
+              <span>Epicteto (Liberto)</span>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </a>
+            <a href="marco-aurelio.html" class="flex items-center justify-between text-zinc-300 hover:text-brand-gold py-1 transition border-b border-brand-surfaceBorder/40">
+              <span>Marco Aurelio (Emperador)</span>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </a>
+            <a href="seneca.html" class="flex items-center justify-between text-zinc-300 hover:text-brand-gold py-1 transition">
+              <span>Séneca (El Estadista)</span>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Botones de Respaldo de Datos -->
+        <div class="p-4 rounded-xl border border-dashed border-zinc-800 bg-brand-surfaceDim text-[11px] space-y-2">
+          <div class="text-zinc-400 font-mono">Gestión de Registros:</div>
+          <div class="flex gap-2">
+            <button onclick="exportUserData()" class="flex-1 py-1.5 px-2 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-center transition flex items-center justify-center gap-1">
+              <i data-lucide="download" class="w-3 h-3"></i> Exportar
+            </button>
+            <label class="flex-1 py-1.5 px-2 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-center cursor-pointer transition flex items-center justify-center gap-1">
+              <i data-lucide="upload" class="w-3 h-3"></i> Importar
+              <input type="file" accept=".json" onchange="importUserData(event)" class="hidden">
+            </label>
+          </div>
         </div>
       </div>
     </aside>
 
-    <!-- Centro: Feed Principal -->
-    <main class="lg:col-span-7 space-y-12">
-      <!-- SECCIÓN 1: MURO / KAIROS -->
+    <!-- Feed Central Principal -->
+    <main class="lg:col-span-9 space-y-12">
+      <!-- SECCIÓN 1: MURO / RELOJ KAIROS -->
       <section id="muro" class="scroll-target scroll-mt-24 border border-brand-surfaceBorder bg-gradient-to-r from-brand-surface to-brand-surfaceCard rounded-2xl p-6 relative overflow-hidden shadow-sm">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-brand-surfaceBorder/60 pb-5">
           <div class="flex items-center gap-3">
@@ -183,62 +227,73 @@
         </div>
       </section>
 
-      <!-- SECCIÓN 2: HISTORIAS DE LOS SABIOS -->
+      <!-- SECCIÓN 2: HISTORIAS DE LOS SABIOS (AUDIO NATIVO) -->
       <section id="historias" class="scroll-target scroll-mt-24 space-y-3">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-zinc-400">
             <i data-lucide="waves" class="w-4 h-4 text-brand-gold"></i> <span>Historias de los Sabios</span>
           </div>
-          <span class="text-[11px] font-mono text-brand-gold bg-brand-gold/10 px-2.5 py-0.5 rounded-full border border-brand-gold/20">Audio 60s • Nuevas hoy</span>
+          <span class="text-[11px] font-mono text-brand-gold bg-brand-gold/10 px-2.5 py-0.5 rounded-full border border-brand-gold/20">Síntesis Vocal Integrada</span>
         </div>
-        <div class="grid grid-cols-3 sm:grid-cols-4 gap-3">
-          <div class="p-3 rounded-xl border border-dashed border-zinc-700 bg-brand-surfaceDim flex flex-col items-center justify-center text-center cursor-pointer hover:border-brand-gold transition group">
-            <div class="w-10 h-10 rounded-full bg-brand-surfaceCard border border-zinc-700 group-hover:border-brand-gold flex items-center justify-center text-zinc-400 mb-2 transition">
-              <i data-lucide="mic" class="w-5 h-5 text-brand-gold"></i>
-            </div>
-            <div class="text-xs font-semibold text-zinc-200">Tu Reflexión</div>
-            <div class="text-[10px] text-zinc-500 font-mono">Grabar</div>
-          </div>
-          <div class="p-3 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceCard flex flex-col items-center text-center cursor-pointer hover:border-brand-gold transition">
-            <div class="w-10 h-10 rounded-full ring-2 ring-brand-gold/50 overflow-hidden mb-2">
-              <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=100&auto=format&fit=crop&q=80" alt="Marco Aurelio" class="w-full h-full object-cover">
-            </div>
-            <div class="text-xs font-semibold text-zinc-200">M. Aurelio</div>
-            <div class="text-[10px] text-brand-gold font-mono">1:20m</div>
-          </div>
-          <div class="p-3 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceCard flex flex-col items-center text-center cursor-pointer hover:border-brand-gold transition">
-            <div class="w-10 h-10 rounded-full ring-2 ring-brand-gold/50 overflow-hidden mb-2">
-              <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=100&auto=format&fit=crop&q=80" alt="Séneca" class="w-full h-full object-cover">
-            </div>
-            <div class="text-xs font-semibold text-zinc-200">Séneca</div>
-            <div class="text-[10px] text-brand-gold font-mono">2:05m</div>
-          </div>
-          <a href="epicteto.html" class="p-3 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceCard flex flex-col items-center text-center cursor-pointer hover:border-brand-gold transition block">
-            <div class="w-10 h-10 rounded-full ring-2 ring-brand-gold/50 overflow-hidden mb-2">
-              <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=100&auto=format&fit=crop&q=80" alt="Epicteto" class="w-full h-full object-cover">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <button onclick="playPhilosopherAudio('epicteto')" class="p-3 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceCard flex flex-col items-center text-center hover:border-brand-gold transition group">
+            <div class="w-11 h-11 rounded-full ring-2 ring-brand-gold/40 overflow-hidden mb-2 relative">
+              <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=120&auto=format&fit=crop&q=80" alt="Epicteto" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                <i data-lucide="play" class="w-4 h-4 text-brand-gold"></i>
+              </div>
             </div>
             <div class="text-xs font-semibold text-zinc-200">Epicteto</div>
-            <div class="text-[10px] text-brand-gold font-mono">Perfil →</div>
-          </a>
+            <div class="text-[10px] text-brand-gold font-mono">Escuchar Voz</div>
+          </button>
+
+          <button onclick="playPhilosopherAudio('marco')" class="p-3 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceCard flex flex-col items-center text-center hover:border-brand-gold transition group">
+            <div class="w-11 h-11 rounded-full ring-2 ring-brand-gold/40 overflow-hidden mb-2 relative">
+              <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=120&auto=format&fit=crop&q=80" alt="Marco Aurelio" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                <i data-lucide="play" class="w-4 h-4 text-brand-gold"></i>
+              </div>
+            </div>
+            <div class="text-xs font-semibold text-zinc-200">Marco Aurelio</div>
+            <div class="text-[10px] text-brand-gold font-mono">Escuchar Voz</div>
+          </button>
+
+          <button onclick="playPhilosopherAudio('seneca')" class="p-3 rounded-xl border border-brand-surfaceBorder bg-brand-surfaceCard flex flex-col items-center text-center hover:border-brand-gold transition group">
+            <div class="w-11 h-11 rounded-full ring-2 ring-brand-gold/40 overflow-hidden mb-2 relative">
+              <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=120&auto=format&fit=crop&q=80" alt="Séneca" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                <i data-lucide="play" class="w-4 h-4 text-brand-gold"></i>
+              </div>
+            </div>
+            <div class="text-xs font-semibold text-zinc-200">Séneca</div>
+            <div class="text-[10px] text-brand-gold font-mono">Escuchar Voz</div>
+          </button>
+
+          <div onclick="toggleJournalModal(true)" class="p-3 rounded-xl border border-dashed border-zinc-700 bg-brand-surfaceDim flex flex-col items-center justify-center text-center cursor-pointer hover:border-brand-gold transition">
+            <div class="w-11 h-11 rounded-full bg-brand-surfaceCard border border-zinc-700 flex items-center justify-center text-zinc-400 mb-2">
+              <i data-lucide="feather" class="w-5 h-5 text-brand-gold"></i>
+            </div>
+            <div class="text-xs font-semibold text-zinc-200">Tu Diario</div>
+            <div class="text-[10px] text-zinc-500 font-mono">Escribir</div>
+          </div>
         </div>
       </section>
 
-      <!-- SECCIÓN 3: MEDITACIONES DIARIAS -->
+      <!-- SECCIÓN 3: MEDITACIONES DIARIAS & BUSCADOR TEMÁTICO -->
       <section id="meditaciones" class="scroll-target scroll-mt-24 space-y-6">
-        <!-- Tarjeta Principal Dinámica -->
+        <!-- Máxima del Día Determinista -->
         <article class="p-6 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-6 shadow-sm">
           <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-zinc-400 border-b border-brand-surfaceBorder/60 pb-3">
             <span id="dailyCategory" class="text-brand-gold uppercase tracking-wider font-semibold">MÁXIMA MATUTINA</span>
             <div class="flex items-center gap-3">
+              <button onclick="speakText(currentDailyQuote.quote, currentDailyQuote.author)" class="hover:text-brand-gold transition flex items-center gap-1">
+                <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+                <span>Escuchar</span>
+              </button>
               <button onclick="copyDailyQuote()" class="hover:text-brand-gold transition flex items-center gap-1">
                 <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                 <span id="copyBtnLabel">Copiar</span>
               </button>
-              <button onclick="shareDailyQuote()" class="hover:text-brand-gold transition flex items-center gap-1">
-                <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
-                <span>Compartir</span>
-              </button>
-              <span class="flex items-center gap-1.5"><i data-lucide="headphones" class="w-3.5 h-3.5 text-brand-gold"></i> Audio • 1:45 min</span>
             </div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
@@ -247,12 +302,12 @@
                 “Cargando máxima del día...”
               </blockquote>
               <div>
-                <a href="epicteto.html" id="dailyAuthor" class="text-sm font-semibold text-brand-gold hover:underline">Autor</a>
+                <a href="#" id="dailyAuthorLink" class="text-sm font-semibold text-brand-gold hover:underline">Autor</a>
                 <p id="dailySource" class="text-xs text-zinc-400 font-mono">Fuente histórica</p>
               </div>
             </div>
             <div class="md:col-span-5 rounded-xl overflow-hidden border border-brand-surfaceBorder aspect-[4/3] bg-brand-surfaceDim">
-              <img id="dailyImage" src="" alt="Filósofo Estoico" class="w-full h-full object-cover grayscale contrast-125 transition duration-500">
+              <img id="dailyImage" src="" alt="Filósofo Estoico" class="w-full h-full object-cover grayscale contrast-125">
             </div>
           </div>
           <div class="p-4 rounded-xl bg-brand-surfaceDim border border-brand-surfaceBorder/80 text-xs text-zinc-300 leading-relaxed">
@@ -263,132 +318,218 @@
           </div>
         </article>
 
-        <!-- Sub-cita 1 Dinámica -->
-        <article class="p-6 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-3">
-          <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span class="text-brand-gold uppercase tracking-wider font-semibold">AMOR FATI • GRATITUD MATUTINA</span>
-            <span id="subQuote1Ref" class="text-zinc-500">Referencia</span>
+        <!-- Buscador de Máximas por Tema / Etiqueta -->
+        <div class="p-6 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h3 class="font-serif text-lg font-bold text-zinc-100">Buscador Canónico</h3>
+              <p class="text-xs text-zinc-400">Encuentra orientación según tu estado anímico o desafío actual.</p>
+            </div>
+            <div class="relative w-full sm:w-64">
+              <input type="text" id="quoteSearchInput" oninput="filterQuotes()" placeholder="Buscar: ira, muerte, juicio..." class="w-full bg-brand-surfaceDim border border-brand-surfaceBorder rounded-xl pl-9 pr-3 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-brand-gold">
+              <i data-lucide="search" class="w-4 h-4 text-zinc-500 absolute left-3 top-2"></i>
+            </div>
           </div>
-          <blockquote id="subQuote1Text" class="font-serif text-lg sm:text-xl text-zinc-200 italic leading-snug">
-            Cargando reflexión...
-          </blockquote>
-          <div id="subQuote1Author" class="text-xs text-zinc-400 font-mono">— Autor</div>
-        </article>
 
-        <!-- Sub-cita 2 Dinámica -->
-        <article class="p-6 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-3">
-          <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span class="text-brand-gold uppercase tracking-wider font-semibold">PAZ MENTAL • SERENIDAD</span>
-            <span id="subQuote2Ref" class="text-zinc-500">Referencia</span>
+          <!-- Etiquetas rápidas -->
+          <div class="flex flex-wrap gap-2 pt-1">
+            <button onclick="setSearchFilter('')" class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-brand-gold/20 text-brand-gold hover:bg-brand-gold/30 transition">Todos</button>
+            <button onclick="setSearchFilter('control')" class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-brand-surfaceDim border border-zinc-700 hover:border-brand-gold text-zinc-300 transition">Control</button>
+            <button onclick="setSearchFilter('muerte')" class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-brand-surfaceDim border border-zinc-700 hover:border-brand-gold text-zinc-300 transition">Muerte</button>
+            <button onclick="setSearchFilter('tiempo')" class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-brand-surfaceDim border border-zinc-700 hover:border-brand-gold text-zinc-300 transition">Tiempo</button>
+            <button onclick="setSearchFilter('ansiedad')" class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-brand-surfaceDim border border-zinc-700 hover:border-brand-gold text-zinc-300 transition">Ansiedad</button>
           </div>
-          <blockquote id="subQuote2Text" class="font-serif text-lg sm:text-xl text-zinc-200 italic leading-snug">
-            Cargando reflexión...
-          </blockquote>
-          <div id="subQuote2Author" class="text-xs text-zinc-400 font-mono">— Autor</div>
-        </article>
+
+          <!-- Resultados de Búsqueda -->
+          <div id="searchResultsList" class="space-y-3 pt-2 max-h-72 overflow-y-auto pr-1"></div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 4: PAUSA DE CLARIDAD & DICOTOMÍA -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Pausa de Claridad con Síntesis de Sonido -->
+        <section id="pausa" class="scroll-target scroll-mt-24 p-6 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard text-center space-y-4">
+          <div class="w-10 h-10 mx-auto rounded-full bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold">
+            <i data-lucide="flower-2" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-serif text-base font-bold text-zinc-100">Pausa de Claridad</h3>
+            <p class="text-xs text-zinc-400 mt-1">60 segundos de respiración regulada con campana armónica.</p>
+          </div>
+          <div class="py-2">
+            <div id="clarityRing" class="w-24 h-24 mx-auto rounded-full border-2 border-brand-gold flex flex-col items-center justify-center bg-brand-surfaceDim transition-all duration-700">
+              <span id="clarityCounter" class="text-2xl font-bold font-mono text-brand-gold">60s</span>
+              <span id="clarityLabel" class="text-[9px] font-mono text-zinc-400 uppercase tracking-wider">RESPIRA</span>
+            </div>
+          </div>
+          <button id="clarityBtn" onclick="toggleClarityPause()" class="w-full py-2.5 rounded-xl bg-brand-gold hover:bg-brand-goldLight text-zinc-950 font-semibold text-xs transition">
+            Iniciar micro-pausa
+          </button>
+        </section>
+
+        <!-- Clasificador: Dicotomía del Control -->
+        <section id="dicotomia" class="scroll-target scroll-mt-24 p-6 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-gold font-semibold">
+              <i data-lucide="scale" class="w-4 h-4"></i> Dicotomía del Control
+            </div>
+            <span class="text-[10px] font-mono text-zinc-500 uppercase">Triaje Mental</span>
+          </div>
+
+          <div class="space-y-2">
+            <input type="text" id="dichotomyInput" placeholder="Ej: La opinión de otros, mi serenidad..." maxlength="90" class="w-full bg-brand-surfaceDim border border-brand-surfaceBorder rounded-xl px-3 py-2 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-brand-gold transition" onkeydown="if(event.key === 'Enter') addDichotomyItem('control')">
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="addDichotomyItem('control')" class="py-1.5 px-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30 hover:bg-emerald-900/50 text-emerald-400 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i> Bajo control
+              </button>
+              <button onclick="addDichotomyItem('no-control')" class="py-1.5 px-2 rounded-lg bg-zinc-800/60 border border-zinc-700 hover:bg-zinc-700/60 text-zinc-300 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition">
+                <i data-lucide="slash" class="w-3.5 h-3.5"></i> Fuera de control
+              </button>
+            </div>
+          </div>
+
+          <div class="space-y-3 pt-2 border-t border-brand-surfaceBorder/60">
+            <div>
+              <div class="flex items-center justify-between text-[11px] font-mono mb-1">
+                <span class="text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Bajo tu control</span>
+                <span id="countControl" class="text-zinc-500 text-[10px]">0</span>
+              </div>
+              <ul id="listControl" class="space-y-1 max-h-24 overflow-y-auto pr-1"></ul>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-[11px] font-mono mb-1">
+                <span class="text-zinc-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-zinc-500"></span> Fuera de control</span>
+                <span id="countNoControl" class="text-zinc-500 text-[10px]">0</span>
+              </div>
+              <ul id="listNoControl" class="space-y-1 max-h-24 overflow-y-auto pr-1"></ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- SECCIÓN 5: VISUALIZADOR INTERACTIVO MEMENTO MORI -->
+      <section id="mementomori" class="scroll-target scroll-mt-24 p-6 rounded-2xl border border-brand-surfaceBorder bg-gradient-to-br from-brand-surfaceDim to-brand-surfaceCard space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-brand-surfaceBorder/60 pb-4">
+          <div class="flex items-center gap-3">
+            <i data-lucide="hourglass" class="w-6 h-6 text-brand-gold"></i>
+            <div>
+              <h3 class="font-serif text-lg font-bold text-zinc-100">Memento Mori: Tu Vida en Semanas</h3>
+              <p class="text-xs text-zinc-400">Cada cuadro representa una semana de una expectativa de 80 años.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono">
+            <span class="text-zinc-400">Año de Nacimiento:</span>
+            <input type="number" id="birthYearInput" min="1930" max="2026" value="1998" onchange="updateMementoMori()" class="w-20 bg-brand-surfaceCard border border-brand-surfaceBorder rounded px-2 py-1 text-brand-gold text-center focus:outline-none focus:border-brand-gold">
+          </div>
+        </div>
+
+        <!-- Estadísticas Rápidas -->
+        <div class="grid grid-cols-3 gap-4 text-center py-2">
+          <div class="p-3 rounded-xl bg-brand-surfaceDim border border-brand-surfaceBorder">
+            <div id="weeksLivedLabel" class="text-xl font-bold font-mono text-zinc-200">0</div>
+            <div class="text-[10px] font-mono text-zinc-500 uppercase">Semanas Vividas</div>
+          </div>
+          <div class="p-3 rounded-xl bg-brand-surfaceDim border border-brand-surfaceBorder">
+            <div id="weeksRemainingLabel" class="text-xl font-bold font-mono text-brand-gold">0</div>
+            <div class="text-[10px] font-mono text-zinc-500 uppercase">Semanas Estimadas</div>
+          </div>
+          <div class="p-3 rounded-xl bg-brand-surfaceDim border border-brand-surfaceBorder">
+            <div id="percentageLivedLabel" class="text-xl font-bold font-mono text-emerald-400">0%</div>
+            <div class="text-[10px] font-mono text-zinc-500 uppercase">Travesía Recorrida</div>
+          </div>
+        </div>
+
+        <!-- Barra de Progreso Visual -->
+        <div class="w-full bg-zinc-800 rounded-full h-3 overflow-hidden">
+          <div id="mementoBar" class="bg-gradient-to-r from-brand-goldDark to-brand-gold h-full rounded-full transition-all duration-700" style="width: 35%;"></div>
+        </div>
+        <div class="text-center text-xs font-serif italic text-zinc-400">
+          «No recibimos una vida corta, sino que la hacemos tal; y no somos pobres de ella, sino pródigos.» — Séneca
+        </div>
       </section>
     </main>
+  </div>
 
-    <!-- Columna Derecha -->
-    <aside class="lg:col-span-3 space-y-8">
-      <!-- SECCIÓN 4: PAUSA DE CLARIDAD (Interactiva) -->
-      <div id="pausa" class="scroll-target scroll-mt-24 p-5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard text-center space-y-4">
-        <div class="w-10 h-10 mx-auto rounded-full bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold">
-          <i data-lucide="flower-2" class="w-5 h-5"></i>
+  <!-- MODAL: DIARIO NOCTURNO DE EXAMEN DE CONCIENCIA -->
+  <div id="journalModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-brand-surfaceCard border border-brand-surfaceBorder rounded-2xl max-w-xl w-full p-6 space-y-5 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-brand-surfaceBorder pb-3">
+        <div class="flex items-center gap-2 text-brand-gold font-serif text-lg font-bold">
+          <i data-lucide="moon" class="w-5 h-5"></i> Examen de Conciencia Nocturno
         </div>
-        <div>
-          <h3 class="font-serif text-base font-bold text-zinc-100">Pausa de Claridad</h3>
-          <p class="text-xs text-zinc-400 mt-1">Detén el torrente mental. Regula tu atención hacia el instante presente.</p>
-        </div>
-        <div class="py-2">
-          <div id="clarityRing" class="w-20 h-20 mx-auto rounded-full border-2 border-brand-gold flex flex-col items-center justify-center bg-brand-surfaceDim transition-all duration-700">
-            <span id="clarityCounter" class="text-xl font-bold font-mono text-brand-gold">60s</span>
-            <span id="clarityLabel" class="text-[9px] font-mono text-zinc-400 uppercase tracking-wider">RESPIRA</span>
-          </div>
-        </div>
-        <button id="clarityBtn" onclick="toggleClarityPause()" class="w-full py-2 rounded-xl bg-brand-gold hover:bg-brand-goldLight text-zinc-950 font-semibold text-xs transition">
-          Iniciar micro-pausa (60 seg)
+        <button onclick="toggleJournalModal(false)" class="text-zinc-400 hover:text-zinc-100">
+          <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
+      <p class="text-xs text-zinc-400">«Cuando la lámpara se ha retirado y reina el silencio, examino todo mi día y mido mis actos y palabras.» — Séneca</p>
 
-      <!-- SECCIÓN 5: CLASIFICADOR INTERACTIVO - DICOTOMÍA DEL CONTROL -->
-      <div id="dicotomia" class="scroll-target scroll-mt-24 p-5 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-4">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-gold font-semibold">
-            <i data-lucide="scale" class="w-4 h-4"></i> Dicotomía del Control
-          </div>
-          <span class="text-[10px] font-mono text-zinc-500 uppercase">Triaje Mental</span>
+      <form id="journalForm" onsubmit="saveJournalEntry(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block text-zinc-300 font-semibold mb-1">1. ¿Qué mal hábito o juicio impulsivo corregí hoy?</label>
+          <textarea id="q1" rows="2" class="w-full bg-brand-surfaceDim border border-brand-surfaceBorder rounded-xl p-2.5 text-zinc-200 focus:outline-none focus:border-brand-gold" placeholder="Mi respuesta ante la tardanza ajena, moderación..." required></textarea>
         </div>
-
-        <p class="text-xs text-zinc-400 leading-relaxed">
-          Examina una preocupación actual y sométela a la regla de Epicteto.
-        </p>
-
-        <!-- Campo de entrada -->
-        <div class="space-y-2">
-          <input 
-            type="text" 
-            id="dichotomyInput" 
-            placeholder="Ej: La opinión de mi colega, mi paciencia..." 
-            maxlength="90"
-            class="w-full bg-brand-surfaceDim border border-brand-surfaceBorder rounded-xl px-3 py-2 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-brand-gold/60 transition"
-            onkeydown="if(event.key === 'Enter') addDichotomyItem('control')"
-          >
-          <div class="grid grid-cols-2 gap-2">
-            <button 
-              onclick="addDichotomyItem('control')" 
-              class="py-1.5 px-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30 hover:bg-emerald-900/50 text-emerald-400 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition"
-            >
-              <i data-lucide="check" class="w-3.5 h-3.5"></i> Bajo mi control
-            </button>
-            <button 
-              onclick="addDichotomyItem('no-control')" 
-              class="py-1.5 px-2 rounded-lg bg-zinc-800/60 border border-zinc-700 hover:bg-zinc-700/60 text-zinc-300 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition"
-            >
-              <i data-lucide="slash" class="w-3.5 h-3.5"></i> Fuera de control
-            </button>
-          </div>
+        <div>
+          <label class="block text-zinc-300 font-semibold mb-1">2. ¿En qué acto o decisión fui más virtuoso y sereno?</label>
+          <textarea id="q2" rows="2" class="w-full bg-brand-surfaceDim border border-brand-surfaceBorder rounded-xl p-2.5 text-zinc-200 focus:outline-none focus:border-brand-gold" placeholder="Mantuve mi tranquilidad en el trabajo, no me quejé..." required></textarea>
         </div>
-
-        <!-- Tableros de clasificación -->
-        <div class="space-y-3 pt-2 border-t border-brand-surfaceBorder/60">
-          <div>
-            <div class="flex items-center justify-between text-[11px] font-mono mb-1.5">
-              <span class="text-emerald-400 flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Bajo tu control
-              </span>
-              <span id="countControl" class="text-zinc-500 text-[10px]">0</span>
-            </div>
-            <ul id="listControl" class="space-y-1.5 max-h-36 overflow-y-auto pr-1"></ul>
-          </div>
-
-          <div>
-            <div class="flex items-center justify-between text-[11px] font-mono mb-1.5">
-              <span class="text-zinc-400 flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-zinc-500"></span> Fuera de control
-              </span>
-              <span id="countNoControl" class="text-zinc-500 text-[10px]">0</span>
-            </div>
-            <ul id="listNoControl" class="space-y-1.5 max-h-36 overflow-y-auto pr-1"></ul>
-          </div>
+        <div>
+          <label class="block text-zinc-300 font-semibold mb-1">3. ¿Qué debí hacer de otro modo y cómo actuaré mañana?</label>
+          <textarea id="q3" rows="2" class="w-full bg-brand-surfaceDim border border-brand-surfaceBorder rounded-xl p-2.5 text-zinc-200 focus:outline-none focus:border-brand-gold" placeholder="Procrastiné menos en la tarde; mañana madrugaré con propósito..." required></textarea>
         </div>
-      </div>
-
-      <!-- Memento Mori -->
-      <div class="p-5 rounded-2xl border border-brand-surfaceBorder bg-gradient-to-br from-brand-surfaceDim to-brand-surfaceCard text-center space-y-2">
-        <i data-lucide="infinity" class="w-5 h-5 text-brand-gold mx-auto opacity-70"></i>
-        <div class="text-[11px] font-mono uppercase tracking-widest text-brand-gold">MEMENTO MORI</div>
-        <p class="text-xs font-serif italic text-zinc-300 leading-relaxed">
-          «No recibimos una vida corta, sino que la hacemos tal; y no somos pobres de ella, sino pródigos.»
-        </p>
-        <span class="block text-[10px] font-mono text-zinc-500">— SÉNECA</span>
-      </div>
-    </aside>
+        <div class="flex justify-end gap-3 pt-2">
+          <button type="button" onclick="toggleJournalModal(false)" class="px-4 py-2 rounded-xl border border-zinc-700 text-zinc-300 hover:bg-zinc-800">Cerrar</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-brand-gold text-zinc-950 font-bold hover:bg-brand-goldLight">Guardar Examen</button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <!-- SCRIPTS -->
   <script>
-    // --- 1. CONFIGURACIÓN DE CIUDADES Y CLIMA DINÁMICO ---
+    // --- 1. AUDIO SINTETIZADO WEB API (SIN ARCHIVOS EXTERNOS) ---
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playTone(freq, duration, type = 'sine') {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
+
+    function playBell() {
+      playTone(528, 2.5, 'sine'); // Frecuencia armónica de claridad
+    }
+
+    function speakText(text, author) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(`${text}. Por ${author}`);
+      utterance.lang = 'es-ES';
+      utterance.rate = 0.9;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function playPhilosopherAudio(philosopher) {
+      const messages = {
+        epicteto: { text: "No pretendas que los sucesos acontezcan como tú deseas; desea más bien que ocurran como ocurren, y serás libre.", author: "Epicteto" },
+        marco: { text: "Al amanecer, dite a ti mismo: hoy tropezaré con el indiscreto, el ingrato, el insolente. Ninguno de ellos puede herirme.", author: "Marco Aurelio" },
+        seneca: { text: "No es que tengamos poco tiempo, sino que perdemos mucho. La vida es suficientemente larga si sabemos emplearla.", author: "Séneca" }
+      };
+      const p = messages[philosopher];
+      if (p) {
+        playBell();
+        setTimeout(() => speakText(p.text, p.author), 600);
+      }
+    }
+
+    // --- 2. CONFIGURACIÓN CLIMA Y CIUDADES ---
     const CITIES_DATA = {
       mendoza: { name: 'Mendoza', lat: -32.8908, lon: -68.8272 },
       buenosaires: { name: 'Buenos Aires', lat: -34.61315, lon: -58.37723 },
@@ -398,210 +539,296 @@
       athens: { name: 'Atenas', lat: 37.9838, lon: 23.7275 }
     };
 
-    const CITY_STORAGE_KEY = 'ataraxia_user_city';
-
     async function fetchWeather(cityKey) {
       const city = CITIES_DATA[cityKey] || CITIES_DATA.mendoza;
-      const weatherTempEl = document.getElementById('weatherTemp');
-      const weatherBannerEl = document.getElementById('weatherStatusCity');
-
-      if (weatherTempEl) weatherTempEl.textContent = '...';
-      if (weatherBannerEl) weatherBannerEl.textContent = `${city.name} • Cargando...`;
-
+      const tempEl = document.getElementById('weatherTemp');
+      const bannerEl = document.getElementById('weatherStatusCity');
       try {
-        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current_weather=true`);
-        if (!response.ok) throw new Error('Error al obtener clima');
-        const data = await response.json();
+        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current_weather=true`);
+        const data = await res.json();
         const temp = Math.round(data.current_weather.temperature);
-
-        if (weatherTempEl) weatherTempEl.textContent = `${temp}°C`;
-        if (weatherBannerEl) weatherBannerEl.textContent = `${city.name} • ${temp}°C`;
+        if (tempEl) tempEl.textContent = `${temp}°C`;
+        if (bannerEl) bannerEl.textContent = `${city.name} • ${temp}°C`;
       } catch (err) {
-        console.warn('Fallo consulta meteorológica, usando fallback:', err);
-        const fallbackTemp = '22°C';
-        if (weatherTempEl) weatherTempEl.textContent = fallbackTemp;
-        if (weatherBannerEl) weatherBannerEl.textContent = `${city.name} • ${fallbackTemp}`;
+        if (tempEl) tempEl.textContent = `22°C`;
+        if (bannerEl) bannerEl.textContent = `${city.name} • 22°C`;
       }
     }
 
-    function changeCity(cityKey) {
-      localStorage.setItem(CITY_STORAGE_KEY, cityKey);
-      fetchWeather(cityKey);
+    function changeCity(key) {
+      localStorage.setItem('ataraxia_user_city', key);
+      fetchWeather(key);
     }
 
-    function initCityPreference() {
-      const savedCity = localStorage.getItem(CITY_STORAGE_KEY) || 'mendoza';
-      const citySelect = document.getElementById('citySelect');
-      if (citySelect) citySelect.value = savedCity;
-      fetchWeather(savedCity);
-    }
-
-    // --- 2. RELOJ EN TIEMPO REAL Y FECHA EN FORMATO CLÁSICO ---
+    // --- 3. RELOJ Y FECHA ---
     function updateClock() {
       const now = new Date();
-      const h = String(now.getHours()).padStart(2, '0');
-      const m = String(now.getMinutes()).padStart(2, '0');
-      const s = String(now.getSeconds()).padStart(2, '0');
       const clockEl = document.getElementById('clock');
-      if (clockEl) clockEl.textContent = `${h}:${m}:${s}`;
+      if (clockEl) clockEl.textContent = now.toTimeString().split(' ')[0];
     }
     setInterval(updateClock, 1000);
     updateClock();
 
     function updateDateDisplay() {
-      const monthsRoman = [
-        'Ianuarius', 'Februarius', 'Martius', 'Aprilis', 'Maius', 'Iunius',
-        'Iulius', 'Augustus', 'September', 'October', 'November', 'December'
-      ];
+      const months = ['Ianuarius', 'Februarius', 'Martius', 'Aprilis', 'Maius', 'Iunius', 'Iulius', 'Augustus', 'September', 'October', 'November', 'December'];
       const now = new Date();
-      const day = now.getDate();
-      const month = monthsRoman[now.getMonth()];
       const dateEl = document.getElementById('currentDateRoman');
-      if (dateEl) dateEl.textContent = `Die ${day} ${month}`;
+      if (dateEl) dateEl.textContent = `Die ${now.getDate()} ${months[now.getMonth()]}`;
     }
     updateDateDisplay();
 
-    // --- 3. NAVEGACIÓN ACTIVA AL CLICKEAR (TABS & SMOOTH SCROLL) ---
+    // --- 4. NAVEGACIÓN Y TABS ---
     function setActiveNavLink(targetId) {
-      // Actualizar enlaces del Header
-      const navLinks = document.querySelectorAll('.nav-link');
-      navLinks.forEach(link => {
-        const target = link.getAttribute('data-target');
-        if (target === targetId) {
-          link.className = 'nav-link text-brand-gold flex items-center gap-2 border-b-2 border-brand-gold pb-1 pt-1 font-semibold transition-all';
-        } else {
-          link.className = 'nav-link text-zinc-400 hover:text-zinc-200 transition-colors flex items-center gap-2 pb-1 pt-1 border-b-2 border-transparent';
-        }
+      document.querySelectorAll('.nav-link').forEach(link => {
+        const isTarget = link.getAttribute('data-target') === targetId;
+        link.className = isTarget 
+          ? 'nav-link text-brand-gold flex items-center gap-2 border-b-2 border-brand-gold pb-1 pt-1 font-semibold transition-all'
+          : 'nav-link text-zinc-400 hover:text-zinc-200 transition-colors flex items-center gap-2 pb-1 pt-1 border-b-2 border-transparent';
       });
-
-      // Actualizar enlaces de la barra lateral
-      const sideLinks = document.querySelectorAll('.side-link');
-      sideLinks.forEach(link => {
-        const target = link.getAttribute('data-target');
-        if (target === targetId) {
-          link.className = 'side-link flex items-center gap-3 px-3 py-2.5 rounded-lg bg-brand-gold text-zinc-950 font-semibold text-sm shadow-sm transition';
-        } else {
-          link.className = 'side-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition';
-        }
+      document.querySelectorAll('.side-link').forEach(link => {
+        const isTarget = link.getAttribute('data-target') === targetId;
+        link.className = isTarget
+          ? 'side-link flex items-center gap-3 px-3 py-2.5 rounded-lg bg-brand-gold text-zinc-950 font-semibold text-sm shadow-sm transition'
+          : 'side-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition';
       });
     }
 
     function handleNavClick(e, targetId) {
       e.preventDefault();
-      const targetElement = document.getElementById(targetId);
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         setActiveNavLink(targetId);
+        const drawer = document.getElementById('mobileDrawer');
+        if (drawer) drawer.classList.add('hidden');
       }
     }
 
-    // Scroll Spy para actualizar automáticamente si el usuario scrollea libremente
-    let isClickScrolling = false;
-    const sections = document.querySelectorAll('.scroll-target');
+    function toggleMobileMenu() {
+      const drawer = document.getElementById('mobileDrawer');
+      if (drawer) drawer.classList.toggle('hidden');
+    }
 
-    window.addEventListener('scroll', () => {
-      let currentId = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop - 140;
-        if (window.pageYOffset >= sectionTop) {
-          currentId = section.getAttribute('id');
-        }
-      });
-      if (currentId) {
-        setActiveNavLink(currentId);
+    // --- 5. BANCO DE MÁXIMAS Y BUSCADOR INTELIGENTE ---
+    const STOIC_MASTER_BANK = [
+      {
+        category: "MÁXIMA MATUTINA • ENQUIRIDIÓN V",
+        quote: "No nos perturban las cosas que suceden, sino la opinión y el juicio que nos formamos acerca de ellas.",
+        author: "Epicteto de Hierápolis",
+        source: "Filósofo de la Libertad Interior (50 d.C. – 135 d.C.)",
+        praxis: "Distingue en cada contratiempo lo que depende enteramente de tu albedrío de lo que pertenece a la fortuna externa.",
+        tags: ["control", "juicio", "ansiedad"],
+        image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600&auto=format&fit=crop&q=80",
+        link: "epicteto.html"
+      },
+      {
+        category: "MÁXIMA MATUTINA • MEDITACIONES IV",
+        quote: "Tienes poder sobre tu mente, no sobre los acontecimientos externos. Comprende esto y hallarás la verdadera fuerza.",
+        author: "Marco Aurelio",
+        source: "Emperador de Roma (121 d.C. – 180 d.C.)",
+        praxis: "Dirige la totalidad de tu vigilancia hacia tu propia rectitud y carácter.",
+        tags: ["control", "poder", "mente"],
+        image: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80",
+        link: "marco-aurelio.html"
+      },
+      {
+        category: "MÁXIMA MATUTINA • DE LA BREVEDAD DE LA VIDA",
+        quote: "No recibimos una vida corta, sino que la hacemos tal; y no somos pobres de tiempo, sino pródigos en desperdiciarlo.",
+        author: "Séneca el Joven",
+        source: "El Estadista de Córdoba (4 a.C. – 65 d.C.)",
+        praxis: "Protege tus horas como tu posesión más sagrada. Di no a las distracciones vanas.",
+        tags: ["tiempo", "vida", "muerte"],
+        image: "https://images.unsplash.com/photo-1552053831-71594a27632d?w=600&auto=format&fit=crop&q=80",
+        link: "seneca.html"
+      },
+      {
+        category: "MÁXIMA MATUTINA • DISCURSOS II",
+        quote: "Ninguna pérdida es irreparable salvo la de la propia virtud y el honor.",
+        author: "Epicteto",
+        source: "Discursos de Nicópolis",
+        praxis: "Si conservas tu integridad moral, ningún daño material puede empobrecerte.",
+        tags: ["virtud", "control", "honor"],
+        image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600&auto=format&fit=crop&q=80",
+        link: "epicteto.html"
       }
-    });
+    ];
 
-    // --- 4. DICOTOMÍA DEL CONTROL (PERSISTENCIA Y GESTIÓN) ---
+    let currentDailyQuote = STOIC_MASTER_BANK[0];
+
+    function renderDailyQuote() {
+      const start = new Date(new Date().getFullYear(), 0, 0);
+      const dayIndex = Math.floor((new Date() - start) / (1000 * 60 * 60 * 24));
+      currentDailyQuote = STOIC_MASTER_BANK[dayIndex % STOIC_MASTER_BANK.length];
+
+      document.getElementById('dailyCategory').textContent = currentDailyQuote.category;
+      document.getElementById('dailyQuoteText').textContent = `“${currentDailyQuote.quote}”`;
+      const authorLink = document.getElementById('dailyAuthorLink');
+      authorLink.textContent = currentDailyQuote.author;
+      authorLink.href = currentDailyQuote.link;
+      document.getElementById('dailySource').textContent = currentDailyQuote.source;
+      document.getElementById('dailyPraxis').textContent = currentDailyQuote.praxis;
+      document.getElementById('dailyImage').src = currentDailyQuote.image;
+    }
+
+    function filterQuotes() {
+      const query = document.getElementById('quoteSearchInput').value.toLowerCase().trim();
+      const resultsContainer = document.getElementById('searchResultsList');
+      resultsContainer.innerHTML = '';
+
+      const filtered = STOIC_MASTER_BANK.filter(item => 
+        item.quote.toLowerCase().includes(query) ||
+        item.author.toLowerCase().includes(query) ||
+        item.tags.some(tag => tag.includes(query))
+      );
+
+      if (filtered.length === 0) {
+        resultsContainer.innerHTML = '<div class="text-xs text-zinc-500 italic p-2">No se encontraron sentencias con ese criterio.</div>';
+        return;
+      }
+
+      filtered.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'p-3 rounded-xl bg-brand-surfaceDim border border-brand-surfaceBorder space-y-1';
+        div.innerHTML = `
+          <div class="flex items-center justify-between text-[10px] font-mono text-brand-gold">
+            <span>${item.author}</span>
+            <span class="uppercase">${item.tags.join(' • ')}</span>
+          </div>
+          <p class="text-xs text-zinc-200 italic font-serif">«${item.quote}»</p>
+        `;
+        resultsContainer.appendChild(div);
+      });
+    }
+
+    function setSearchFilter(val) {
+      document.getElementById('quoteSearchInput').value = val;
+      filterQuotes();
+    }
+
+    // --- 6. VISUALIZADOR MEMENTO MORI ---
+    function updateMementoMori() {
+      const birthYear = parseInt(document.getElementById('birthYearInput').value) || 1998;
+      const currentYear = new Date().getFullYear();
+      const yearsLived = Math.max(0, currentYear - birthYear);
+      const totalExpectancyYears = 80;
+      
+      const weeksLived = yearsLived * 52;
+      const totalWeeks = totalExpectancyYears * 52;
+      const weeksRemaining = Math.max(0, totalWeeks - weeksLived);
+      const percentage = Math.min(100, Math.round((weeksLived / totalWeeks) * 100));
+
+      document.getElementById('weeksLivedLabel').textContent = weeksLived.toLocaleString();
+      document.getElementById('weeksRemainingLabel').textContent = weeksRemaining.toLocaleString();
+      document.getElementById('percentageLivedLabel').textContent = `${percentage}%`;
+      document.getElementById('mementoBar').style.width = `${percentage}%`;
+    }
+
+    // --- 7. EXAMEN NOCTURNO (DIARIO) ---
+    function toggleJournalModal(show) {
+      const modal = document.getElementById('journalModal');
+      if (modal) modal.style.display = show ? 'flex' : 'none';
+    }
+
+    function saveJournalEntry(e) {
+      e.preventDefault();
+      const entry = {
+        date: new Date().toLocaleDateString(),
+        q1: document.getElementById('q1').value,
+        q2: document.getElementById('q2').value,
+        q3: document.getElementById('q3').value
+      };
+      const entries = JSON.parse(localStorage.getItem('ataraxia_journal_entries')) || [];
+      entries.unshift(entry);
+      localStorage.setItem('ataraxia_journal_entries', JSON.stringify(entries));
+      toggleJournalModal(false);
+      document.getElementById('journalForm').reset();
+      alert('Examen de conciencia guardado en tu registro interior.');
+    }
+
+    // --- 8. EXPORTAR / IMPORTAR REGISTROS ---
+    function exportUserData() {
+      const data = {
+        dichotomy: JSON.parse(localStorage.getItem('ataraxia_dichotomy_items')) || [],
+        journal: JSON.parse(localStorage.getItem('ataraxia_journal_entries')) || [],
+        city: localStorage.getItem('ataraxia_user_city') || 'mendoza'
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ataraxia_respaldo_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+    }
+
+    function importUserData(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const data = JSON.parse(event.target.result);
+          if (data.dichotomy) localStorage.setItem('ataraxia_dichotomy_items', JSON.stringify(data.dichotomy));
+          if (data.journal) localStorage.setItem('ataraxia_journal_entries', JSON.stringify(data.journal));
+          if (data.city) localStorage.setItem('ataraxia_user_city', data.city);
+          alert('¡Datos restaurados con éxito!');
+          location.reload();
+        } catch (err) {
+          alert('Archivo de respaldo no válido.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // --- 9. DICOTOMÍA Y PAUSA (LOGICA) ---
     const STORAGE_KEY = 'ataraxia_dichotomy_items';
     let dichotomyItems = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [
       { id: 1, text: 'Mi propia serenidad y juicio ético', type: 'control' },
       { id: 2, text: 'La impuntualidad o desdén de terceros', type: 'no-control' }
     ];
 
-    function saveDichotomyItems() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(dichotomyItems));
-    }
-
     function renderDichotomyLists() {
-      const listControl = document.getElementById('listControl');
-      const listNoControl = document.getElementById('listNoControl');
-      const countControl = document.getElementById('countControl');
-      const countNoControl = document.getElementById('countNoControl');
+      const listC = document.getElementById('listControl');
+      const listNC = document.getElementById('listNoControl');
+      if (!listC || !listNC) return;
+      listC.innerHTML = ''; listNC.innerHTML = '';
+      const cItems = dichotomyItems.filter(i => i.type === 'control');
+      const ncItems = dichotomyItems.filter(i => i.type === 'no-control');
+      document.getElementById('countControl').textContent = cItems.length;
+      document.getElementById('countNoControl').textContent = ncItems.length;
 
-      if (!listControl || !listNoControl) return;
-
-      listControl.innerHTML = '';
-      listNoControl.innerHTML = '';
-
-      const controlItems = dichotomyItems.filter(item => item.type === 'control');
-      const noControlItems = dichotomyItems.filter(item => item.type === 'no-control');
-
-      countControl.textContent = controlItems.length;
-      countNoControl.textContent = noControlItems.length;
-
-      if (controlItems.length === 0) {
-        listControl.innerHTML = '<li class="text-[11px] text-zinc-600 italic py-1">Sin entradas</li>';
-      } else {
-        controlItems.forEach(item => listControl.appendChild(createDichotomyElement(item)));
-      }
-
-      if (noControlItems.length === 0) {
-        listNoControl.innerHTML = '<li class="text-[11px] text-zinc-600 italic py-1">Sin entradas</li>';
-      } else {
-        noControlItems.forEach(item => listNoControl.appendChild(createDichotomyElement(item)));
-      }
-
-      lucide.createIcons();
-    }
-
-    function createDichotomyElement(item) {
-      const li = document.createElement('li');
-      li.className = 'group flex items-center justify-between text-xs p-2 rounded-lg bg-brand-surfaceDim border border-brand-surfaceBorder/80 transition-all hover:border-zinc-700';
-
-      const textSpan = document.createElement('span');
-      textSpan.className = item.type === 'control' ? 'text-zinc-200 truncate pr-2' : 'text-zinc-400 line-through decoration-zinc-600 truncate pr-2';
-      textSpan.textContent = item.text;
-
-      const deleteBtn = document.createElement('button');
-      deleteBtn.className = 'text-zinc-500 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity p-0.5 flex-shrink-0';
-      deleteBtn.title = 'Descartar';
-      deleteBtn.onclick = () => deleteDichotomyItem(item.id);
-      deleteBtn.innerHTML = '<i data-lucide="x" class="w-3.5 h-3.5"></i>';
-
-      li.appendChild(textSpan);
-      li.appendChild(deleteBtn);
-      return li;
+      cItems.forEach(item => {
+        const li = document.createElement('li');
+        li.className = 'flex justify-between items-center text-xs p-1.5 rounded bg-brand-surfaceDim border border-brand-surfaceBorder';
+        li.innerHTML = `<span class="truncate pr-2 text-zinc-200">${item.text}</span><button onclick="deleteDichotomyItem(${item.id})" class="text-zinc-500 hover:text-rose-400">×</button>`;
+        listC.appendChild(li);
+      });
+      ncItems.forEach(item => {
+        const li = document.createElement('li');
+        li.className = 'flex justify-between items-center text-xs p-1.5 rounded bg-brand-surfaceDim border border-brand-surfaceBorder';
+        li.innerHTML = `<span class="truncate pr-2 text-zinc-400 line-through">${item.text}</span><button onclick="deleteDichotomyItem(${item.id})" class="text-zinc-500 hover:text-rose-400">×</button>`;
+        listNC.appendChild(li);
+      });
     }
 
     function addDichotomyItem(type) {
       const input = document.getElementById('dichotomyInput');
       const val = input.value.trim();
       if (!val) return;
-
-      const newItem = {
-        id: Date.now(),
-        text: val,
-        type: type
-      };
-
-      dichotomyItems.unshift(newItem);
-      saveDichotomyItems();
+      dichotomyItems.unshift({ id: Date.now(), text: val, type: type });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(dichotomyItems));
       renderDichotomyLists();
       input.value = '';
-      input.focus();
     }
 
     function deleteDichotomyItem(id) {
-      dichotomyItems = dichotomyItems.filter(item => item.id !== id);
-      saveDichotomyItems();
+      dichotomyItems = dichotomyItems.filter(i => i.id !== id);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(dichotomyItems));
       renderDichotomyLists();
     }
 
-    // --- 5. TEMPORIZADOR INTERACTIVO PAUSA DE CLARIDAD ---
-    let timerInterval = null;
-    let timeLeft = 60;
-    let isRunning = false;
+    let clarityInterval = null;
+    let clarityRunning = false;
+    let claritySeconds = 60;
 
     function toggleClarityPause() {
       const btn = document.getElementById('clarityBtn');
@@ -609,204 +836,51 @@
       const label = document.getElementById('clarityLabel');
       const ring = document.getElementById('clarityRing');
 
-      if (isRunning) {
-        clearInterval(timerInterval);
-        isRunning = false;
+      if (clarityRunning) {
+        clearInterval(clarityInterval);
+        clarityRunning = false;
         btn.textContent = 'Reanudar pausa';
         label.textContent = 'PAUSA';
         ring.classList.remove('scale-105', 'border-amber-300');
         return;
       }
 
-      isRunning = true;
+      playBell();
+      clarityRunning = true;
       btn.textContent = 'Interrumpir pausa';
       ring.classList.add('scale-105', 'border-amber-300');
 
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        counter.textContent = `${timeLeft}s`;
+      clarityInterval = setInterval(() => {
+        claritySeconds--;
+        counter.textContent = `${claritySeconds}s`;
+        const cycle = claritySeconds % 8;
+        label.textContent = cycle >= 4 ? 'INHALA' : 'EXHALA';
 
-        const cycle = timeLeft % 8;
-        if (cycle >= 4) {
-          label.textContent = 'INHALA';
-        } else {
-          label.textContent = 'EXHALA';
-        }
-
-        if (timeLeft <= 0) {
-          clearInterval(timerInterval);
-          isRunning = false;
-          timeLeft = 60;
+        if (claritySeconds <= 0) {
+          clearInterval(clarityInterval);
+          playBell();
+          clarityRunning = false;
+          claritySeconds = 60;
           counter.textContent = '60s';
           label.textContent = 'ATARAXIA';
           btn.textContent = 'Reiniciar micro-pausa';
           ring.classList.remove('scale-105', 'border-amber-300');
           ring.classList.add('border-emerald-500');
-
-          setTimeout(() => {
-            ring.classList.remove('border-emerald-500');
-            label.textContent = 'RESPIRA';
-          }, 4000);
         }
       }, 1000);
     }
 
-    // --- 6. BANCO DE CITAS Y ROTACIÓN DETERMINISTA ---
-    const STOIC_DAILY_BANK = [
-      {
-        category: "MÁXIMA MATUTINA • ENQUIRIDIÓN V",
-        quote: "No nos perturban las cosas que suceden, sino la opinión y el juicio que nos formamos acerca de ellas.",
-        author: "Epicteto de Hierápolis",
-        source: "Filósofo de la Libertad Interior (50 d.C. – 135 d.C.)",
-        praxis: "Distingue en cada contratiempo lo que depende enteramente de tu albedrío de lo que pertenece a la fortuna externa. Suspende el juicio apresurado.",
-        image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600&auto=format&fit=crop&q=80"
-      },
-      {
-        category: "MÁXIMA MATUTINA • MEDITACIONES IV",
-        quote: "Tienes poder sobre tu mente, no sobre los acontecimientos externos. Comprende esto y hallarás la verdadera fuerza.",
-        author: "Marco Aurelio",
-        source: "Emperador de Roma (121 d.C. – 180 d.C.)",
-        praxis: "No desgastes energía intentando gobernar las decisiones ajenas o los imprevistos. Dirige la totalidad de tu vigilancia hacia tu propia rectitud.",
-        image: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80"
-      },
-      {
-        category: "MÁXIMA MATUTINA • EPÍSTOLA XIII",
-        quote: "A menudo sufrimos más en la imaginación que en la realidad. La angustia anticipada inventa fantasmas innecesarios.",
-        author: "Lucio Anneo Séneca",
-        source: "Cartas a Lucilio (4 a.C. – 65 d.C.)",
-        praxis: "Pregúntate ante la incertidumbre: ¿este peligro está presente aquí y ahora, o es solo una hipótesis dolorosa construida por mi propia mente?",
-        image: "https://images.unsplash.com/photo-1552053831-71594a27632d?w=600&auto=format&fit=crop&q=80"
-      },
-      {
-        category: "MÁXIMA MATUTINA • DISCURSOS II",
-        quote: "Ninguna pérdida es irreparable salvo la de la propia virtud y el honor. Si conservas tu integridad moral, nada sustancial has perdido.",
-        author: "Epicteto de Hierápolis",
-        source: "Discursos por Arriano",
-        praxis: "Ante cualquier pérdida material o fracaso circunstancial, revisa si tu carácter continúa intacto. Si tu juicio sigue firme, el santuario interior prevalece.",
-        image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600&auto=format&fit=crop&q=80"
-      },
-      {
-        category: "MÁXIMA MATUTINA • MEDITACIONES VII",
-        quote: "Acepta las cosas a las que el destino te ata y ama a las personas con las que el destino te une, pero hazlo de todo corazón.",
-        author: "Marco Aurelio",
-        source: "Pensamientos para sí mismo",
-        praxis: "Evita la resistencia amarga ante lo irrevocable. Integra los sucesos del día como combustible necesario para forjar tu paciencia y benevolencia.",
-        image: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80"
-      }
-    ];
-
-    const SECONDARY_QUOTES = [
-      {
-        quote: "«Cuando te despiertes en la mañana, piensa en qué valioso privilegio es estar vivo: respirar, pensar, disfrutar, amar.»",
-        author: "— Marco Aurelio, Emperador de Roma",
-        ref: "Meditaciones, Libro II"
-      },
-      {
-        quote: "«No recibimos una vida corta, sino que la hacemos tal; no somos pobres de tiempo, sino pródigos en desperdiciarlo.»",
-        author: "— Lucio Anneo Séneca",
-        ref: "De la brevedad de la vida"
-      },
-      {
-        quote: "«Primero aprende el significado de lo que dices; luego habla. Que tus acciones precedan a tus argumentos.»",
-        author: "— Epicteto de Hierápolis",
-        ref: "Discursos de Nicópolis"
-      }
-    ];
-
-    function getDayOfYear() {
-      const now = new Date();
-      const start = new Date(now.getFullYear(), 0, 0);
-      const diff = now - start;
-      const oneDay = 1000 * 60 * 60 * 24;
-      return Math.floor(diff / oneDay);
-    }
-
-    let currentDailyQuote = null;
-
-    function renderDailyQuotes() {
-      const dayIndex = getDayOfYear();
-      currentDailyQuote = STOIC_DAILY_BANK[dayIndex % STOIC_DAILY_BANK.length];
-      
-      const catEl = document.getElementById('dailyCategory');
-      const quoteEl = document.getElementById('dailyQuoteText');
-      const authorEl = document.getElementById('dailyAuthor');
-      const sourceEl = document.getElementById('dailySource');
-      const praxisEl = document.getElementById('dailyPraxis');
-      const imgEl = document.getElementById('dailyImage');
-
-      if (catEl) catEl.textContent = currentDailyQuote.category;
-      if (quoteEl) quoteEl.textContent = `“${currentDailyQuote.quote}”`;
-      if (authorEl) authorEl.textContent = currentDailyQuote.author;
-      if (sourceEl) sourceEl.textContent = currentDailyQuote.source;
-      if (praxisEl) praxisEl.textContent = currentDailyQuote.praxis;
-      if (imgEl) {
-        imgEl.src = currentDailyQuote.image;
-        imgEl.alt = currentDailyQuote.author;
-      }
-
-      const sub1 = SECONDARY_QUOTES[dayIndex % SECONDARY_QUOTES.length];
-      const sub2 = SECONDARY_QUOTES[(dayIndex + 1) % SECONDARY_QUOTES.length];
-
-      const sub1Text = document.getElementById('subQuote1Text');
-      const sub1Author = document.getElementById('subQuote1Author');
-      const sub1Ref = document.getElementById('subQuote1Ref');
-
-      if (sub1Text) sub1Text.textContent = sub1.quote;
-      if (sub1Author) sub1Author.textContent = sub1.author;
-      if (sub1Ref) sub1Ref.textContent = sub1.ref;
-
-      const sub2Text = document.getElementById('subQuote2Text');
-      const sub2Author = document.getElementById('subQuote2Author');
-      const sub2Ref = document.getElementById('subQuote2Ref');
-
-      if (sub2Text) sub2Text.textContent = sub2.quote;
-      if (sub2Author) sub2Author.textContent = sub2.author;
-      if (sub2Ref) sub2Ref.textContent = sub2.ref;
-
-      lucide.createIcons();
-    }
-
-    async function copyDailyQuote() {
-      if (!currentDailyQuote) return;
-      const textToCopy = `«${currentDailyQuote.quote}» — ${currentDailyQuote.author} (${currentDailyQuote.source})`;
-      
-      try {
-        await navigator.clipboard.writeText(textToCopy);
-        const label = document.getElementById('copyBtnLabel');
-        if (label) {
-          const prevText = label.textContent;
-          label.textContent = '¡Copiada!';
-          setTimeout(() => { label.textContent = prevText; }, 2500);
-        }
-      } catch (err) {
-        console.error('Error al copiar:', err);
-      }
-    }
-
-    async function shareDailyQuote() {
-      if (!currentDailyQuote) return;
-      const shareData = {
-        title: 'Ataraxia — Filosofía Vivida',
-        text: `«${currentDailyQuote.quote}» — ${currentDailyQuote.author}`,
-        url: window.location.href
-      };
-
-      if (navigator.share) {
-        try {
-          await navigator.share(shareData);
-        } catch (err) {
-          if (err.name !== 'AbortError') console.error(err);
-        }
-      } else {
-        copyDailyQuote();
-      }
-    }
-
-    // Inicializaciones al cargar la página
+    // Inicialización general
     document.addEventListener('DOMContentLoaded', () => {
-      initCityPreference();
+      const savedCity = localStorage.getItem('ataraxia_user_city') || 'mendoza';
+      const citySelect = document.getElementById('citySelect');
+      if (citySelect) citySelect.value = savedCity;
+      fetchWeather(savedCity);
+
+      renderDailyQuote();
+      filterQuotes();
+      updateMementoMori();
       renderDichotomyLists();
-      renderDailyQuotes();
       lucide.createIcons();
     });
   </script>
