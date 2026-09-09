@@ -57,26 +57,35 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.75rem;
+      font-size: 1.85rem;
       cursor: pointer;
       user-select: none;
       transition: all 0.15s ease;
+      position: relative;
     }
     @media (min-width: 640px) {
-      .chess-cell { font-size: 2.25rem; }
+      .chess-cell { font-size: 2.35rem; }
     }
-    .cell-light { background-color: #27282e; color: #f3deab; }
-    .cell-dark { background-color: #141518; color: #f3deab; }
+    .cell-light { background-color: #27282e; }
+    .cell-dark { background-color: #141518; }
     .cell-selected { outline: 2px solid #c5a059; background-color: #3b3628 !important; }
-    .cell-valid-move { position: relative; }
+    .cell-in-check { background-color: rgba(225, 29, 72, 0.45) !important; outline: 2px solid #f43f5e !important; }
     .cell-valid-move::after {
       content: '';
       position: absolute;
-      width: 12px;
-      height: 12px;
+      width: 11px;
+      height: 11px;
       background: #c5a059;
-      opacity: 0.6;
+      opacity: 0.75;
       border-radius: 50%;
+    }
+    .cell-valid-capture::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      border: 2px solid #e11d48;
+      border-radius: 6px;
+      opacity: 0.85;
     }
   </style>
 </head>
@@ -131,11 +140,6 @@
           <span class="text-zinc-600">|</span>
           <span id="weatherTemp" class="text-brand-gold font-semibold">--°C</span>
         </div>
-
-        <button onclick="toggleFavoritesModal(true)" class="p-1.5 sm:px-3 sm:py-1 rounded-full border border-brand-gold/40 bg-brand-gold/10 hover:bg-brand-gold/20 text-brand-gold text-xs font-semibold flex items-center gap-1.5 transition" title="Ver Favoritos Guardados">
-          <i data-lucide="bookmark" class="w-4 h-4"></i>
-          <span id="favCountBadge" class="hidden sm:inline">0</span>
-        </button>
 
         <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg border border-brand-surfaceBorder bg-brand-surfaceCard text-zinc-300 hover:text-brand-gold transition">
           <i data-lucide="menu" class="w-5 h-5"></i>
@@ -232,86 +236,103 @@
         <div class="pt-6 space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-zinc-400">
             <span id="dailyCategory" class="text-brand-gold uppercase tracking-wider font-semibold">MÁXIMA MATUTINA</span>
-            <div class="flex items-center gap-3">
-              <button onclick="randomizeDailyQuote()" class="hover:text-brand-gold transition flex items-center gap-1">
-                <i data-lucide="shuffle" class="w-3.5 h-3.5"></i> <span>Aleatoria</span>
-              </button>
-              <button id="bookmarkCurrentBtn" onclick="toggleBookmarkCurrent()" class="hover:text-brand-gold transition flex items-center gap-1">
-                <i data-lucide="bookmark" class="w-3.5 h-3.5"></i> <span>Guardar</span>
-              </button>
-            </div>
           </div>
-
           <blockquote id="dailyQuoteText" class="font-serif text-2xl sm:text-3xl text-zinc-100 italic leading-relaxed">
             “No nos perturban las cosas que suceden, sino la opinión y el juicio que nos formamos acerca de ellas.”
           </blockquote>
-
-          <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
-            <div>
-              <span id="dailyAuthor" class="text-sm font-semibold text-brand-gold">Epicteto de Hierápolis</span>
-              <p id="dailySource" class="text-xs text-zinc-400 font-mono">Enquiridión, Capítulo V</p>
-            </div>
+          <div>
+            <span id="dailyAuthor" class="text-sm font-semibold text-brand-gold">Epicteto de Hierápolis</span>
+            <p id="dailySource" class="text-xs text-zinc-400 font-mono">Enquiridión, Capítulo V</p>
           </div>
         </div>
       </section>
 
-      <!-- SECCIÓN NUEVA: AJEDREZ ESTOICO (LUDUS LATRUNCULORUM) -->
+      <!-- SECCIÓN 2: AJEDREZ ESTOICO CON DIFICULTADES, JAQUE Y JAQUE MATE -->
       <section id="ajedrez" class="scroll-target scroll-mt-24 p-6 sm:p-8 rounded-3xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-brand-surfaceBorder pb-4">
           <div>
             <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-gold font-semibold">
-              <i data-lucide="crown" class="w-4 h-4"></i> Ludus Latrunculorum • Mini Ajedrez
+              <i data-lucide="crown" class="w-4 h-4"></i> Ludus Latrunculorum • Ajedrez Offline
             </div>
             <h3 class="font-serif text-xl sm:text-2xl font-bold text-zinc-100 mt-0.5">El Tablero del Destino</h3>
           </div>
-          <div class="flex items-center gap-3">
-            <span id="chessTurnBadge" class="text-xs font-mono px-2.5 py-1 rounded-full border border-brand-gold/40 bg-brand-gold/10 text-brand-gold font-semibold">Tu Turno (Blancas)</span>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <!-- Selector de Dificultades -->
+            <div class="flex items-center gap-1.5 bg-brand-surfaceDim border border-brand-surfaceBorder rounded-full px-3 py-1 text-xs font-mono">
+              <span class="text-zinc-500">Rival:</span>
+              <select id="chessDifficulty" onchange="setChessDifficulty(this.value)" class="bg-transparent text-brand-gold font-semibold outline-none cursor-pointer">
+                <option value="easy" class="bg-brand-surfaceCard">Principiante</option>
+                <option value="medium" selected class="bg-brand-surfaceCard">Estoico Medium</option>
+                <option value="supreme" class="bg-brand-surfaceCard">Estoico Supremo</option>
+              </select>
+            </div>
+
+            <!-- Estado del Turno / Jaque -->
+            <span id="chessTurnBadge" class="text-xs font-mono px-3 py-1 rounded-full border border-brand-gold/40 bg-brand-gold/10 text-brand-gold font-semibold transition-all">
+              Tu Turno (Blancas)
+            </span>
+
             <button onclick="resetChessGame()" class="p-1.5 rounded-lg border border-zinc-700 bg-brand-surfaceDim hover:border-brand-gold text-zinc-300 hover:text-brand-gold transition" title="Reiniciar Partida">
               <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
             </button>
           </div>
         </div>
 
+        <!-- Banner de Alerta Jaque / Jaque Mate -->
+        <div id="chessAlertBanner" class="hidden p-3 rounded-xl border flex items-center justify-between transition-all">
+          <div class="flex items-center gap-2.5">
+            <i id="chessAlertIcon" data-lucide="alert-triangle" class="w-4 h-4"></i>
+            <span id="chessAlertText" class="text-xs font-mono font-semibold tracking-wide">¡JAQUE! Tu Rey está bajo ataque. Debes defenderlo.</span>
+          </div>
+          <span id="chessAlertSub" class="text-[10px] font-mono opacity-80 uppercase">Escape Obligatorio</span>
+        </div>
+
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <!-- El Tablero 8x8 -->
           <div class="lg:col-span-7 flex justify-center">
-            <div class="w-full max-w-[420px] aspect-square border-2 border-brand-surfaceBorder rounded-xl overflow-hidden shadow-2xl bg-black">
+            <div class="w-full max-w-[440px] aspect-square border-2 border-brand-surfaceBorder rounded-xl overflow-hidden shadow-2xl bg-black">
               <div id="chessBoardGrid" class="grid grid-cols-8 grid-rows-8 w-full h-full"></div>
             </div>
           </div>
 
-          <!-- Panel de Reflexión & Estado del Juego -->
+          <!-- Panel Lateral: Capturas y Lecciones -->
           <div class="lg:col-span-5 space-y-4">
             <div class="p-4 rounded-2xl bg-brand-surfaceDim border border-brand-surfaceBorder space-y-3">
               <div class="flex items-center justify-between text-xs font-mono">
-                <span class="text-zinc-500 uppercase">Piezas Caídas (Tus Bajas):</span>
-                <span id="capturedWhite" class="text-zinc-400 text-sm tracking-widest"></span>
+                <span class="text-zinc-500 uppercase">Tus Bajas:</span>
+                <span id="capturedWhite" class="text-zinc-400 text-base tracking-widest"></span>
               </div>
               <div class="flex items-center justify-between text-xs font-mono">
                 <span class="text-zinc-500 uppercase">Capturas al Rival:</span>
-                <span id="capturedBlack" class="text-brand-gold text-sm tracking-widest"></span>
+                <span id="capturedBlack" class="text-brand-gold text-base tracking-widest"></span>
               </div>
             </div>
 
             <!-- Veredicto Filosófico de la Jugada -->
             <div class="p-5 rounded-2xl bg-brand-surfaceDim border border-brand-gold/30 space-y-2">
               <span class="text-[10px] font-mono text-brand-gold uppercase font-bold tracking-wider flex items-center gap-1.5">
-                <i data-lucide="scale" class="w-3.5 h-3.5"></i> Veredicto del Tablero
+                <i data-lucide="scale" class="w-3.5 h-3.5"></i> Veredicto de la Estoa
               </span>
               <p id="chessStoicThought" class="text-xs text-zinc-300 font-serif italic leading-relaxed">
                 «El ajedrez es como la vida: juegas con las piezas que te son dadas, pero tu virtud reside enteramente en el juicio de cada movimiento.»
               </p>
-              <span class="block text-[10px] font-mono text-zinc-500 text-right">— EPICTETO</span>
+              <span id="chessAuthorRef" class="block text-[10px] font-mono text-zinc-500 text-right">— EPICTETO</span>
             </div>
 
-            <div class="text-[11px] text-zinc-500 font-mono leading-tight">
-              * Juegas con blancas. Haz clic en una pieza para ver movimientos legales; el rival responderá automáticamente. No requiere internet.
+            <div class="p-4 rounded-xl border border-dashed border-zinc-800 bg-brand-surfaceDim text-xs space-y-2">
+              <div class="text-[10px] font-mono uppercase text-zinc-400 font-bold">Reglas de Templanza:</div>
+              <ul class="text-[11px] text-zinc-400 space-y-1 list-disc list-inside">
+                <li><strong class="text-zinc-300">Jaque Obligatorio:</strong> No puedes realizar movimientos que dejen a tu rey bajo amenaza.</li>
+                <li><strong class="text-zinc-300">Dificultad Progresiva:</strong> En <em>Supremo</em>, el bot anticipa sacrificios y jaques letales.</li>
+                <li>Funciona 100% sin conexión a internet.</li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SECCIÓN 2: ORÁCULO DE DILEMAS COTIDIANOS -->
+      <!-- SECCIÓN 3: ORÁCULO DE DILEMAS COTIDIANOS -->
       <section id="oraculo" class="scroll-target scroll-mt-24 p-6 sm:p-8 rounded-3xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-brand-surfaceBorder pb-4">
           <div>
@@ -355,7 +376,7 @@
         </div>
       </section>
 
-      <!-- SECCIÓN 3: LA VISTA DESDE ARRIBA -->
+      <!-- SECCIÓN 4: LA VISTA DESDE ARRIBA -->
       <section id="perspectiva" class="scroll-target scroll-mt-24 p-6 sm:p-8 rounded-3xl border border-brand-surfaceBorder bg-gradient-to-b from-brand-surface to-brand-surfaceCard space-y-6">
         <div class="flex items-center justify-between border-b border-brand-surfaceBorder pb-4">
           <div>
@@ -383,7 +404,7 @@
         </div>
       </section>
 
-      <!-- SECCIÓN 4: CORPUS CANÓNICO -->
+      <!-- SECCIÓN 5: CORPUS CANÓNICO -->
       <section id="buscador" class="scroll-target scroll-mt-24 p-6 sm:p-8 rounded-3xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-brand-surfaceBorder pb-4">
           <div>
@@ -403,39 +424,25 @@
     </main>
   </div>
 
-  <!-- MODAL: SANTUARIO DE FAVORITOS -->
-  <div id="favoritesModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-brand-surfaceCard border border-brand-surfaceBorder rounded-2xl max-w-xl w-full p-6 space-y-4 shadow-2xl">
-      <div class="flex items-center justify-between border-b border-brand-surfaceBorder pb-3">
-        <div class="flex items-center gap-2 text-brand-gold font-serif text-lg font-bold">
-          <i data-lucide="bookmark" class="w-5 h-5"></i> Tu Santuario de Sentencias
-        </div>
-        <button onclick="toggleFavoritesModal(false)" class="text-zinc-400 hover:text-zinc-100">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-      <div id="favoritesListContainer" class="space-y-2.5 max-h-80 overflow-y-auto pr-1"></div>
-      <div class="flex justify-end pt-2">
-        <button onclick="toggleFavoritesModal(false)" class="px-4 py-2 rounded-xl bg-brand-surfaceDim border border-zinc-700 text-zinc-300 text-xs hover:bg-zinc-800">Cerrar</button>
-      </div>
-    </div>
-  </div>
-
   <!-- SCRIPTS -->
   <script>
-    // --- 1. MOTOR DE AJEDREZ ESTOICO INDEPENDIENTE (OFFLINE) ---
+    // =========================================================================
+    // 1. MOTOR DE AJEDREZ ESTOICO COMPLETO: JAQUE, ESCAPE, MATE & IA ASCENDENTE
+    // =========================================================================
     const CHESS_PIECES = {
       wP: '♙', wR: '♖', wN: '♘', wB: '♗', wQ: '♕', wK: '♔',
       bP: '♟', bR: '♜', bN: '♞', bB: '♝', bQ: '♛', bK: '♚'
     };
 
+    const PIECE_VALUES = { P: 10, N: 32, B: 33, R: 50, Q: 90, K: 1000 };
+
     const STOIC_CHESS_THOUGHTS = [
-      "«El peón no teme avanzar aunque no pueda retroceder. Acepta su curso con sobriedad.»",
-      "«Una pieza perdida en el tablero no es una pérdida para tu alma. Mantén la compostura.»",
-      "«El tablero exterior cambia constantemente; que tu concentración interior permanezca inmutable.»",
-      "«No te envanezcas tras capturar una pieza enemiga; todo triunfo contingente es efímero.»",
-      "«Si el rival te acorrala, agradece el desafío: ahí se forja la serenidad estratégica.»",
-      "«Hasta el rey debe rendir tributo al fin de la partida: peones y reyes duermen en la misma caja.»"
+      { text: "«El peón no teme avanzar aunque no pueda retroceder. Acepta su curso con sobriedad.»", author: "EPICTETO" },
+      { text: "«Una pieza perdida en el tablero no es una pérdida para tu honor. Mantén la templanza.»", author: "SÉNECA" },
+      { text: "«El tablero exterior cambia constantemente; que tu concentración interior permanezca inmutable.»", author: "MARCO AURELIO" },
+      { text: "«No te envanezcas tras capturar una pieza enemiga; todo triunfo contingente es efímero.»", author: "MUSONIO RUFO" },
+      { text: "«Si el rival te acorrala, agradece el desafío: ahí se forja la serenidad estratégica.»", author: "ZENÓN DE CITIO" },
+      { text: "«Hasta el rey debe rendir tributo al fin de la partida: peones y reyes duermen en la misma caja.»", author: "CRISIPO" }
     ];
 
     let boardState = [
@@ -451,124 +458,76 @@
 
     let selectedCell = null;
     let validMoves = [];
-    let currentTurn = 'w'; // 'w' blancas (usuario), 'b' negras (rival)
+    let currentTurn = 'w'; // 'w' = Blancas (Humano), 'b' = Negras (Bot)
     let capturedByWhite = [];
     let capturedByBlack = [];
+    let currentDifficulty = 'medium'; // 'easy', 'medium', 'supreme'
+    let isGameOver = false;
 
-    function renderBoard() {
-      const grid = document.getElementById('chessBoardGrid');
-      if (!grid) return;
-      grid.innerHTML = '';
+    function setChessDifficulty(val) {
+      currentDifficulty = val;
+    }
 
+    // Copia profunda de tablero
+    function cloneBoard(b) {
+      return b.map(row => [...row]);
+    }
+
+    // Encuentra la posición del rey
+    function findKing(board, color) {
+      const kingTarget = color + 'K';
       for (let r = 0; r < 8; r++) {
         for (let c = 0; c < 8; c++) {
-          const piece = boardState[r][c];
-          const cell = document.createElement('div');
-          const isDark = (r + c) % 2 === 1;
-          cell.className = `chess-cell ${isDark ? 'cell-dark' : 'cell-light'}`;
-          
-          if (selectedCell && selectedCell.r === r && selectedCell.c === c) {
-            cell.classList.add('cell-selected');
-          }
-
-          if (validMoves.some(m => m.r === r && m.c === c)) {
-            cell.classList.add('cell-valid-move');
-          }
-
-          if (piece) {
-            cell.textContent = CHESS_PIECES[piece];
-            // Estilo dorado para blancas, gris plata para negras
-            if (piece.startsWith('w')) {
-              cell.style.color = '#c5a059';
-            } else {
-              cell.style.color = '#a1a1aa';
-            }
-          }
-
-          cell.onclick = () => onCellClick(r, c);
-          grid.appendChild(cell);
+          if (board[r][c] === kingTarget) return { r, c };
         }
       }
-
-      document.getElementById('capturedWhite').textContent = capturedByBlack.map(p => CHESS_PIECES[p]).join(' ') || '—';
-      document.getElementById('capturedBlack').textContent = capturedByWhite.map(p => CHESS_PIECES[p]).join(' ') || '—';
+      return null;
     }
 
-    function onCellClick(r, c) {
-      if (currentTurn !== 'w') return; // Bloquear interacción durante el turno del rival
-
-      const piece = boardState[r][c];
-
-      // Si se hace clic en una celda válida de movimiento
-      if (selectedCell && validMoves.some(m => m.r === r && m.c === c)) {
-        makeMove(selectedCell.r, selectedCell.c, r, c);
-        selectedCell = null;
-        validMoves = [];
-        renderBoard();
-
-        // Turno del rival
-        currentTurn = 'b';
-        document.getElementById('chessTurnBadge').textContent = 'El Rival piensa...';
-        document.getElementById('chessTurnBadge').className = 'text-xs font-mono px-2.5 py-1 rounded-full border border-zinc-700 bg-zinc-800 text-zinc-400 font-semibold';
-        
-        setTimeout(botMove, 600);
-        return;
+    // Verifica si una casilla está amenazada por un bando dado
+    function isSquareAttacked(board, targetR, targetC, attackerColor) {
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          const piece = board[r][c];
+          if (piece && piece[0] === attackerColor) {
+            const rawMoves = getPseudoMoves(r, c, board);
+            if (rawMoves.some(m => m.r === targetR && m.c === targetC)) {
+              return true;
+            }
+          }
+        }
       }
-
-      // Si se selecciona una pieza propia
-      if (piece && piece.startsWith('w')) {
-        selectedCell = { r, c };
-        validMoves = getLegalMoves(r, c, boardState);
-      } else {
-        selectedCell = null;
-        validMoves = [];
-      }
-      renderBoard();
+      return false;
     }
 
-    function makeMove(fromR, fromC, toR, toC) {
-      const movingPiece = boardState[fromR][fromC];
-      const targetPiece = boardState[toR][toC];
-
-      if (targetPiece) {
-        if (targetPiece.startsWith('w')) capturedByBlack.push(targetPiece);
-        else capturedByWhite.push(targetPiece);
-      }
-
-      boardState[toR][toC] = movingPiece;
-      boardState[fromR][fromC] = '';
-
-      // Corona de peón automática a Dama
-      if (movingPiece === 'wP' && toR === 0) boardState[toR][toC] = 'wQ';
-      if (movingPiece === 'bP' && toR === 7) boardState[toR][toC] = 'bQ';
-
-      // Actualizar pensamiento estoico aleatorio
-      const thought = STOIC_CHESS_THOUGHTS[Math.floor(Math.random() * STOIC_CHESS_THOUGHTS.length)];
-      document.getElementById('chessStoicThought').textContent = thought;
+    // Evalúa si el rey del color está en Jaque
+    function isKingInCheck(board, color) {
+      const kingPos = findKing(board, color);
+      if (!kingPos) return false;
+      const enemyColor = color === 'w' ? 'b' : 'w';
+      return isSquareAttacked(board, kingPos.r, kingPos.c, enemyColor);
     }
 
-    // Generador de movimientos elementales
-    function getLegalMoves(r, c, board) {
+    // Movimientos geométricos crudos sin validar jaque propio
+    function getPseudoMoves(r, c, board) {
       const piece = board[r][c];
       if (!piece) return [];
       const color = piece[0];
       const type = piece[1];
       const moves = [];
-
       const inBounds = (nr, nc) => nr >= 0 && nr < 8 && nc >= 0 && nc < 8;
 
       if (type === 'P') {
         const dir = color === 'w' ? -1 : 1;
         const startRow = color === 'w' ? 6 : 1;
-        // Avance simple
+        // Avance
         if (inBounds(r + dir, c) && board[r + dir][c] === '') {
           moves.push({ r: r + dir, c });
-          // Avance doble
           if (r === startRow && board[r + 2 * dir][c] === '') {
             moves.push({ r: r + 2 * dir, c });
           }
         }
-        // Capturas diagonales
+        // Capturas
         [-1, 1].forEach(dc => {
           const nr = r + dir, nc = c + dc;
           if (inBounds(nr, nc) && board[nr][nc] !== '' && board[nr][nc][0] !== color) {
@@ -582,8 +541,9 @@
         dirs.forEach(([dr, dc]) => {
           let nr = r + dr, nc = c + dc;
           while (inBounds(nr, nc)) {
-            if (board[nr][nc] === '') moves.push({ r: nr, c: nc });
-            else {
+            if (board[nr][nc] === '') {
+              moves.push({ r: nr, c: nc });
+            } else {
               if (board[nr][nc][0] !== color) moves.push({ r: nr, c: nc });
               break;
             }
@@ -597,8 +557,9 @@
         dirs.forEach(([dr, dc]) => {
           let nr = r + dr, nc = c + dc;
           while (inBounds(nr, nc)) {
-            if (board[nr][nc] === '') moves.push({ r: nr, c: nc });
-            else {
+            if (board[nr][nc] === '') {
+              moves.push({ r: nr, c: nc });
+            } else {
               if (board[nr][nc][0] !== color) moves.push({ r: nr, c: nc });
               break;
             }
@@ -630,35 +591,298 @@
       return moves;
     }
 
-    // IA del Rival (Estrategia heurística offline)
-    function botMove() {
-      const allMoves = [];
-      const pieceValues = { P: 1, N: 3, B: 3, R: 5, Q: 9, K: 100 };
+    // Movimientos estrictamente legales (filtra los que dejan al propio rey en Jaque)
+    function getStrictLegalMoves(r, c, board) {
+      const piece = board[r][c];
+      if (!piece) return [];
+      const color = piece[0];
+      const pseudos = getPseudoMoves(r, c, board);
 
+      return pseudos.filter(m => {
+        const simBoard = cloneBoard(board);
+        simBoard[m.r][m.c] = simBoard[r][c];
+        simBoard[r][c] = '';
+        return !isKingInCheck(simBoard, color);
+      });
+    }
+
+    // Obtiene todos los movimientos legales posibles de un bando
+    function getAllLegalMoves(board, color) {
+      const all = [];
       for (let r = 0; r < 8; r++) {
         for (let c = 0; c < 8; c++) {
-          if (boardState[r][c].startsWith('b')) {
-            const moves = getLegalMoves(r, c, boardState);
-            moves.forEach(m => {
-              const target = boardState[m.r][m.c];
-              let weight = target ? pieceValues[target[1]] * 10 : 0;
-              // Incentivar avance al centro
-              weight += (3.5 - Math.abs(3.5 - m.r)) + (3.5 - Math.abs(3.5 - m.c));
-              allMoves.push({ fromR: r, fromC: c, toR: m.r, toC: m.c, weight });
-            });
+          if (board[r][c].startsWith(color)) {
+            const moves = getStrictLegalMoves(r, c, board);
+            moves.forEach(m => all.push({ fromR: r, fromC: c, toR: m.r, toC: m.c }));
           }
         }
       }
+      return all;
+    }
 
-      if (allMoves.length > 0) {
-        allMoves.sort((a, b) => b.weight - a.weight);
-        const chosen = allMoves[0];
-        makeMove(chosen.fromR, chosen.fromC, chosen.toR, chosen.toC);
+    function renderBoard() {
+      const grid = document.getElementById('chessBoardGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const whiteInCheck = isKingInCheck(boardState, 'w');
+      const blackInCheck = isKingInCheck(boardState, 'b');
+      const whiteKingPos = findKing(boardState, 'w');
+      const blackKingPos = findKing(boardState, 'b');
+
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          const piece = boardState[r][c];
+          const cell = document.createElement('div');
+          const isDark = (r + c) % 2 === 1;
+          cell.className = `chess-cell ${isDark ? 'cell-dark' : 'cell-light'}`;
+
+          // Resaltar rey en jaque
+          if (whiteInCheck && whiteKingPos && whiteKingPos.r === r && whiteKingPos.c === c) {
+            cell.classList.add('cell-in-check');
+          }
+          if (blackInCheck && blackKingPos && blackKingPos.r === r && blackKingPos.c === c) {
+            cell.classList.add('cell-in-check');
+          }
+
+          // Resaltar casilla seleccionada
+          if (selectedCell && selectedCell.r === r && selectedCell.c === c) {
+            cell.classList.add('cell-selected');
+          }
+
+          // Indicadores de movimiento válido
+          if (validMoves.some(m => m.r === r && m.c === c)) {
+            if (piece !== '') {
+              cell.classList.add('cell-valid-capture');
+            } else {
+              cell.classList.add('cell-valid-move');
+            }
+          }
+
+          // Render de piezas
+          if (piece) {
+            cell.textContent = CHESS_PIECES[piece];
+            cell.style.color = piece.startsWith('w') ? '#c5a059' : '#a1a1aa';
+          }
+
+          cell.onclick = () => onCellClick(r, c);
+          grid.appendChild(cell);
+        }
       }
 
+      document.getElementById('capturedWhite').textContent = capturedByBlack.map(p => CHESS_PIECES[p]).join(' ') || '—';
+      document.getElementById('capturedBlack').textContent = capturedByWhite.map(p => CHESS_PIECES[p]).join(' ') || '—';
+      updateGameStatusBanners();
+    }
+
+    function updateGameStatusBanners() {
+      const banner = document.getElementById('chessAlertBanner');
+      const alertText = document.getElementById('chessAlertText');
+      const alertSub = document.getElementById('chessAlertSub');
+      const turnBadge = document.getElementById('chessTurnBadge');
+
+      const whiteInCheck = isKingInCheck(boardState, 'w');
+      const blackInCheck = isKingInCheck(boardState, 'b');
+      const legalMovesWhite = getAllLegalMoves(boardState, 'w');
+      const legalMovesBlack = getAllLegalMoves(boardState, 'b');
+
+      // Jaque Mate Blancas
+      if (whiteInCheck && legalMovesWhite.length === 0) {
+        isGameOver = true;
+        banner.className = 'p-3 rounded-xl border border-rose-500/50 bg-rose-950/30 text-rose-300 flex items-center justify-between';
+        alertText.textContent = '¡JAQUE MATE! Has sido vencido por el destino.';
+        alertSub.textContent = 'Fin de la Partida';
+        turnBadge.textContent = 'Derrota Digna';
+        turnBadge.className = 'text-xs font-mono px-3 py-1 rounded-full border border-rose-600 bg-rose-950 text-rose-300 font-semibold';
+        banner.classList.remove('hidden');
+        return;
+      }
+
+      // Jaque Mate Negras
+      if (blackInCheck && legalMovesBlack.length === 0) {
+        isGameOver = true;
+        banner.className = 'p-3 rounded-xl border border-emerald-500/50 bg-emerald-950/30 text-emerald-300 flex items-center justify-between';
+        alertText.textContent = '¡JAQUE MATE! Has dominado el tablero con virtud.';
+        alertSub.textContent = 'Victoria Estoica';
+        turnBadge.textContent = 'Triunfo Sereno';
+        turnBadge.className = 'text-xs font-mono px-3 py-1 rounded-full border border-emerald-600 bg-emerald-950 text-emerald-300 font-semibold';
+        banner.classList.remove('hidden');
+        return;
+      }
+
+      // Jaque Activo
+      if (whiteInCheck) {
+        banner.className = 'p-3 rounded-xl border border-amber-500/50 bg-amber-950/30 text-amber-300 flex items-center justify-between';
+        alertText.textContent = '¡JAQUE! Tu Rey está amenazado. Debes moverlo o bloquear.';
+        alertSub.textContent = 'Escape Forzoso';
+        banner.classList.remove('hidden');
+      } else if (blackInCheck) {
+        banner.className = 'p-3 rounded-xl border border-brand-gold/50 bg-brand-gold/10 text-brand-gold flex items-center justify-between';
+        alertText.textContent = '¡JAQUE! El Rey enemigo está contra las cuerdas.';
+        alertSub.textContent = 'Presión Moral';
+        banner.classList.remove('hidden');
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
+
+    function onCellClick(r, c) {
+      if (isGameOver || currentTurn !== 'w') return;
+
+      const piece = boardState[r][c];
+
+      // Ejecutar movimiento legal seleccionado
+      if (selectedCell && validMoves.some(m => m.r === r && m.c === c)) {
+        executeMove(selectedCell.r, selectedCell.c, r, c);
+        selectedCell = null;
+        validMoves = [];
+        renderBoard();
+
+        if (!isGameOver) {
+          currentTurn = 'b';
+          document.getElementById('chessTurnBadge').textContent = 'El Rival medita...';
+          document.getElementById('chessTurnBadge').className = 'text-xs font-mono px-3 py-1 rounded-full border border-zinc-700 bg-zinc-800 text-zinc-400 font-semibold';
+          setTimeout(runBotEngine, 500);
+        }
+        return;
+      }
+
+      // Seleccionar pieza propia
+      if (piece && piece.startsWith('w')) {
+        selectedCell = { r, c };
+        validMoves = getStrictLegalMoves(r, c, boardState);
+      } else {
+        selectedCell = null;
+        validMoves = [];
+      }
+      renderBoard();
+    }
+
+    function executeMove(fromR, fromC, toR, toC) {
+      const moving = boardState[fromR][fromC];
+      const target = boardState[toR][toC];
+
+      if (target) {
+        if (target.startsWith('w')) capturedByBlack.push(target);
+        else capturedByWhite.push(target);
+      }
+
+      boardState[toR][toC] = moving;
+      boardState[fromR][fromC] = '';
+
+      // Coronación de peón a Dama
+      if (moving === 'wP' && toR === 0) boardState[toR][toC] = 'wQ';
+      if (moving === 'bP' && toR === 7) boardState[toR][toC] = 'bQ';
+
+      // Actualizar pensamiento estoico
+      const thought = STOIC_CHESS_THOUGHTS[Math.floor(Math.random() * STOIC_CHESS_THOUGHTS.length)];
+      document.getElementById('chessStoicThought').textContent = thought.text;
+      document.getElementById('chessAuthorRef').textContent = `— ${thought.author}`;
+    }
+
+    // =========================================================================
+    // INTELIGENCIA ARTIFICIAL EN 3 DIFICULTADES ASCENDENTES
+    // =========================================================================
+    function evaluateBoardScore(board) {
+      let score = 0;
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          const p = board[r][c];
+          if (!p) continue;
+          const val = PIECE_VALUES[p[1]] || 0;
+          // Bonificación posicional por control de casillas centrales (d4, d5, e4, e5)
+          const centerBonus = (3.5 - Math.abs(3.5 - r)) + (3.5 - Math.abs(3.5 - c));
+          const totalVal = val + (p[1] === 'P' ? centerBonus * 0.5 : centerBonus * 0.2);
+
+          if (p.startsWith('b')) score += totalVal;
+          else score -= totalVal;
+        }
+      }
+      return score;
+    }
+
+    function runBotEngine() {
+      if (isGameOver) return;
+      const allMoves = getAllLegalMoves(boardState, 'b');
+
+      if (allMoves.length === 0) {
+        updateGameStatusBanners();
+        return;
+      }
+
+      let chosenMove = null;
+
+      // DIFICULTAD 1: PRINCIPIANTE (El Neófito) - Mayormente aleatorio, capturas accidentales
+      if (currentDifficulty === 'easy') {
+        if (Math.random() < 0.65) {
+          chosenMove = allMoves[Math.floor(Math.random() * allMoves.length)];
+        } else {
+          // Busca cualquier captura directa simple
+          const captures = allMoves.filter(m => boardState[m.toR][m.toC].startsWith('w'));
+          chosenMove = captures.length > 0 ? captures[0] : allMoves[Math.floor(Math.random() * allMoves.length)];
+        }
+      }
+
+      // DIFICULTAD 2: ESTOICO MEDIUM (Filósofo Practicante) - Evaluación voraz de 1 capa
+      else if (currentDifficulty === 'medium') {
+        let bestScore = -Infinity;
+        allMoves.forEach(m => {
+          const sim = cloneBoard(boardState);
+          sim[m.toR][m.toC] = sim[m.fromR][m.fromC];
+          sim[m.fromR][m.fromC] = '';
+
+          let score = evaluateBoardScore(sim);
+          // Priorizar jaques al rey blanco
+          if (isKingInCheck(sim, 'w')) score += 15;
+
+          if (score > bestScore) {
+            bestScore = score;
+            chosenMove = m;
+          }
+        });
+      }
+
+      // DIFICULTAD 3: ESTOICO SUPREMO (Marco Aurelio / Minimax a 2 capas)
+      else if (currentDifficulty === 'supreme') {
+        let bestScore = -Infinity;
+
+        allMoves.forEach(m1 => {
+          const sim1 = cloneBoard(boardState);
+          sim1[m1.toR][m1.toC] = sim1[m1.fromR][m1.fromC];
+          sim1[m1.fromR][m1.fromC] = '';
+
+          // Simula la mejor respuesta de las blancas
+          const whiteResponses = getAllLegalMoves(sim1, 'w');
+          let worstWhiteScore = Infinity;
+
+          if (whiteResponses.length === 0) {
+            // Si el blanco no tiene movimientos y está en jaque, es Jaque Mate
+            if (isKingInCheck(sim1, 'w')) worstWhiteScore = 9999;
+            else worstWhiteScore = 0;
+          } else {
+            whiteResponses.forEach(m2 => {
+              const sim2 = cloneBoard(sim1);
+              sim2[m2.toR][m2.toC] = sim2[m2.fromR][m2.fromC];
+              sim2[m2.fromR][m2.fromC] = '';
+
+              const score = evaluateBoardScore(sim2);
+              if (score < worstWhiteScore) worstWhiteScore = score;
+            });
+          }
+
+          if (worstWhiteScore > bestScore) {
+            bestScore = worstWhiteScore;
+            chosenMove = m1;
+          }
+        });
+      }
+
+      if (!chosenMove) chosenMove = allMoves[0];
+
+      executeMove(chosenMove.fromR, chosenMove.fromC, chosenMove.toR, chosenMove.toC);
       currentTurn = 'w';
       document.getElementById('chessTurnBadge').textContent = 'Tu Turno (Blancas)';
-      document.getElementById('chessTurnBadge').className = 'text-xs font-mono px-2.5 py-1 rounded-full border border-brand-gold/40 bg-brand-gold/10 text-brand-gold font-semibold';
+      document.getElementById('chessTurnBadge').className = 'text-xs font-mono px-3 py-1 rounded-full border border-brand-gold/40 bg-brand-gold/10 text-brand-gold font-semibold';
       renderBoard();
     }
 
@@ -678,58 +902,23 @@
       currentTurn = 'w';
       capturedByWhite = [];
       capturedByBlack = [];
+      isGameOver = false;
       document.getElementById('chessTurnBadge').textContent = 'Tu Turno (Blancas)';
+      document.getElementById('chessTurnBadge').className = 'text-xs font-mono px-3 py-1 rounded-full border border-brand-gold/40 bg-brand-gold/10 text-brand-gold font-semibold';
+      document.getElementById('chessAlertBanner').classList.add('hidden');
       renderBoard();
     }
 
-    // --- 2. BANCO CANÓNICO COMPLETO ---
+    // =========================================================================
+    // 2. CORPUS CANÓNICO & ORÁCULO
+    // =========================================================================
     const STOIC_CORPUS = [
-      { id: 1, author: "Epicteto", source: "Enquiridión V", category: "control", quote: "No nos perturban las cosas que suceden, sino la opinión y el juicio que nos formamos acerca de ellas.", context: "Epicteto enseñaba que la mente es la única ciudadela inexpugnable ante cualquier adversidad.", praxis: "Examina tu interpretación antes de culpar al evento." },
-      { id: 2, author: "Marco Aurelio", source: "Meditaciones IV, 3", category: "control", quote: "En ninguna parte puede hallar el hombre un retiro más apacible y tranquilo que en la intimidad de su propia alma.", context: "Marco desaconsejaba huir al campo cuando la calma interior está ausente.", praxis: "Cierra los ojos: tu santuario no depende de la geografía exterior." },
-      { id: 3, author: "Séneca", source: "De la Brevedad de la Vida I", category: "tiempo", quote: "No recibimos una vida corta, sino que la hacemos tal; y no somos pobres de tiempo, sino pródigos en desperdiciarlo.", context: "Consejo para abandonar los afanes y la ambición estéril.", praxis: "Protege tus horas con más celo que tus posesiones materiales." },
-      { id: 4, author: "Musonio Rufo", source: "Disertaciones V", category: "resiliencia", quote: "Si logras algo bueno con esfuerzo, el esfuerzo pasa pronto, pero el bien permanece; si haces algo malo por placer, el placer se va, pero el mal queda.", context: "Enseñanza sobre la nobleza del trabajo honesto.", praxis: "Vence la inercia del descanso improductivo hoy." },
-      { id: 5, author: "Zenón de Citio", source: "Sentencias", category: "tiempo", quote: "El tiempo es la cosa más valiosa que un ser humano puede gastar.", context: "Fundador del estoicismo tras perderlo todo en un naufragio.", praxis: "No gastes tu atención en disputas sin sustancia." }
+      { id: 1, author: "Epicteto", source: "Enquiridión V", category: "control", quote: "No nos perturban las cosas que suceden, sino la opinión y el juicio que nos formamos acerca de ellas." },
+      { id: 2, author: "Marco Aurelio", source: "Meditaciones IV, 3", category: "control", quote: "En ninguna parte puede hallar el hombre un retiro más apacible y tranquilo que en la intimidad de su propia alma." },
+      { id: 3, author: "Séneca", source: "De la Brevedad de la Vida I", category: "tiempo", quote: "No recibimos una vida corta, sino que la hacemos tal; y no somos pobres de tiempo, sino pródigos en desperdiciarlo." },
+      { id: 4, author: "Musonio Rufo", source: "Disertaciones V", category: "resiliencia", quote: "Si logras algo bueno con esfuerzo, el esfuerzo pasa pronto, pero el bien permanece." }
     ];
 
-    let currentDailyQuote = STOIC_CORPUS[0];
-    let favorites = JSON.parse(localStorage.getItem('ataraxia_favorites')) || [];
-
-    function renderDailyQuote(q) {
-      currentDailyQuote = q;
-      document.getElementById('dailyQuoteText').textContent = `“${q.quote}”`;
-      document.getElementById('dailyAuthor').textContent = q.author;
-      document.getElementById('dailySource').textContent = q.source;
-    }
-
-    function randomizeDailyQuote() {
-      const q = STOIC_CORPUS[Math.floor(Math.random() * STOIC_CORPUS.length)];
-      renderDailyQuote(q);
-    }
-
-    function toggleBookmarkCurrent() {
-      const exists = favorites.some(f => f.id === currentDailyQuote.id);
-      if (exists) favorites = favorites.filter(f => f.id !== currentDailyQuote.id);
-      else favorites.unshift(currentDailyQuote);
-      localStorage.setItem('ataraxia_favorites', JSON.stringify(favorites));
-      document.getElementById('favCountBadge').textContent = favorites.length;
-    }
-
-    function toggleFavoritesModal(show) {
-      const modal = document.getElementById('favoritesModal');
-      modal.style.display = show ? 'flex' : 'none';
-      if (show) {
-        const list = document.getElementById('favoritesListContainer');
-        list.innerHTML = favorites.length === 0 ? '<div class="text-xs text-zinc-500 py-4 text-center">No hay citas guardadas aún.</div>' : '';
-        favorites.forEach(f => {
-          const d = document.createElement('div');
-          d.className = 'p-3 rounded-xl bg-brand-surfaceDim border border-brand-surfaceBorder';
-          d.innerHTML = `<span class="text-[10px] font-mono text-brand-gold">${f.author} • ${f.source}</span><p class="text-xs italic text-zinc-200 mt-1">«${f.quote}»</p>`;
-          list.appendChild(d);
-        });
-      }
-    }
-
-    // --- 3. ORÁCULO & PERSPECTIVA ---
     const ORACLE_DATA = {
       ansiedad: { author: "Séneca", source: "Epístolas XIII", quote: "Sufrimos más a menudo en la imaginación que en la realidad.", prep: "No anticipes el desastre; vive el presente con dignidad." },
       ira: { author: "Marco Aurelio", source: "Meditaciones VI", quote: "La mejor venganza es no ser como aquel que causó la ofensa.", prep: "Responde a la ofensa con templanza; no concedas poder al agresor." },
@@ -765,7 +954,6 @@
       document.getElementById('cosmicPrompt').textContent = COSMIC_STEPS[idx].prompt;
     }
 
-    // --- 4. CORPUS GRID ---
     function filterCorpus() {
       const q = document.getElementById('corpusSearchInput').value.toLowerCase().trim();
       const grid = document.getElementById('corpusCardsGrid');
@@ -781,7 +969,9 @@
       });
     }
 
-    // --- 5. NAVEGACIÓN, CLIMA Y RELOJ ---
+    // =========================================================================
+    // 3. NAVEGACIÓN, CLIMA Y RELOJ
+    // =========================================================================
     function handleNavClick(e, targetId) {
       e.preventDefault();
       const el = document.getElementById(targetId);
@@ -842,7 +1032,6 @@
 
       renderBoard();
       filterCorpus();
-      document.getElementById('favCountBadge').textContent = favorites.length;
       lucide.createIcons();
     });
   </script>
