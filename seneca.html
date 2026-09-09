@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ataraxia — Séneca: El Estadista</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              gold: '#c5a059',
+              goldLight: '#e4c483',
+              goldDark: '#937537',
+              surface: '#121316',
+              surfaceDim: '#0d0e11',
+              surfaceCard: '#1b1b1f',
+              surfaceBorder: '#27282d',
+              surfaceHighlight: '#222328'
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #0d0e11; color: #e4e4e7; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .gold-text-gradient { background: linear-gradient(135deg, #f3deab 0%, #c5a059 50%, #937537 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#0d0e11] text-zinc-200">
+  <header class="border-b border-brand-surfaceBorder bg-brand-surface/90 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-lg border border-brand-gold/40 flex items-center justify-center bg-brand-gold/10 text-brand-gold">
+          <i data-lucide="landmark" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="font-serif tracking-widest text-lg font-bold uppercase gold-text-gradient">ATARAXIA</span>
+          <span class="block text-[10px] tracking-[0.2em] text-zinc-400 font-mono -mt-1">FILOSOFÍA VIVIDA</span>
+        </div>
+      </a>
+      <a href="index.html" class="text-xs font-mono text-zinc-400 hover:text-brand-gold flex items-center gap-2 border border-zinc-800 px-3 py-1.5 rounded-full transition">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Volver al Portal
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-12 flex-1">
+    <!-- Hero Séneca -->
+    <section class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center border border-brand-surfaceBorder bg-brand-surfaceCard rounded-3xl p-6 sm:p-8">
+      <div class="md:col-span-5 aspect-square rounded-2xl overflow-hidden border border-brand-surfaceBorder relative">
+        <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=800&auto=format&fit=crop&q=80" alt="Séneca" class="w-full h-full object-cover grayscale contrast-125">
+        <div class="absolute bottom-3 left-3 text-[10px] font-mono bg-black/80 px-2.5 py-1 rounded text-zinc-300">
+          MUSEO DEL PRADO • MADRID
+        </div>
+      </div>
+      <div class="md:col-span-7 space-y-4">
+        <span class="text-[11px] font-mono uppercase tracking-widest bg-brand-gold/10 text-brand-gold px-2.5 py-0.5 rounded border border-brand-gold/20">EL ESTADISTA DE CÓRDOBA</span>
+        <h1 class="font-serif text-3xl sm:text-5xl font-bold text-zinc-100">Lucio Anneo Séneca</h1>
+        <p class="text-xs font-mono text-brand-gold">4 A.C. – 65 D.C. • DRAMATURGO, SENADOR & CONSEJERO IMPERIAL</p>
+        <p class="text-sm text-zinc-300 leading-relaxed">
+          Nacido en Hispania y formado en el corazón político de Roma. Conoció el destierro en Córcega, la cima de la opulencia y el poder político al lado de Nerón, y finalmente el mandato de quitarse la vida con serenidad inquebrantable. Su prosa epistolar enseña la urgencia de reclamar el dominio del tiempo y sosegar las pasiones desmedidas.
+        </p>
+        <button onclick="speakSeneca()" class="py-2 px-4 rounded-xl bg-brand-gold/10 border border-brand-gold/40 text-brand-gold text-xs font-semibold flex items-center gap-2 hover:bg-brand-gold/20 transition">
+          <i data-lucide="volume-2" class="w-4 h-4"></i> Escuchar Consejo sobre el Tiempo
+        </button>
+      </div>
+    </section>
+
+    <!-- Pilares de Séneca -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="p-6 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-3">
+        <span class="text-2xl font-mono font-bold text-brand-gold">01</span>
+        <h3 class="font-serif text-lg font-bold text-zinc-100">Economía del Tiempo</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed">Nadie devolverá tus años. Protege tus días con mayor celo del que empleas para custodiar tu hacienda.</p>
+      </div>
+      <div class="p-6 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-3">
+        <span class="text-2xl font-mono font-bold text-brand-gold">02</span>
+        <h3 class="font-serif text-lg font-bold text-zinc-100">Dominio de la Ira</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed">La cólera es una breve locura. El mayor remedio para el arrebato es la demora y la pausa consciente.</p>
+      </div>
+      <div class="p-6 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-3">
+        <span class="text-2xl font-mono font-bold text-brand-gold">03</span>
+        <h3 class="font-serif text-lg font-bold text-zinc-100">Premeditatio Malorum</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed">Anticipa en tu mente el exilio, la pobreza y el dolor. Lo que ha sido previsto con antelación hiere con menor gravedad.</p>
+      </div>
+    </section>
+
+    <!-- Cartas Morales a Lucilio -->
+    <section class="p-6 sm:p-8 rounded-3xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-4">
+      <div class="flex items-center justify-between border-b border-brand-surfaceBorder/60 pb-3">
+        <h3 class="font-serif text-xl font-bold text-zinc-100">Cartas a Lucilio</h3>
+        <div class="flex gap-2">
+          <button onclick="nextSenecaQuote(-1)" class="p-1.5 rounded-lg border border-zinc-700 hover:border-brand-gold text-zinc-300"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+          <button onclick="nextSenecaQuote(1)" class="p-1.5 rounded-lg border border-zinc-700 hover:border-brand-gold text-zinc-300"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+        </div>
+      </div>
+      <blockquote id="senecaQuoteDisplay" class="font-serif text-xl text-zinc-100 italic min-h-[80px]">
+        «Reclama el derecho sobre ti mismo. Aquel tiempo que hasta ahora te quitaban, te sustraían o se te escapaba, recógelo y presérvalo.»
+      </blockquote>
+      <div id="senecaSourceDisplay" class="text-xs font-mono text-brand-gold">Epístola I, A Lucilio</div>
+    </section>
+  </main>
+
+  <footer class="border-t border-brand-surfaceBorder py-6 text-center text-xs font-mono text-zinc-500">
+    ATARAXIA • CARTAS MORALES DE SÉNECA
+  </footer>
+
+  <script>
+    const SENECA_QUOTES = [
+      { text: "Reclama el derecho sobre ti mismo. Aquel tiempo que hasta ahora te quitaban, te sustraían o se te escapaba, recógelo y presérvalo.", src: "Epístola I, A Lucilio" },
+      { text: "Sufrimos más a menudo en la imaginación que en la realidad.", src: "Epístola XIII, A Lucilio" },
+      { text: "Si un hombre no sabe hacia qué puerto navega, ningún viento es favorable.", src: "Epístola LXXI, A Lucilio" },
+      { text: "No es pobre el que tiene poco, sino el que codicia más.", src: "Epístola II, A Lucilio" }
+    ];
+    let sIdx = 0;
+    function renderSeneca() {
+      document.getElementById('senecaQuoteDisplay').textContent = `«${SENECA_QUOTES[sIdx].text}»`;
+      document.getElementById('senecaSourceDisplay').textContent = SENECA_QUOTES[sIdx].src;
+      lucide.createIcons();
+    }
+    function nextSenecaQuote(d) {
+      sIdx = (sIdx + d + SENECA_QUOTES.length) % SENECA_QUOTES.length;
+      renderSeneca();
+    }
+    function speakSeneca() {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(`${SENECA_QUOTES[sIdx].text}. Séneca.`);
+      u.lang = 'es-ES';
+      window.speechSynthesis.speak(u);
+    }
+    renderSeneca();
+  </script>
+</body>
+</html>
