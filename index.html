@@ -493,20 +493,23 @@
         </div>
       </section>
 
-      <!-- SECCIÓN SPOTIFY PODCASTS -->
+      <!-- SECCIÓN SPOTIFY PODCASTS (CON REPRODUCTOR DE ALTA RESOLUCIÓN Y LOGIN) -->
       <section id="podcast" class="scroll-target scroll-mt-24 p-6 sm:p-8 rounded-3xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-brand-surfaceBorder pb-4">
           <div>
             <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-spotify font-semibold">
-              <i data-lucide="radio" class="w-4 h-4"></i> Espacio de Escucha Atenta
+              <i data-lucide="radio" class="w-4 h-4"></i> Espacio de Escucha Continua
             </div>
             <h3 class="font-serif text-xl sm:text-2xl font-bold text-zinc-100 mt-0.5">Podcasts de Filosofía & Estoicismo</h3>
           </div>
-          <span class="text-[11px] font-mono text-zinc-500">Conexión Directa a Spotify</span>
+          <div class="flex items-center gap-2 text-xs font-mono text-zinc-400">
+            <span class="w-2 h-2 rounded-full bg-brand-spotify animate-pulse"></span>
+            <span>Sesión Integrada</span>
+          </div>
         </div>
 
         <p class="text-xs text-zinc-400 leading-relaxed">
-          Nutre tu entendimiento durante tu entrenamiento, tus desplazamientos o antes del reposo nocturno. Selecciona uno de los canales esenciales:
+          Puedes <strong>iniciar sesión directamente en el reproductor de abajo</strong> (esquina superior derecha del marco) para sincronizar tu biblioteca y escuchar episodios completos sin salir de Ataraxia.
         </p>
 
         <!-- Selector de Podcasts -->
@@ -542,18 +545,18 @@
           </button>
         </div>
 
-        <!-- Reproductor Embebido Spotify -->
-        <div class="rounded-2xl overflow-hidden border border-brand-surfaceBorder bg-black p-1 spotify-glow">
+        <!-- Reproductor Embebido Spotify (Altura 352px para permitir Login y Navegación) -->
+        <div class="rounded-2xl overflow-hidden border border-brand-surfaceBorder bg-[#121212] p-1.5 spotify-glow">
           <iframe 
             id="spotifyPlayer" 
-            style="border-radius:12px" 
             src="https://open.spotify.com/embed/show/4tDqG3Ww9jZ4gW8uJ1gqV2?utm_source=generator&theme=0" 
             width="100%" 
-            height="152" 
+            height="352" 
             frameBorder="0" 
             allowfullscreen="" 
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-            loading="lazy">
+            loading="lazy"
+            class="rounded-xl w-full">
           </iframe>
         </div>
       </section>
@@ -752,7 +755,6 @@
           }
         });
 
-        // Actualizar elementos DOM
         document.getElementById('blueVenta').textContent = `$${dolarRates.blue.venta.toLocaleString('es-AR')}`;
         document.getElementById('blueCompra').textContent = `$${dolarRates.blue.compra.toLocaleString('es-AR')}`;
         document.getElementById('headerDolarBlue').textContent = `$${dolarRates.blue.venta.toLocaleString('es-AR')}`;
@@ -773,7 +775,6 @@
         calculateExchange();
       } catch (err) {
         console.warn('Fallo consulta Dólar, usando valores de respaldo:', err);
-        // Fallback referencial
         dolarRates.blue.venta = 1540;
         dolarRates.blue.compra = 1520;
         dolarRates.mep.venta = 1525;
@@ -1597,7 +1598,7 @@
       fetchWeather(k);
     }
 
-    // Inicializaciones al cargar el DOM
+    // Inicializaciones
     document.addEventListener('DOMContentLoaded', () => {
       const savedCity = localStorage.getItem('ataraxia_user_city') || 'mendoza';
       const select = document.getElementById('citySelect');
@@ -1605,7 +1606,7 @@
       fetchWeather(savedCity);
 
       fetchDolarRates();
-      setInterval(fetchDolarRates, 60000); // Polling cada 60s
+      setInterval(fetchDolarRates, 60000);
 
       updateXpUI();
       renderBadges();
@@ -1617,3 +1618,5 @@
   </script>
 </body>
 </html>
+            
+  
