@@ -66,15 +66,9 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .gold-glow {
-      box-shadow: 0 0 35px -8px rgba(230, 190, 108, 0.25);
-    }
-    .emerald-glow {
-      box-shadow: 0 0 30px -8px rgba(16, 185, 129, 0.3);
-    }
-    .spotify-glow {
-      box-shadow: 0 0 30px -8px rgba(29, 185, 84, 0.3);
-    }
+    .gold-glow { box-shadow: 0 0 35px -8px rgba(230, 190, 108, 0.25); }
+    .emerald-glow { box-shadow: 0 0 30px -8px rgba(16, 185, 129, 0.3); }
+    .spotify-glow { box-shadow: 0 0 30px -8px rgba(29, 185, 84, 0.3); }
 
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: #0a0c10; }
@@ -122,7 +116,7 @@
 </head>
 <body class="min-h-screen flex flex-col bg-brand-obsidian text-slate-200">
 
-  <!-- Header Fijo con Gamificación y Acceso a Podcast -->
+  <!-- Header Fijo con Cotización en Vivo, Gamificación y Menús -->
   <header class="border-b border-brand-surfaceBorder bg-brand-obsidian/95 backdrop-blur sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
       
@@ -143,6 +137,9 @@
           <a href="#muro" data-target="muro" onclick="handleNavClick(event, 'muro')" class="nav-link text-brand-gold flex items-center gap-2 border-b-2 border-brand-gold pb-1 pt-1 font-semibold transition-all">
             <i data-lucide="scroll" class="w-4 h-4"></i> Muro
           </a>
+          <a href="#mercado" data-target="mercado" onclick="handleNavClick(event, 'mercado')" class="nav-link text-zinc-400 hover:text-zinc-200 transition-colors flex items-center gap-2 pb-1 pt-1 border-b-2 border-transparent">
+            <i data-lucide="dollar-sign" class="w-4 h-4 text-emerald-400"></i> Dólar Hoy
+          </a>
           <a href="#podcast" data-target="podcast" onclick="handleNavClick(event, 'podcast')" class="nav-link text-zinc-400 hover:text-zinc-200 transition-colors flex items-center gap-2 pb-1 pt-1 border-b-2 border-transparent">
             <i data-lucide="radio" class="w-4 h-4 text-brand-spotify"></i> Podcasts
           </a>
@@ -158,19 +155,17 @@
         </nav>
       </div>
 
-      <!-- Barra de Progreso XP y Racha -->
-      <div class="flex items-center gap-2.5 sm:gap-4">
+      <!-- Ticker Dólar en Vivo & Controles -->
+      <div class="flex items-center gap-2.5 sm:gap-3.5">
         
-        <div class="hidden sm:flex flex-col items-end">
-          <div class="flex items-center gap-1.5 text-xs font-mono">
-            <span class="text-zinc-400 text-[11px]">Rango:</span>
-            <span id="rankTitle" class="text-brand-gold font-bold">Neófito</span>
-            <span class="text-zinc-500">•</span>
-            <span id="rankLevelBadge" class="text-brand-neonSky font-semibold">Nv. 1</span>
-          </div>
-          <div class="w-32 bg-brand-surfaceHighlight border border-brand-surfaceBorder rounded-full h-2 mt-1 overflow-hidden">
-            <div id="xpProgressBar" class="bg-gradient-to-r from-brand-goldDark to-brand-gold h-full rounded-full transition-all duration-500" style="width: 15%;"></div>
-          </div>
+        <!-- Badge Dólar Blue en Vivo en Header -->
+        <div onclick="handleNavClick(event, 'mercado')" class="hidden md:flex items-center gap-2 bg-brand-surfaceDim border border-brand-surfaceBorder hover:border-emerald-500/50 rounded-full px-3 py-1 cursor-pointer transition text-xs font-mono">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-zinc-400">Blue:</span>
+          <span id="headerDolarBlue" class="text-emerald-400 font-bold">$---</span>
+          <span class="text-zinc-600">|</span>
+          <span class="text-zinc-400">MEP:</span>
+          <span id="headerDolarMep" class="text-brand-neonSky font-bold">$---</span>
         </div>
 
         <!-- Racha -->
@@ -179,7 +174,7 @@
           <span id="streakCount">14 d</span>
         </div>
 
-        <!-- Selector Clima -->
+        <!-- Clima -->
         <div class="flex items-center gap-1.5 bg-brand-surfaceDim border border-brand-surfaceBorder rounded-full px-2.5 py-1 text-xs font-mono text-zinc-300">
           <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-gold"></i>
           <select id="citySelect" onchange="changeCity(this.value)" class="bg-transparent text-xs text-zinc-200 outline-none cursor-pointer">
@@ -188,7 +183,6 @@
             <option value="santiago" class="bg-brand-surfaceCard">Santiago</option>
             <option value="madrid" class="bg-brand-surfaceCard">Madrid</option>
             <option value="rome" class="bg-brand-surfaceCard">Roma</option>
-            <option value="athens" class="bg-brand-surfaceCard">Atenas</option>
           </select>
           <span class="text-zinc-600">|</span>
           <span id="weatherTemp" class="text-brand-gold font-semibold">--°C</span>
@@ -202,9 +196,17 @@
 
     <!-- Menú Drawer Mobile -->
     <div id="mobileDrawer" class="hidden xl:hidden border-b border-brand-surfaceBorder bg-brand-surfaceDim px-6 py-4 space-y-3">
+      <!-- Cotización en Drawer -->
+      <div class="p-2.5 rounded-xl bg-brand-obsidian border border-brand-surfaceBorder flex items-center justify-between text-xs font-mono">
+        <span class="text-zinc-400">USD/ARS Blue:</span>
+        <span id="mobileDolarBlue" class="text-emerald-400 font-bold">$---</span>
+      </div>
       <nav class="flex flex-col space-y-2 text-sm">
         <a href="#muro" onclick="handleNavClick(event, 'muro')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
           <i data-lucide="scroll" class="w-4 h-4"></i> Muro Principal
+        </a>
+        <a href="#mercado" onclick="handleNavClick(event, 'mercado')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
+          <i data-lucide="dollar-sign" class="w-4 h-4 text-emerald-400"></i> Mercado Cambiario & Dólar
         </a>
         <a href="#podcast" onclick="handleNavClick(event, 'podcast')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
           <i data-lucide="radio" class="w-4 h-4 text-brand-spotify"></i> Podcasts Spotify
@@ -213,10 +215,10 @@
           <i data-lucide="crown" class="w-4 h-4"></i> Ajedrez Gran Maestro
         </a>
         <a href="#oraculo" onclick="handleNavClick(event, 'oraculo')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
-          <i data-lucide="compass" class="w-4 h-4"></i> Oráculo de Dilemas
+          <i data-lucide="compass" class="w-4 h-4"></i> Oráculo Universal
         </a>
         <a href="#buscador" onclick="handleNavClick(event, 'buscador')" class="py-2 text-zinc-300 hover:text-brand-gold flex items-center gap-3">
-          <i data-lucide="book-open" class="w-4 h-4"></i> Corpus Universal
+          <i data-lucide="book-open" class="w-4 h-4"></i> Corpus de Sabiduría
         </a>
       </nav>
     </div>
@@ -234,6 +236,9 @@
           <a href="#muro" data-target="muro" onclick="handleNavClick(event, 'muro')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-xl bg-brand-gold text-brand-obsidian font-bold text-sm shadow-sm transition">
             <i data-lucide="columns-2" class="w-4 h-4"></i> Muro Principal
           </a>
+          <a href="#mercado" data-target="mercado" onclick="handleNavClick(event, 'mercado')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
+            <i data-lucide="dollar-sign" class="w-4 h-4 text-emerald-400"></i> Dólar en Vivo
+          </a>
           <a href="#podcast" data-target="podcast" onclick="handleNavClick(event, 'podcast')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
             <i data-lucide="radio" class="w-4 h-4 text-brand-spotify"></i> Podcasts Spotify
           </a>
@@ -244,11 +249,11 @@
             <i data-lucide="compass" class="w-4 h-4"></i> Oráculo Universal
           </a>
           <a href="#buscador" data-target="buscador" onclick="handleNavClick(event, 'buscador')" class="side-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-400 hover:text-zinc-100 hover:bg-brand-surfaceHighlight text-sm transition">
-            <i data-lucide="search" class="w-4 h-4"></i> Corpus de Sabiduría
+            <i data-lucide="search" class="w-4 h-4"></i> Corpus Canónico
           </a>
         </nav>
 
-        <!-- Vitrina de Insignias -->
+        <!-- Vitrina de Logros -->
         <div class="p-4 rounded-2xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-3">
           <div class="flex items-center justify-between text-[11px] font-mono uppercase text-zinc-400 font-bold">
             <span>Insignias de Virtud</span>
@@ -319,7 +324,7 @@
             <span class="text-[10px] font-mono uppercase tracking-widest bg-brand-gold/10 text-brand-gold px-2.5 py-0.5 rounded border border-brand-gold/20">VIGILIA</span>
           </div>
           <div class="text-xs text-zinc-400 font-mono flex flex-wrap items-center gap-3">
-            <span class="flex items-center gap-1.5"><i data-lucide="calendar" class="w-3.5 h-3.5 text-brand-gold"></i> <span id="currentDateRoman">Die IX September</span></span>
+            <span class="flex items-center gap-1.5"><i data-lucide="calendar" class="w-3.5 h-3.5 text-brand-gold"></i> <span id="currentDateRoman">Die X September</span></span>
             <span>•</span>
             <span class="flex items-center gap-1.5"><i data-lucide="sun" class="w-3.5 h-3.5 text-amber-400"></i> <span id="weatherStatusCity">Mendoza • --°C</span></span>
           </div>
@@ -361,6 +366,129 @@
           <div>
             <span id="dailyAuthor" class="text-sm font-semibold text-brand-gold">Epicteto de Hierápolis</span>
             <p id="dailySource" class="text-xs text-zinc-400 font-mono">Enquiridión, Capítulo V</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN COTIZACIÓN DEL DÓLAR EN VIVO & CONVERSOR -->
+      <section id="mercado" class="scroll-target scroll-mt-24 p-6 sm:p-8 rounded-3xl border border-brand-surfaceBorder bg-brand-surfaceCard space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-brand-surfaceBorder pb-4">
+          <div>
+            <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-emerald-400 font-semibold">
+              <i data-lucide="trending-up" class="w-4 h-4"></i> Mercado Cambiario Argentino (USD / ARS)
+            </div>
+            <h3 class="font-serif text-xl sm:text-2xl font-bold text-zinc-100 mt-0.5">Cotizaciones en Vivo</h3>
+          </div>
+          <div class="flex items-center gap-3">
+            <span id="dolarUpdatedTime" class="text-[11px] font-mono text-zinc-500">Actualizando...</span>
+            <button onclick="fetchDolarRates()" class="p-2 rounded-xl border border-zinc-700 bg-brand-surfaceDim hover:border-emerald-500 text-zinc-300 hover:text-emerald-400 transition" title="Refrescar cotizaciones">
+              <i id="dolarRefreshIcon" data-lucide="refresh-cw" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tarjetas de Cotizaciones -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+          <!-- Dólar Blue -->
+          <div class="p-4 rounded-2xl bg-brand-surfaceDim border border-emerald-500/30 hover:border-emerald-500/70 transition space-y-2">
+            <div class="flex items-center justify-between text-[11px] font-mono">
+              <span class="text-emerald-400 font-bold uppercase">Dólar Blue</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            </div>
+            <div>
+              <div class="text-[10px] font-mono text-zinc-500">VENTA</div>
+              <div id="blueVenta" class="text-xl sm:text-2xl font-bold font-mono text-slate-100">$---</div>
+            </div>
+            <div class="pt-1 border-t border-brand-surfaceBorder/60 flex justify-between text-[10px] font-mono text-zinc-400">
+              <span>Compra:</span>
+              <span id="blueCompra" class="text-zinc-300 font-semibold">$---</span>
+            </div>
+          </div>
+
+          <!-- Dólar MEP -->
+          <div class="p-4 rounded-2xl bg-brand-surfaceDim border border-brand-neonSky/30 hover:border-brand-neonSky/70 transition space-y-2">
+            <div class="flex items-center justify-between text-[11px] font-mono">
+              <span class="text-brand-neonSky font-bold uppercase">Dólar MEP</span>
+              <i data-lucide="activity" class="w-3.5 h-3.5 text-brand-neonSky"></i>
+            </div>
+            <div>
+              <div class="text-[10px] font-mono text-zinc-500">VENTA</div>
+              <div id="mepVenta" class="text-xl sm:text-2xl font-bold font-mono text-slate-100">$---</div>
+            </div>
+            <div class="pt-1 border-t border-brand-surfaceBorder/60 flex justify-between text-[10px] font-mono text-zinc-400">
+              <span>Compra:</span>
+              <span id="mepCompra" class="text-zinc-300 font-semibold">$---</span>
+            </div>
+          </div>
+
+          <!-- Dólar Cripto -->
+          <div class="p-4 rounded-2xl bg-brand-surfaceDim border border-brand-gold/30 hover:border-brand-gold/70 transition space-y-2">
+            <div class="flex items-center justify-between text-[11px] font-mono">
+              <span class="text-brand-gold font-bold uppercase">Cripto (USDT)</span>
+              <i data-lucide="zap" class="w-3.5 h-3.5 text-brand-gold"></i>
+            </div>
+            <div>
+              <div class="text-[10px] font-mono text-zinc-500">VENTA</div>
+              <div id="criptoVenta" class="text-xl sm:text-2xl font-bold font-mono text-slate-100">$---</div>
+            </div>
+            <div class="pt-1 border-t border-brand-surfaceBorder/60 flex justify-between text-[10px] font-mono text-zinc-400">
+              <span>Compra:</span>
+              <span id="criptoCompra" class="text-zinc-300 font-semibold">$---</span>
+            </div>
+          </div>
+
+          <!-- Dólar Oficial -->
+          <div class="p-4 rounded-2xl bg-brand-surfaceDim border border-brand-surfaceBorder hover:border-zinc-700 transition space-y-2">
+            <div class="flex items-center justify-between text-[11px] font-mono">
+              <span class="text-zinc-400 font-bold uppercase">Oficial BNA</span>
+              <i data-lucide="landmark" class="w-3.5 h-3.5 text-zinc-500"></i>
+            </div>
+            <div>
+              <div class="text-[10px] font-mono text-zinc-500">VENTA</div>
+              <div id="oficialVenta" class="text-xl sm:text-2xl font-bold font-mono text-slate-100">$---</div>
+            </div>
+            <div class="pt-1 border-t border-brand-surfaceBorder/60 flex justify-between text-[10px] font-mono text-zinc-400">
+              <span>Compra:</span>
+              <span id="oficialCompra" class="text-zinc-300 font-semibold">$---</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Conversor Rápido de Divisas -->
+        <div class="p-5 rounded-2xl bg-brand-obsidian/70 border border-brand-surfaceBorder space-y-4">
+          <div class="flex items-center justify-between text-xs font-mono">
+            <span class="text-zinc-400 font-bold flex items-center gap-1.5">
+              <i data-lucide="calculator" class="w-4 h-4 text-emerald-400"></i> Calculadora de Conversión
+            </span>
+            <span class="text-zinc-500 text-[10px]">Cálculo instantáneo</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+            <div class="sm:col-span-5 relative">
+              <input 
+                type="number" 
+                id="calcAmount" 
+                value="100" 
+                min="1" 
+                oninput="calculateExchange()"
+                class="w-full bg-brand-surfaceDim border border-brand-surfaceBorder rounded-xl pl-8 pr-3 py-2 text-sm font-mono text-zinc-100 focus:outline-none focus:border-emerald-400"
+              >
+              <span id="calcCurrencyPrefix" class="absolute left-3 top-2.5 text-zinc-500 font-mono text-xs">US$</span>
+            </div>
+
+            <div class="sm:col-span-3">
+              <select id="calcType" onchange="calculateExchange()" class="w-full bg-brand-surfaceDim border border-brand-surfaceBorder rounded-xl px-3 py-2 text-xs font-mono text-zinc-200 outline-none cursor-pointer">
+                <option value="blue">Dólar Blue</option>
+                <option value="mep">Dólar MEP</option>
+                <option value="cripto">Cripto</option>
+                <option value="oficial">Oficial</option>
+              </select>
+            </div>
+
+            <div class="sm:col-span-4 p-2.5 rounded-xl bg-brand-surfaceDim border border-brand-surfaceBorder text-right">
+              <div class="text-[10px] font-mono text-zinc-500 uppercase">Equivalente en Pesos</div>
+              <div id="calcResult" class="text-lg font-mono font-bold text-emerald-400">$0,00</div>
+            </div>
           </div>
         </div>
       </section>
@@ -460,7 +588,7 @@
           </div>
         </div>
 
-        <!-- Banner de Jaque / Jaque Mate -->
+        <!-- Banner de Jaque -->
         <div id="chessAlertBanner" class="hidden p-3 rounded-xl border flex items-center justify-between transition-all">
           <div class="flex items-center gap-2.5">
             <i data-lucide="alert-triangle" class="w-4 h-4"></i>
@@ -594,7 +722,80 @@
   <!-- SCRIPTS -->
   <script>
     // =========================================================================
-    // 1. SISTEMA DE XP, NIVELES Y SPOTIFY
+    // 1. COTIZACIÓN DEL DÓLAR EN TIEMPO REAL & CONVERSOR
+    // =========================================================================
+    let dolarRates = {
+      blue: { compra: 0, venta: 0 },
+      mep: { compra: 0, venta: 0 },
+      cripto: { compra: 0, venta: 0 },
+      oficial: { compra: 0, venta: 0 }
+    };
+
+    async function fetchDolarRates() {
+      const refreshIcon = document.getElementById('dolarRefreshIcon');
+      if (refreshIcon) refreshIcon.classList.add('animate-spin');
+
+      try {
+        const res = await fetch('https://dolarapi.com/v1/dolares');
+        if (!res.ok) throw new Error('Error al consultar DolarApi');
+        const data = await res.json();
+
+        data.forEach(item => {
+          const casa = item.casa.toLowerCase();
+          if (dolarRates[casa]) {
+            dolarRates[casa].compra = item.compra;
+            dolarRates[casa].venta = item.venta;
+          }
+          if (casa === 'bolsa') {
+            dolarRates.mep.compra = item.compra;
+            dolarRates.mep.venta = item.venta;
+          }
+        });
+
+        // Actualizar elementos DOM
+        document.getElementById('blueVenta').textContent = `$${dolarRates.blue.venta.toLocaleString('es-AR')}`;
+        document.getElementById('blueCompra').textContent = `$${dolarRates.blue.compra.toLocaleString('es-AR')}`;
+        document.getElementById('headerDolarBlue').textContent = `$${dolarRates.blue.venta.toLocaleString('es-AR')}`;
+        document.getElementById('mobileDolarBlue').textContent = `$${dolarRates.blue.venta.toLocaleString('es-AR')}`;
+
+        document.getElementById('mepVenta').textContent = `$${dolarRates.mep.venta.toLocaleString('es-AR')}`;
+        document.getElementById('mepCompra').textContent = `$${dolarRates.mep.compra.toLocaleString('es-AR')}`;
+        document.getElementById('headerDolarMep').textContent = `$${dolarRates.mep.venta.toLocaleString('es-AR')}`;
+
+        document.getElementById('criptoVenta').textContent = `$${dolarRates.cripto.venta.toLocaleString('es-AR')}`;
+        document.getElementById('criptoCompra').textContent = `$${dolarRates.cripto.compra.toLocaleString('es-AR')}`;
+
+        document.getElementById('oficialVenta').textContent = `$${dolarRates.oficial.venta.toLocaleString('es-AR')}`;
+        document.getElementById('oficialCompra').textContent = `$${dolarRates.oficial.compra.toLocaleString('es-AR')}`;
+
+        const now = new Date();
+        document.getElementById('dolarUpdatedTime').textContent = `Act. ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')} hs`;
+        calculateExchange();
+      } catch (err) {
+        console.warn('Fallo consulta Dólar, usando valores de respaldo:', err);
+        // Fallback referencial
+        dolarRates.blue.venta = 1540;
+        dolarRates.blue.compra = 1520;
+        dolarRates.mep.venta = 1525;
+        dolarRates.mep.compra = 1520;
+        document.getElementById('blueVenta').textContent = `$1.540`;
+        document.getElementById('headerDolarBlue').textContent = `$1.540`;
+        calculateExchange();
+      } finally {
+        if (refreshIcon) refreshIcon.classList.remove('animate-spin');
+      }
+    }
+
+    function calculateExchange() {
+      const amount = parseFloat(document.getElementById('calcAmount').value) || 0;
+      const type = document.getElementById('calcType').value;
+      const rate = (dolarRates[type] && dolarRates[type].venta > 0) ? dolarRates[type].venta : 1540;
+      const total = amount * rate;
+      document.getElementById('calcResult').textContent = `$${Math.round(total).toLocaleString('es-AR')}`;
+    }
+
+    // =========================================================================
+    // 2. SISTEMA DE GAMIFICACIÓN & SPOTIFY
     // =========================================================================
     const RANKS = [
       { level: 1, title: "Neófito", minXp: 0, maxXp: 100 },
@@ -762,7 +963,7 @@
     }
 
     // =========================================================================
-    // 2. MOTOR DE AJEDREZ ALTA DIFICULTAD (MINIMAX + ALFA-BETA + PST)
+    // 3. MOTOR DE AJEDREZ ALTA DIFICULTAD (MINIMAX + ALFA-BETA + PST)
     // =========================================================================
     const CHESS_PIECES = {
       wP: '♙', wR: '♖', wN: '♘', wB: '♗', wQ: '♕', wK: '♔',
@@ -771,7 +972,6 @@
 
     const PIECE_VALUES = { P: 100, N: 320, B: 330, R: 500, Q: 900, K: 20000 };
 
-    // Tablas de posición de piezas (Piece-Square Tables para negras)
     const PAWN_PST = [
       [0,  0,  0,  0,  0,  0,  0,  0],
       [50, 50, 50, 50, 50, 50, 50, 50],
@@ -813,13 +1013,8 @@
     let currentDifficulty = 'supreme';
     let isGameOver = false;
 
-    function setChessDifficulty(val) {
-      currentDifficulty = val;
-    }
-
-    function cloneBoard(b) {
-      return b.map(row => [...row]);
-    }
+    function setChessDifficulty(val) { currentDifficulty = val; }
+    function cloneBoard(b) { return b.map(row => [...row]); }
 
     function findKing(board, color) {
       const kingTarget = color + 'K';
@@ -881,9 +1076,8 @@
         dirs.forEach(([dr, dc]) => {
           let nr = r + dr, nc = c + dc;
           while (inBounds(nr, nc)) {
-            if (board[nr][nc] === '') {
-              moves.push({ r: nr, c: nc });
-            } else {
+            if (board[nr][nc] === '') moves.push({ r: nr, c: nc });
+            else {
               if (board[nr][nc][0] !== color) moves.push({ r: nr, c: nc });
               break;
             }
@@ -897,9 +1091,8 @@
         dirs.forEach(([dr, dc]) => {
           let nr = r + dr, nc = c + dc;
           while (inBounds(nr, nc)) {
-            if (board[nr][nc] === '') {
-              moves.push({ r: nr, c: nc });
-            } else {
+            if (board[nr][nc] === '') moves.push({ r: nr, c: nc });
+            else {
               if (board[nr][nc][0] !== color) moves.push({ r: nr, c: nc });
               break;
             }
@@ -975,16 +1168,10 @@
           const isDark = (r + c) % 2 === 1;
           cell.className = `chess-cell ${isDark ? 'cell-dark' : 'cell-light'}`;
 
-          if (whiteInCheck && whiteKingPos && whiteKingPos.r === r && whiteKingPos.c === c) {
-            cell.classList.add('cell-in-check');
-          }
-          if (blackInCheck && blackKingPos && blackKingPos.r === r && blackKingPos.c === c) {
-            cell.classList.add('cell-in-check');
-          }
+          if (whiteInCheck && whiteKingPos && whiteKingPos.r === r && whiteKingPos.c === c) cell.classList.add('cell-in-check');
+          if (blackInCheck && blackKingPos && blackKingPos.r === r && blackKingPos.c === c) cell.classList.add('cell-in-check');
 
-          if (selectedCell && selectedCell.r === r && selectedCell.c === c) {
-            cell.classList.add('cell-selected');
-          }
+          if (selectedCell && selectedCell.r === r && selectedCell.c === c) cell.classList.add('cell-selected');
 
           if (validMoves.some(m => m.r === r && m.c === c)) {
             if (piece !== '') cell.classList.add('cell-valid-capture');
@@ -1102,7 +1289,6 @@
       if (moving === 'bP' && toR === 7) boardState[toR][toC] = 'bQ';
     }
 
-    // Evaluación Posicional Completa
     function evaluateBoardScore(board) {
       let score = 0;
       for (let r = 0; r < 8; r++) {
@@ -1116,7 +1302,6 @@
           if (p[1] === 'N') pstBonus = KNIGHT_PST[r][c];
 
           const total = val + pstBonus;
-
           if (p.startsWith('b')) score += total;
           else score -= total;
         }
@@ -1124,17 +1309,14 @@
       return score;
     }
 
-    // Minimax con poda Alfa-Beta (Profundidad 3)
     function minimax(board, depth, alpha, beta, isMaximizing) {
-      if (depth === 0) {
-        return evaluateBoardScore(board);
-      }
+      if (depth === 0) return evaluateBoardScore(board);
 
       const moves = getAllLegalMoves(board, isMaximizing ? 'b' : 'w');
       if (moves.length === 0) {
         const inCheck = isKingInCheck(board, isMaximizing ? 'b' : 'w');
         if (inCheck) return isMaximizing ? -99999 + (3 - depth) : 99999 - (3 - depth);
-        return 0; // Tablas
+        return 0;
       }
 
       if (isMaximizing) {
@@ -1190,7 +1372,6 @@
         });
       } else if (currentDifficulty === 'supreme') {
         let bestScore = -Infinity;
-        // Ordenamiento previo de jugadas para podar más rápido
         allMoves.sort((a, b) => {
           const targetA = boardState[a.toR][a.toC] ? PIECE_VALUES[boardState[a.toR][a.toC][1]] || 0 : 0;
           const targetB = boardState[b.toR][b.toC] ? PIECE_VALUES[boardState[b.toR][b.toC][1]] || 0 : 0;
@@ -1201,7 +1382,6 @@
           const sim = cloneBoard(boardState);
           sim[m.toR][m.toC] = sim[m.fromR][m.fromC];
           sim[m.fromR][m.fromC] = '';
-          
           let score = minimax(sim, 2, -Infinity, Infinity, false);
           if (score > bestScore) {
             bestScore = score;
@@ -1244,7 +1424,7 @@
     }
 
     // =========================================================================
-    // 3. CORPUS UNIVERSAL DE SABIDURÍA (PLATÓN, EINSTEIN, TESLA, NIETZSCHE)
+    // 4. CORPUS UNIVERSAL (PLATÓN, EINSTEIN, TESLA, NIETZSCHE, FRANKL, JUNG)
     // =========================================================================
     const UNIVERSAL_CORPUS = [
       // Estoicos
@@ -1256,23 +1436,23 @@
       { id: 4, author: "Platón", source: "La República, Libro VII", category: "filosofia", quote: "Podemos perdonar fácilmente a un niño que tiene miedo de la oscuridad; la verdadera tragedia de la vida es cuando los hombres tienen miedo de la luz." },
       { id: 5, author: "Platón", source: "Fedón", category: "filosofia", quote: "La conquista de uno mismo es la mayor de todas las victorias; ser conquistado por uno mismo es la más vergonzosa y vil de las derrotas." },
       { id: 6, author: "Sócrates", source: "Apología por Platón", category: "filosofia", quote: "Una vida que no se somete a examen crítico constante no merece la pena de ser vivida." },
+      { id: 7, author: "Arthur Schopenhauer", source: "Aforismos sobre el Arte de Vivir", category: "filosofia", quote: "Lo que un hombre es por sí mismo en la soledad es lo que mejor revela la dignidad de su existencia." },
 
-      // Ciencia, Realidad & Genio Creativo
-      { id: 7, author: "Albert Einstein", source: "Ideas y Opiniones", category: "ciencia", quote: "La mente intuitiva es un regalo sagrado y la mente racional es un sirviente fiel. Hemos creado una sociedad que honra al sirviente y ha olvidado el regalo." },
-      { id: 8, author: "Albert Einstein", source: "Correspondencia a Michele Besso", category: "ciencia", quote: "La realidad no es más que una ilusión, aunque ciertamente muy persistente. Quien comprende esto camina con ligereza." },
-      { id: 9, author: "Nikola Tesla", source: "Mis Invenciones", category: "ciencia", quote: "Si quieres encontrar los verdaderos secretos del universo, piensa en términos de energía, frecuencia y vibración." },
-      { id: 10, author: "Nikola Tesla", source: "Entrevista de 1934", category: "ciencia", quote: "El cerebro humano es solo un receptor; en el cosmos existe un núcleo del cual obtenemos conocimiento, fuerza e inspiración." },
+      // Ciencia, Realidad & Genio
+      { id: 8, author: "Albert Einstein", source: "Ideas y Opiniones", category: "ciencia", quote: "La mente intuitiva es un regalo sagrado y la mente racional es un sirviente fiel. Hemos creado una sociedad que honra al sirviente y ha olvidado el regalo." },
+      { id: 9, author: "Albert Einstein", source: "Correspondencia a Michele Besso", category: "ciencia", quote: "La distinción entre pasado, presente y futuro es solo una ilusión obstinadamente persistente. Quien comprende esto camina con ligereza." },
+      { id: 10, author: "Nikola Tesla", source: "Mis Invenciones", category: "ciencia", quote: "Si quieres encontrar los verdaderos secretos del universo, piensa en términos de energía, frecuencia y vibración." },
+      { id: 11, author: "Nikola Tesla", source: "Entrevista de 1934", category: "ciencia", quote: "El cerebro es solo un receptor; en el cosmos existe un núcleo del cual obtenemos conocimiento, fuerza e inspiración." },
 
       // Existencialismo & Resiliencia
-      { id: 11, author: "Viktor Frankl", source: "El Hombre en Busca de Sentido", category: "resiliencia", quote: "A un hombre le pueden robar todo excepto la última de las libertades humanas: la elección de su actitud ante cualquier circunstancia dada." },
-      { id: 12, author: "Friedrich Nietzsche", source: "El Crepúsculo de los Ídolos", category: "resiliencia", quote: "Aquel que tiene un 'porqué' para vivir, puede soportar casi cualquier 'cómo'." },
-      { id: 13, author: "Carl Gustav Jung", source: "Recuerdos, Sueños, Pensamientos", category: "resiliencia", quote: "Hasta que no hagas consciente lo inconsciente, este dirigirá tu vida y tú lo llamarás destino." },
-      { id: 14, author: "Arthur Schopenhauer", source: "Aforismos sobre el Arte de Vivir", category: "filosofia", quote: "Lo que un hombre es por sí mismo en la soledad es lo que mejor revela la dignidad de su existencia." }
+      { id: 12, author: "Viktor Frankl", source: "El Hombre en Busca de Sentido", category: "resiliencia", quote: "A un hombre le pueden robar todo excepto la última de las libertades humanas: la elección de su actitud ante cualquier circunstancia dada." },
+      { id: 13, author: "Friedrich Nietzsche", source: "El Crepúsculo de los Ídolos", category: "resiliencia", quote: "Aquel que tiene un 'porqué' para vivir, puede soportar casi cualquier 'cómo'." },
+      { id: 14, author: "Carl Gustav Jung", source: "Recuerdos, Sueños, Pensamientos", category: "resiliencia", quote: "Hasta que no hagas consciente lo inconsciente, este dirigirá tu vida y tú lo llamarás destino." }
     ];
 
     const ORACLE_EXTENDED = {
       ansiedad: { 
-        author: "Séneca & Einstein", 
+        author: "Séneca & Albert Einstein", 
         source: "Epístolas XIII / Correspondencia", 
         quote: "Hay más cosas que nos aterran que las que nos destruyen. El tiempo es una construcción relativa: no sufras hoy por un fantasma del porvenir.", 
         prep: "Concéntrate exclusivamente en el experimento del presente. Devuelve la incertidumbre a su nada teórica." 
@@ -1280,20 +1460,20 @@
       verdad: { 
         author: "Platón & Nikola Tesla", 
         source: "Mito de la Caverna / Escritos", 
-        quote: "Las sombras de la opinión ajena en la pared no son la realidad. Sintoniza la frecuencia de tu propia razón y busca la fuente original.", 
-        prep: "No creas lo que se dice por consenso. Pregúntate cuál es la causa fundamental de este fenómeno." 
+        quote: "Las sombras de la opinión ajena en la pared no son la realidad. Sintoniza la frecuencia de tu propia razón y busca la causa fundamental.", 
+        prep: "No te conformes con el consenso social. Pregúntate cuál es la verdad elemental detrás de este hecho." 
       },
       voluntad: { 
         author: "Viktor Frankl & Nietzsche", 
         source: "Logoterapia / La Gaya Ciencia", 
-        quote: "No preguntes qué espera la vida de ti, sino qué sentido le otorgas tú a la adversidad. Amor Fati: abraza tu combate.", 
-        prep: "Toma el problema que te agobia y transfórmalo en tu deber cívico o tu entrenamiento de temple." 
+        quote: "No preguntes qué espera la vida de ti, sino qué sentido le otorgas tú al desafío. Abraza tu destino como forja de tu carácter.", 
+        prep: "Toma el problema que te agobia y transfórmalo en tu deber moral o tu laboratorio de temple." 
       },
       ira: { 
         author: "Marco Aurelio & Carl Jung", 
         source: "Meditaciones VI / Arquetipos", 
-        quote: "Lo que te irrita de otros suele ser el reflejo de tu propia sombra no reconciliada. No te vuelvas semejante al agresor.", 
-        prep: "Guarda 10 respiraciones completas antes de hablar. El agravio pierde toda fuerza si no le otorgas tu asentimiento." 
+        quote: "Lo que te irrita de otros suele ser el reflejo de tu propia sombra no reconocida. La mejor venganza es no parecerse al agresor.", 
+        prep: "Guarda 10 respiraciones completas antes de emitir respuesta. El agravio pierde fuerza si no le otorgas tu juicio." 
       }
     };
 
@@ -1364,7 +1544,7 @@
     }
 
     // =========================================================================
-    // 4. CLIMA, RELOJ Y NAVEGACIÓN
+    // 5. NAVEGACIÓN, CLIMA Y RELOJ
     // =========================================================================
     function handleNavClick(e, targetId) {
       e.preventDefault();
@@ -1395,8 +1575,7 @@
       buenosaires: { name: 'Buenos Aires', lat: -34.61, lon: -58.37 },
       santiago: { name: 'Santiago', lat: -33.45, lon: -70.64 },
       madrid: { name: 'Madrid', lat: 40.41, lon: -3.70 },
-      rome: { name: 'Roma', lat: 41.89, lon: 12.51 },
-      athens: { name: 'Atenas', lat: 37.98, lon: 23.72 }
+      rome: { name: 'Roma', lat: 41.89, lon: 12.51 }
     };
 
     async function fetchWeather(k) {
@@ -1418,12 +1597,15 @@
       fetchWeather(k);
     }
 
-    // Inicializaciones
+    // Inicializaciones al cargar el DOM
     document.addEventListener('DOMContentLoaded', () => {
       const savedCity = localStorage.getItem('ataraxia_user_city') || 'mendoza';
       const select = document.getElementById('citySelect');
       if (select) select.value = savedCity;
       fetchWeather(savedCity);
+
+      fetchDolarRates();
+      setInterval(fetchDolarRates, 60000); // Polling cada 60s
 
       updateXpUI();
       renderBadges();
